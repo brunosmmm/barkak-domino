@@ -1,0 +1,72 @@
+import React, { useMemo } from 'react';
+import { Lobby } from './components/Lobby';
+import { Game } from './components/Game';
+import { useGameStore } from './store/gameStore';
+
+function App() {
+  const { gameId, playerId, setCredentials, setError } = useGameStore();
+
+  // Check for join parameter in URL
+  const joinGameId = useMemo(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('join');
+  }, []);
+
+  const handleCreateGame = async (playerName: string, maxPlayers: number, cpuPlayers: number) => {
+    try {
+      const response = await fetch('/api/games', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          player_name: playerName,
+          max_players: maxPlayers,
+          cpu_players: cpuPlayers,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.detail || 'Failed to create game');
+        return;
+      }
+
+      const data = await response.json();
+      setCredentials(data.game_id, data.player_id, playerName);
+    } catch (e) {
+      setError('Failed to connect to server');
+    }
+  };
+
+  const handleJoinGame = async (gameId: string, playerName: string) => {
+    try {
+      const response = await fetch(`/api/games/${gameId}/join`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          game_id: gameId,
+          player_name: playerName,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.detail || 'Failed to join game');
+        return;
+      }
+
+      const data = await response.json();
+      setCredentials(data.game_id, data.player_id, playerName);
+    } catch (e) {
+      setError('Failed to connect to server');
+    }
+  };
+
+  // Show lobby if not in a game, otherwise show game
+  if (!gameId || !playerId) {
+    return <Lobby onJoinGame={handleJoinGame} onCreateGame={handleCreateGame} initialJoinGameId={joinGameId} />;
+  }
+
+  return <Game />;
+}
+
+export default App;
