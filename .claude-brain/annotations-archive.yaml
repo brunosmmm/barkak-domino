@@ -1,0 +1,425 @@
+archived:
+- id: ann_003409_2f7434
+  type: work
+  status: DONE
+  created: '2026-01-26T00:34:09.186311+00:00'
+  last_activity: '2026-01-26T02:07:54.662788+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T00:34:42.700740+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_003442_70a43d
+    source: auto
+  - timestamp: '2026-01-26T01:38:45.939623+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+  text: Implement multiplayer dominoes web app with FastAPI backend, React frontend,
+    and WebSocket real-time communication. Starting with Block Game variant, extensible
+    architecture for Draw Game and All Fives later.
+  context:
+    repository_id: _local/barkak-domino
+  perceived_complexity: 0.8
+  complexity_factors:
+  - multi_file
+  - new_project
+  - architecture
+  - real_time
+  priority: high
+  tags:
+  - fullstack
+  - websocket
+  - game
+  - react
+  - fastapi
+  updated: '2026-01-26T01:38:45.939623+00:00'
+  resolution:
+    type: fixed
+    summary: Built complete multiplayer dominoes web app with FastAPI backend, React
+      frontend, WebSocket real-time play, CPU players, multi-round scoring, lobby
+      system, invite links
+    approach: other
+    key_insight: Full-stack implementation with real-time WebSocket communication
+  related_tasks:
+  - task_003442_70a43d
+  - task_004448_5c7951
+  - task_004558_3c898e
+  - task_004646_900df1
+  - task_004817_e5857e
+  - task_004904_a7aff8
+  - task_005042_f8ad8f
+  - task_005146_3c01c7
+  - task_005523_8f529e
+  completed: '2026-01-26T01:38:45.939623+00:00'
+  commit_refs:
+  - hash: 2d0149368391863df4f6250112da71fdb866f21d
+    hash_short: 2d01493
+    linked_at: '2026-01-26T02:07:54.662788+00:00'
+    message: 'Initial commit: Barkak Domino multiplayer web app
+
+
+      Full-stack dominoes game with FastAPI backend, Re'
+- id: ann_002954_fac278
+  type: work
+  status: DONE
+  created: '2026-01-26T00:29:54.650394+00:00'
+  last_activity: '2026-01-26T01:38:51.022844+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T01:38:51.022844+00:00'
+    action: status_change
+    from: TODO
+    to: DONE
+  text: Build multiplayer dominoes web app - game UI/UX focused with access control
+  context:
+    repository_id: _local/barkak-domino
+  perceived_complexity: 0.85
+  complexity_factors:
+  - multi_file
+  - new_project
+  - architecture
+  - real_time_multiplayer
+  - ui_ux_design
+  priority: high
+  tags:
+  - web-app
+  - game
+  - multiplayer
+  - dominoes
+  updated: '2026-01-26T01:38:51.022844+00:00'
+  resolution:
+    type: fixed
+    summary: Implemented game UI with lobby, create/join flows, shareable invite links,
+      player list, game board visualization, turn indicators, and access control via
+      game codes
+    approach: other
+    key_insight: Clean separation of lobby and game views with Zustand state management
+  completed: '2026-01-26T01:38:51.022844+00:00'
+- id: ann_010733_d52ff2
+  type: idea
+  status: DONE
+  created: '2026-01-26T01:07:33.806426+00:00'
+  last_activity: '2026-01-26T01:39:06.205292+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T01:08:27.425842+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_010827_7fa151
+    source: auto
+  - timestamp: '2026-01-26T01:39:06.205292+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+  text: "## Multi-Round Team Scoring System\n\n### Core Concept\nTransform single-game\
+    \ play into multi-round sessions with persistent scoring.\n\n### Team Play (4\
+    \ players)\n- Opposite players are teammates (like sitting at a round table)\n\
+    - Player 0 + Player 2 vs Player 1 + Player 3\n- Team score accumulates across\
+    \ rounds\n- First team to reach target score wins (e.g., 100 points)\n\n### Individual\
+    \ Scoring Fallback (2-3 players)\n- When fewer than 4 players, use individual\
+    \ scoring\n- Each player accumulates points independently\n- First to target score\
+    \ wins\n\n### Scoring Rules\n- Winner scores the total pip count of all opponents'\
+    \ remaining tiles\n- On blocked game: lowest remaining pip count wins, scores\
+    \ difference\n- Teams: combine teammate tiles for team pip count\n\n### UI Changes\
+    \ Required\n\n1. **Table Visualization (small corner indicator)**\n   - Show 4\
+    \ seats around a small table graphic\n   - Highlight occupied seats with player\
+    \ avatars/names\n   - Color-code teams (e.g., red team vs blue team)\n   - Position:\
+    \ lower-left or lower-right corner\n   - Subtle but informative\n\n2. **Score\
+    \ Display**\n   - Persistent team/player scores across rounds\n   - Round counter\
+    \ (Round 3 of ?)\n   - Target score progress bar\n   - \"Match point\" indicator\
+    \ when near winning\n\n3. **Round Transition**\n   - \"Round Over\" overlay with\
+    \ scoring breakdown\n   - Show tiles remaining in each hand\n   - Points awarded\
+    \ animation\n   - \"Next Round\" button (or auto-start timer)\n   - Running team/player\
+    \ scores update\n\n4. **Match End**\n   - \"Match Winner\" celebration screen\n\
+    \   - Full score history/breakdown\n   - Option to rematch or return to lobby\n\
+    \n### Backend Changes\n- Add `Match` model wrapping multiple `Game` rounds\n-\
+    \ Track cumulative scores per player/team\n- Add `match_score`, `round_number`,\
+    \ `target_score` fields\n- Preserve team assignments across rounds\n- Handle player\
+    \ disconnection mid-match\n\n### State Model Addition\n```\nMatch {\n  id: string\n\
+    \  games: Game[]  // completed rounds\n  current_game: Game\n  team_a: [player_id,\
+    \ player_id]  // for 4p\n  team_b: [player_id, player_id]\n  scores: { team_a:\
+    \ number, team_b: number } | { player_id: number }\n  target_score: number\n \
+    \ is_team_game: boolean\n}\n```"
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_005523_8f529e
+  perceived_complexity: 0.72
+  complexity_factors:
+  - multi_file
+  - backend_model_changes
+  - frontend_ui_overhaul
+  - game_state_redesign
+  - new_visual_components
+  priority: medium
+  tags:
+  - scoring
+  - multi-round
+  - teams
+  - ui
+  - table-visualization
+  - match-system
+  updated: '2026-01-26T01:39:06.205292+00:00'
+  resolution:
+    type: fixed
+    summary: 'Implemented Match model with team scoring (4 players: opposite seats
+      teammates), individual scoring fallback (2-3 players), table visualization,
+      round-over overlay with scoring breakdown and next round button'
+    approach: other
+    key_insight: Teams determined by seat position (0+2 vs 1+3), target score for
+      match victory
+  related_tasks:
+  - task_010827_7fa151
+  completed: '2026-01-26T01:39:06.205292+00:00'
+- id: ann_005957_472124
+  type: todo
+  status: DONE
+  created: '2026-01-26T00:59:57.473241+00:00'
+  last_activity: '2026-01-26T01:45:27.334162+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T01:40:11.164501+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_014011_1dfd09
+    source: auto
+  - timestamp: '2026-01-26T01:45:27.334162+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_014011_1dfd09
+    source: auto
+  text: 'Add reaction/taunt system for player interaction during games. Include emoji/icon
+    picker accessible during gameplay. When a player sends a reaction, broadcast to
+    all players with sender identification. Show reactions briefly on screen (toast/popup).
+    Consider: thumbs up, clapping, laughing, crying, thinking, fire, etc.'
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_005523_8f529e
+  perceived_complexity: 0.5
+  priority: medium
+  tags:
+  - frontend
+  - backend
+  - websocket
+  - ux
+  - social
+  updated: '2026-01-26T01:45:27.334162+00:00'
+  resolution:
+    type: fixed
+    summary: "Implemented reaction/taunt emoji system with 12 emojis (\U0001F602\U0001F624\
+      \U0001F525\U0001F480\U0001F921\U0001F451\U0001F3AF\U0001F4AA\U0001F608\U0001F64F\
+      \U0001F44E\U0001F340), floating display that shows player name, 2-second cooldown\
+      \ between reactions, picker button in bottom right during gameplay"
+    approach: bugfix
+  related_tasks:
+  - task_014011_1dfd09
+  completed: '2026-01-26T01:45:27.334162+00:00'
+- id: ann_022230_b33745
+  type: bug
+  status: DONE
+  created: '2026-01-26T02:22:30.788472+00:00'
+  last_activity: '2026-01-26T15:25:59.028510+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T02:27:43.608206+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_022743_1daf6c
+    source: auto
+  - timestamp: '2026-01-26T02:31:50.169357+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_022743_1daf6c
+    source: auto
+  text: 'Board meandering/snake pattern bug: domino tiles not visually touching.
+
+
+    **CRITICAL:** UI allows impossible plays because tiles aren''t properly connected,
+    making it unclear which ends are playable.
+
+
+    The board layout system displays tiles with gaps between them. Pieces should be
+    visually connected/touching as they would be in a real game.
+
+
+    **Affected:** GameBoard.tsx snake layout logic
+
+    **Expected:** Tiles connect seamlessly, matching ends touch visually
+
+    **Actual:** Tiles displayed with gaps - causes confusion about valid play positions'
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    file: frontend/src/components/GameBoard.tsx
+    task_id: task_021024_14f4bd
+  perceived_complexity: 0.5
+  priority: critical
+  tags:
+  - frontend
+  - ui
+  - game-board
+  - layout
+  updated: '2026-01-26T02:31:50.169357+00:00'
+  resolution:
+    type: fixed
+    summary: 'Fixed play zone logic: added isYourTurn check, removed tiles gap, simplified
+      zone conditions, made zones match tile orientation'
+    approach: other
+  related_tasks:
+  - task_022743_1daf6c
+  completed: '2026-01-26T02:31:50.169357+00:00'
+  commit_refs:
+  - hash: 2d0149368391863df4f6250112da71fdb866f21d
+    hash_short: 2d01493
+    linked_at: '2026-01-26T15:25:59.028510+00:00'
+    message: 'chore: remove .pyc from tracking and add .gitignore'
+- id: ann_023228_c2da73
+  type: bug
+  status: DONE
+  created: '2026-01-26T02:32:28.051409+00:00'
+  last_activity: '2026-01-26T15:25:58.909136+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T02:34:45.247143+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_023445_38f20a
+    source: auto
+  - timestamp: '2026-01-26T02:38:37.189463+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_023445_38f20a
+    source: auto
+  text: "Players receive wrong number of tiles at game start.\n\n**CRITICAL:** Players\
+    \ should only receive 6 tiles each. The remaining tiles form the \"boneyard\"\
+    .\n\n**Current behavior:** Players may be receiving more tiles than allowed\n\
+    **Expected:** \n- Each player gets exactly 6 tiles\n- Remaining tiles displayed\
+    \ on the side, face-down (backs visible, no one can see values)\n- Boneyard is\
+    \ for dramatic effect only - tiles are inaccessible during standard play\n\n**Implementation:**\n\
+    - Backend: Limit distribution to 6 tiles per player\n- Frontend: Show boneyard\
+    \ pile on side with face-down tiles for atmosphere"
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_022743_1daf6c
+  perceived_complexity: 0.4
+  priority: critical
+  tags:
+  - backend
+  - game-logic
+  - rules
+  - distribution
+  updated: '2026-01-26T02:38:37.189463+00:00'
+  resolution:
+    type: fixed
+    summary: Changed tiles_per_player from 7 to 6 in backend, created Boneyard component
+      showing face-down tiles stack with dramatic styling
+    approach: bugfix
+  related_tasks:
+  - task_023445_38f20a
+  completed: '2026-01-26T02:38:37.189463+00:00'
+  commit_refs:
+  - hash: 2d0149368391863df4f6250112da71fdb866f21d
+    hash_short: 2d01493
+    linked_at: '2026-01-26T15:25:58.909136+00:00'
+    message: 'chore: remove .pyc from tracking and add .gitignore'
+- id: ann_031445_4a6e75
+  type: idea
+  status: DONE
+  created: '2026-01-26T03:14:45.645385+00:00'
+  last_activity: '2026-01-26T15:25:58.763432+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T03:15:36.637060+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_031536_ed17e1
+    source: auto
+  - timestamp: '2026-01-26T03:18:05.014237+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_031536_ed17e1
+    source: auto
+  text: 'Give each player a unique color, and when a piece is played, it should flash
+    with that player''s color for identification.
+
+
+    Implementation considerations:
+
+    - Add player colors to Player model or assign based on position (0-3)
+
+    - Could use: orange, purple, cyan, lime (distinct, visible on dark background)
+
+    - Update BoardVisualization.tsx to track recently played pieces
+
+    - Add CSS animation for flash effect on newly placed domino
+
+    - Flash duration: ~1-2 seconds with fade out'
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_031337_f87eca
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - ui
+  - ux
+  - visual-feedback
+  - player-identification
+  updated: '2026-01-26T03:18:05.014237+00:00'
+  resolution:
+    type: fixed
+    summary: Added unique player colors (orange/purple/cyan/lime) that flash when
+      a piece is played. Updated TableVisualization to show player color rings around
+      avatars.
+    approach: bugfix
+  related_tasks:
+  - task_031536_ed17e1
+  completed: '2026-01-26T03:18:05.014237+00:00'
+  commit_refs:
+  - hash: 2d0149368391863df4f6250112da71fdb866f21d
+    hash_short: 2d01493
+    linked_at: '2026-01-26T15:25:58.763432+00:00'
+    message: 'chore: remove .pyc from tracking and add .gitignore'
+- id: ann_031835_aee3a7
+  type: work
+  status: DONE
+  created: '2026-01-26T03:18:35.566591+00:00'
+  last_activity: '2026-01-26T03:23:47.710333+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T03:18:43.237023+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_031843_d81515
+    source: auto
+  - timestamp: '2026-01-26T03:23:47.710333+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_031843_d81515
+    source: auto
+  text: Generate 20 distinctive monkey avatars and randomly assign 4 to players when
+    game starts. Replace hardcoded avatar mapping with random selection from pool.
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_031536_ed17e1
+  perceived_complexity: 0.5
+  tags:
+  - assets
+  - avatars
+  - randomization
+  updated: '2026-01-26T03:23:47.710333+00:00'
+  resolution:
+    type: fixed
+    summary: Generated 20 monkey avatars and implemented random selection. Backend
+      now assigns 4 random avatars per match, frontend displays them. Also fixed table
+      visualization spacing and increased size.
+    approach: bugfix
+  related_tasks:
+  - task_031843_d81515
+  completed: '2026-01-26T03:23:47.710333+00:00'

@@ -1,0 +1,315 @@
+annotations:
+- id: ann_005905_d4dbad
+  type: todo
+  status: TODO
+  created: '2026-01-26T00:59:05.101393+00:00'
+  last_activity: '2026-01-26T00:59:05.101393+00:00'
+  activity_log: []
+  text: Add i18n support with react-i18next for automatic browser language detection.
+    Create translation files for English, Spanish, Portuguese. Wrap UI strings with
+    t() function.
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_005523_8f529e
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - frontend
+  - i18n
+  - ux
+- id: ann_010020_0bb2d7
+  type: todo
+  status: TODO
+  created: '2026-01-26T01:00:20.460988+00:00'
+  last_activity: '2026-01-26T01:00:20.460988+00:00'
+  activity_log: []
+  text: 'Add simple text chat system in game room. Include chat input at bottom of
+    sidebar, message history with player names and timestamps. Broadcast messages
+    via WebSocket to all players in the game. Consider: message length limit, basic
+    profanity filter, chat toggle/minimize option.'
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_005523_8f529e
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - frontend
+  - backend
+  - websocket
+  - social
+- id: ann_010141_31ffb0
+  type: todo
+  status: INPROGRESS
+  created: '2026-01-26T01:01:41.478866+00:00'
+  last_activity: '2026-01-26T15:25:59.131813+00:00'
+  activity_log:
+  - timestamp: '2026-01-26T02:10:24.867450+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_021024_14f4bd
+    source: auto
+  text: 'Overhaul UI theming with "drinking, smoking, based" aesthetic.
+
+
+    **Design Direction:**
+
+    - Bar/lounge atmosphere, neon accents, vintage/retro feel
+
+    - Darker/grittier color palette, edgy typography
+
+    - Smoke, whiskey, playing cards vibe
+
+
+    **Image Assets Needed:**
+
+    - Background: smoky bar scene or felt table with drinks/ashtrays
+
+    - Domino tiles: weathered/vintage texture, maybe gold accents
+
+    - Player avatars: stylized characters (optional)
+
+    - Victory/defeat screens: celebratory vs dejected themed
+
+    - UI elements: buttons, panels with neon/glow effects
+
+    - Logo/branding: "Barkak Domino" stylized
+
+
+    **AI Image Tools (need setup guidance):**
+
+    - Midjourney: Best quality, Discord-based, ~$10/mo
+
+    - Stable Diffusion: Free, runs locally, needs GPU or cloud
+
+    - DALL-E API: Easy integration, pay-per-image
+
+
+    Note: User needs walkthrough on using these tools.'
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_005523_8f529e
+  perceived_complexity: 0.7
+  priority: medium
+  tags:
+  - frontend
+  - design
+  - theming
+  - ai-images
+  - branding
+  updated: '2026-01-26T02:10:24.867450+00:00'
+  commit_refs:
+  - hash: 2d0149368391863df4f6250112da71fdb866f21d
+    hash_short: 2d01493
+    linked_at: '2026-01-26T15:25:59.131813+00:00'
+    message: 'chore: remove .pyc from tracking and add .gitignore'
+- id: ann_010358_9e1779
+  type: todo
+  status: TODO
+  created: '2026-01-26T01:03:58.507176+00:00'
+  last_activity: '2026-01-26T01:03:58.507176+00:00'
+  activity_log: []
+  text: 'Add "epic moment" detection and visual effects for statistically unlikely
+    plays.
+
+
+    **Triggers to detect:**
+
+    - Playing last tile to win (domino!)
+
+    - Playing a double-6 as first move
+
+    - Winning with 0 passes made
+
+    - Clearing multiple tiles in quick succession
+
+    - Comeback win when opponent had 1-2 tiles left
+
+    - Perfect game (win without ever being blocked)
+
+    - Blocking all opponents simultaneously
+
+
+    **Visual Effects (broadcast to all players):**
+
+    - Screen shake
+
+    - Particle explosions / confetti
+
+    - Dramatic slow-mo animation of the tile being played
+
+    - Sound effects (glass clink, crowd gasp, airhorn)
+
+    - Special message overlay: "DOMINO!", "CLUTCH!", "LEGENDARY PLAY"
+
+    - Glow/highlight on the player who made the play
+
+
+    **Implementation:**
+
+    - Backend: Calculate odds/detect special conditions after each move
+
+    - WebSocket: Broadcast "epic_moment" event with type and player
+
+    - Frontend: Trigger appropriate animation/sound based on type'
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_005523_8f529e
+  perceived_complexity: 0.6
+  priority: low
+  tags:
+  - frontend
+  - backend
+  - animation
+  - ux
+  - engagement
+- id: ann_010908_8a4951
+  type: idea
+  status: TODO
+  created: '2026-01-26T01:09:08.778713+00:00'
+  last_activity: '2026-01-26T01:09:08.778713+00:00'
+  activity_log: []
+  text: "## Visual Distinction for Multiple Play Options\n\nWhen a player has a domino\
+    \ that can be played on both ends of the board, make it visually clear that there\
+    \ are multiple options.\n\n### Scenarios:\n1. **Same tile can go left OR right**\
+    \ - Board ends are different values, but the selected tile matches both\n2. **Tile\
+    \ orientation matters** - The tile could be flipped to match different patterns\n\
+    \n### UI Ideas:\n- Highlight both ends of the board when a playable tile is selected\n\
+    - Show arrows or indicators pointing to valid play spots\n- Animate/pulse the\
+    \ valid board ends\n- Color-code: green glow on valid ends\n- Show a split button:\
+    \ \"Play Left \u2190 | \u2192 Play Right\"\n- When hovering over an end, show\
+    \ preview of how the tile would be placed\n\n### Current Behavior:\n- User must\
+    \ manually choose left/right after selecting a tile\n- Not obvious when both options\
+    \ are available\n\n### Suggested Implementation:\n1. When tile is selected, calculate\
+    \ which ends it can play on\n2. If multiple ends valid, show both with visual\
+    \ indicators\n3. Clicking on a highlighted end plays there directly\n4. Alternative:\
+    \ show \"Choose side\" modal with previews"
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_010827_7fa151
+  perceived_complexity: 0.45
+  complexity_factors:
+  - frontend_ux
+  - interaction_design
+  - visual_feedback
+  priority: medium
+  tags:
+  - ux
+  - visual-feedback
+  - tile-selection
+  - game-interaction
+- id: ann_013542_2f3fa8
+  type: idea
+  status: TODO
+  created: '2026-01-26T01:35:42.909331+00:00'
+  last_activity: '2026-01-26T01:35:42.909331+00:00'
+  activity_log: []
+  text: "## Sound Taunts from Static Sound Bank\n\nAdd audio taunts that play during\
+    \ gameplay events for a more immersive and fun experience.\n\n### Sound Categories:\n\
+    \n1. **Pass Taunts** (when someone passes)\n   - Laugh sounds\n   - \"Aw man!\"\
+    \ / disappointed sounds\n   - Buzzer sounds\n   - Comedy fail sounds\n\n2. **Domino\
+    \ Taunts** (when someone dominoes/wins round)\n   - Victory fanfare\n   - Air\
+    \ horn\n   - Crowd cheering\n   - \"Let's go!\" type sounds\n\n3. **Big Play Taunts**\
+    \ (high-value tiles, strategic moves)\n   - Slam sounds\n   - \"Ohhh!\" reaction\
+    \ sounds\n   - Impact sounds\n\n4. **Blocked Game**\n   - Tense music sting\n\
+    \   - Record scratch\n\n### Implementation:\n- Store static audio files in `/public/sounds/`\n\
+    - Preload sounds on game start\n- Play via Web Audio API or simple `<audio>` elements\n\
+    - Add volume control in settings\n- Option to mute (respect user preference)\n\
+    - Random selection from category when event occurs\n\n### Sound Sources:\n- Use\
+    \ royalty-free sounds\n- Sites: freesound.org, mixkit.co, pixabay.com/sound-effects\n\
+    - Keep files small (MP3/OGG, <100KB each)\n\n### UI:\n- Sound toggle button in\
+    \ game UI\n- Maybe volume slider in settings\n- Visual indicator when sound plays\
+    \ (for accessibility)"
+  context:
+    repository_id: _local/barkak-domino
+    task_id: task_013330_a75592
+  perceived_complexity: 0.45
+  complexity_factors:
+  - audio_integration
+  - asset_management
+  - user_preferences
+  priority: low
+  tags:
+  - audio
+  - taunts
+  - sound-effects
+  - ux
+  - fun
+- id: ann_022717_94aeb3
+  type: idea
+  status: TODO
+  created: '2026-01-26T02:27:17.481231+00:00'
+  last_activity: '2026-01-26T02:27:17.481231+00:00'
+  activity_log: []
+  text: 'Mini game board visualization in table corner widget.
+
+
+    Add a small visual representation of the played tiles in the TableVisualization
+    component (lower left corner). Doesn''t need to be pixel-perfect accurate - just
+    a rough visual of the domino chain to give players a sense of the board state
+    at a glance.
+
+
+    **Location:** TableVisualization.tsx (lower left corner widget)
+
+    **Concept:** Small dots/rectangles showing approximate tile positions
+
+    **Priority:** Nice-to-have, improves game awareness'
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    file: frontend/src/components/TableVisualization.tsx
+    task_id: task_021024_14f4bd
+  perceived_complexity: 0.45
+  priority: low
+  tags:
+  - frontend
+  - ui
+  - visualization
+  - enhancement
+- id: ann_023656_baa5a9
+  type: idea
+  status: TODO
+  created: '2026-01-26T02:36:56.237057+00:00'
+  last_activity: '2026-01-26T02:36:56.237057+00:00'
+  activity_log: []
+  text: "Interactive tile picking phase before game starts.\n\n**Feature:** Instead\
+    \ of automatically dealing tiles, show a grid of face-down tiles. Players asynchronously\
+    \ click to claim tiles (no turn order needed during picking).\n\n**Flow:**\n1.\
+    \ Game created \u2192 Show 28 face-down tiles in a grid\n2. All players can click\
+    \ tiles simultaneously to claim them\n3. Each player claims 6 tiles (their limit)\n\
+    4. Once all players have 6 tiles, game begins with normal turn order\n5. Remaining\
+    \ tiles become the boneyard (shown but inaccessible)\n\n**Implementation:**\n\
+    - Backend: Track which tiles are claimed by whom during picking phase\n- Frontend:\
+    \ Grid of clickable face-down tiles, show claimed count per player\n- WebSocket:\
+    \ Broadcast tile claims in real-time"
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_023445_38f20a
+  perceived_complexity: 0.7
+  priority: medium
+  tags:
+  - frontend
+  - backend
+  - game-logic
+  - ux
+  - multiplayer
+- id: ann_030917_80da33
+  type: bug
+  status: TODO
+  created: '2026-01-26T03:09:17.177608+00:00'
+  last_activity: '2026-01-26T03:09:17.177608+00:00'
+  activity_log: []
+  text: Taunts/reactions have huge latency when sent between players. Need to investigate
+    WebSocket broadcast timing and potential network delays.
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_030654_83462e
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - websocket
+  - performance
+  - ux
