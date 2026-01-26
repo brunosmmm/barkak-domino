@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useGameStore } from '../store/gameStore';
 
 interface LobbyProps {
@@ -63,10 +63,11 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="bg-green-900/80 rounded-2xl p-8 w-full max-w-md backdrop-blur shadow-2xl">
-        <h1 className="text-3xl font-bold text-white text-center mb-8">
-          Dominoes
-        </h1>
+      <div className="bg-bar-dark/90 rounded-2xl p-8 w-full max-w-md backdrop-blur-md shadow-2xl border border-neon-amber/30">
+        {/* Logo */}
+        <div className="flex justify-center mb-6">
+          <img src="/images/logo.png" alt="Barkak Domino" className="h-20 w-auto drop-shadow-lg" />
+        </div>
 
         {error && (
           <div className="bg-red-500/20 border border-red-500 text-red-300 px-4 py-2 rounded-lg mb-4 text-sm">
@@ -81,13 +82,13 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Your Name"
-              className="w-full px-4 py-3 rounded-lg bg-green-800 text-white placeholder-gray-400
-                         border border-green-700 focus:border-yellow-400 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
+                         border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
             />
             <button
               onClick={() => setMode('create')}
               disabled={!playerName.trim()}
-              className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg
+              className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg
                          font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Create New Game
@@ -95,7 +96,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             <button
               onClick={() => setMode('join')}
               disabled={!playerName.trim()}
-              className="w-full bg-green-700 hover:bg-green-600 text-white py-3 rounded-lg
+              className="w-full bg-bar-felt hover:bg-bar-felt-light text-white py-3 rounded-lg
                          font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Join Game
@@ -121,8 +122,8 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                   setMaxPlayers(max);
                   if (cpuPlayers >= max) setCpuPlayers(max - 1);
                 }}
-                className="w-full px-4 py-3 rounded-lg bg-green-800 text-white
-                           border border-green-700 focus:border-yellow-400 focus:outline-none"
+                className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
+                           border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
               >
                 <option value={2}>2 Players</option>
                 <option value={3}>3 Players</option>
@@ -135,8 +136,8 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               <select
                 value={cpuPlayers}
                 onChange={(e) => setCpuPlayers(Number(e.target.value))}
-                className="w-full px-4 py-3 rounded-lg bg-green-800 text-white
-                           border border-green-700 focus:border-yellow-400 focus:outline-none"
+                className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
+                           border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
               >
                 {[...Array(maxPlayers)].map((_, i) => (
                   <option key={i} value={i}>{i} CPU{i !== 1 ? 's' : ''}</option>
@@ -147,7 +148,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             <button
               onClick={handleCreate}
               disabled={loading}
-              className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg
+              className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg
                          font-medium transition-colors disabled:opacity-50"
             >
               {loading ? 'Creating...' : 'Create Game'}
@@ -168,7 +169,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
 
             {initialJoinGameId && (
               <p className="text-center text-gray-300">
-                You've been invited to join game <code className="bg-black/30 px-2 py-1 rounded text-yellow-300">{initialJoinGameId}</code>
+                You've been invited to join game <code className="bg-black/30 px-2 py-1 rounded text-neon-amber">{initialJoinGameId}</code>
               </p>
             )}
 
@@ -177,8 +178,8 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Your Name"
-              className="w-full px-4 py-3 rounded-lg bg-green-800 text-white placeholder-gray-400
-                         border border-green-700 focus:border-yellow-400 focus:outline-none"
+              className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
+                         border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
             />
 
             {!initialJoinGameId && (
@@ -188,13 +189,13 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                   value={gameIdToJoin}
                   onChange={(e) => setGameIdToJoin(e.target.value)}
                   placeholder="Game ID"
-                  className="flex-1 px-4 py-3 rounded-lg bg-green-800 text-white placeholder-gray-400
-                             border border-green-700 focus:border-yellow-400 focus:outline-none"
+                  className="flex-1 px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
+                             border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
                 />
                 <button
                   onClick={() => handleJoin(gameIdToJoin)}
                   disabled={loading || !gameIdToJoin.trim() || !playerName.trim()}
-                  className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg
+                  className="bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white px-6 py-3 rounded-lg
                              font-medium transition-colors disabled:opacity-50"
                 >
                   Join
@@ -206,7 +207,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               <button
                 onClick={() => handleJoin(initialJoinGameId)}
                 disabled={loading || !playerName.trim()}
-                className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg
+                className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg
                            font-medium transition-colors disabled:opacity-50"
               >
                 {loading ? 'Joining...' : 'Join Game'}
@@ -220,10 +221,10 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                   {openGames.map(game => (
                     <div
                       key={game.id}
-                      className="flex items-center justify-between bg-green-800/50 p-3 rounded-lg"
+                      className="flex items-center justify-between bg-bar-wood/50 p-3 rounded-lg"
                     >
                       <div>
-                        <code className="text-yellow-300">{game.id}</code>
+                        <code className="text-neon-amber">{game.id}</code>
                         <p className="text-gray-400 text-xs">
                           {game.player_names.join(', ')} ({game.players}/{game.max_players})
                         </p>
@@ -231,7 +232,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                       <button
                         onClick={() => handleJoin(game.id)}
                         disabled={loading || !playerName.trim()}
-                        className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded
+                        className="bg-bar-felt-light hover:bg-bar-felt text-white px-4 py-2 rounded
                                    text-sm font-medium transition-colors disabled:opacity-50"
                       >
                         Join

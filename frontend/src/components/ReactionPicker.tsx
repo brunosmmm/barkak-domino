@@ -43,7 +43,7 @@ export function ReactionPicker({ onReaction }: ReactionPickerProps) {
         className={`w-12 h-12 rounded-full text-2xl transition-all
           ${cooldown
             ? 'bg-gray-600 cursor-not-allowed opacity-50'
-            : 'bg-yellow-600 hover:bg-yellow-500 hover:scale-110'
+            : 'bg-neon-amber hover:bg-neon-amber-glow hover:scale-110 shadow-neon-amber'
           }
           shadow-lg`}
         title={cooldown ? 'Wait...' : 'Send reaction'}

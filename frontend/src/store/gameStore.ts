@@ -38,7 +38,7 @@ interface GameStore {
   roundOverInfo: RoundOverInfo | null;
   matchOverInfo: MatchOverInfo | null;
   showRoundOverlay: boolean;
-  lastPlayedTile: { position: number; side: string } | null;
+  lastPlayedTile: { position: number; side: string; playerId: string } | null;
   passNotification: { playerName: string; message: string } | null;
   activeReactions: { playerId: string; playerName: string; emoji: string; id: number }[];
 
@@ -52,7 +52,7 @@ interface GameStore {
   setRoundOverInfo: (info: RoundOverInfo | null) => void;
   setMatchOverInfo: (info: MatchOverInfo | null) => void;
   setShowRoundOverlay: (show: boolean) => void;
-  setLastPlayedTile: (tile: { position: number; side: string } | null) => void;
+  setLastPlayedTile: (tile: { position: number; side: string; playerId: string } | null) => void;
   setPassNotification: (notification: { playerName: string; message: string } | null) => void;
   addReaction: (playerId: string, playerName: string, emoji: string) => void;
   removeReaction: (id: number) => void;

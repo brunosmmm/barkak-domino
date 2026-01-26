@@ -1,4 +1,3 @@
-import React from 'react';
 import { DominoTile } from './DominoTile';
 import { useGameStore } from '../store/gameStore';
 import type { Domino } from '../types';
@@ -38,24 +37,26 @@ export function PlayerHand({ onTileSelect, isYourTurn }: PlayerHandProps) {
   };
 
   return (
-    <div className="bg-green-900/50 rounded-xl p-4 backdrop-blur">
-      <h3 className="text-white text-sm font-medium mb-3">
-        Your Hand ({hand.length} tiles)
-      </h3>
-      <div className="flex flex-wrap gap-2 justify-center">
-        {hand.map((domino, index) => (
-          <DominoTile
-            key={`${domino.left}-${domino.right}-${index}`}
-            domino={domino}
-            selected={isDominoSelected(domino)}
-            disabled={!canPlay(domino)}
-            onClick={() => canPlay(domino) && onTileSelect(domino)}
-            size="md"
-          />
-        ))}
+    <div className="glass-panel p-3 max-w-2xl mx-auto">
+      <div className="flex items-center justify-center gap-4">
+        <span className="text-neon-amber-glow text-sm font-medium neon-text whitespace-nowrap">
+          Your Hand ({hand.length})
+        </span>
+        <div className="flex flex-wrap gap-2 justify-center">
+          {hand.map((domino, index) => (
+            <DominoTile
+              key={`${domino.left}-${domino.right}-${index}`}
+              domino={domino}
+              selected={isDominoSelected(domino)}
+              disabled={!canPlay(domino)}
+              onClick={() => canPlay(domino) && onTileSelect(domino)}
+              size="md"
+            />
+          ))}
+        </div>
       </div>
       {hand.length === 0 && (
-        <p className="text-gray-400 text-center py-4">No tiles remaining</p>
+        <p className="text-gray-400 text-center py-2">No tiles remaining</p>
       )}
     </div>
   );

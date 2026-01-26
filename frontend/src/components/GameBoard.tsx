@@ -1,19 +1,39 @@
 import { DominoTile } from './DominoTile';
 import { useGameStore } from '../store/gameStore';
 
+// Player colors based on position (0-3) - distinct, visible on dark background
+const PLAYER_COLORS: Record<number, { ring: string; shadow: string; bg: string }> = {
+  0: { ring: 'ring-orange-400', shadow: 'shadow-orange-400/60', bg: 'bg-orange-400' },
+  1: { ring: 'ring-purple-400', shadow: 'shadow-purple-400/60', bg: 'bg-purple-400' },
+  2: { ring: 'ring-cyan-400', shadow: 'shadow-cyan-400/60', bg: 'bg-cyan-400' },
+  3: { ring: 'ring-lime-400', shadow: 'shadow-lime-400/60', bg: 'bg-lime-400' },
+};
+
 interface GameBoardProps {
   onPlayLeft: () => void;
   onPlayRight: () => void;
+  isYourTurn: boolean;
 }
 
-const TILES_PER_ROW = 8;
-
-export function GameBoard({ onPlayLeft, onPlayRight }: GameBoardProps) {
+export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProps) {
   const { gameState, selectedDomino, lastPlayedTile } = useGameStore();
 
   if (!gameState) return null;
 
-  const { board, ends } = gameState;
+  const { board, ends, players } = gameState;
+
+  // Get player position by ID
+  const getPlayerPosition = (playerId: string): number => {
+    const player = players.find(p => p.id === playerId);
+    return player?.position ?? 0;
+  };
+
+  // Get player color classes for the last played tile
+  const getPlayerColorClasses = (): { ring: string; shadow: string } => {
+    if (!lastPlayedTile) return { ring: 'ring-neon-amber', shadow: 'shadow-neon-amber/50' };
+    const position = getPlayerPosition(lastPlayedTile.playerId);
+    return PLAYER_COLORS[position] || PLAYER_COLORS[0];
+  };
 
   // Check if a tile at index is the last played tile
   const isLastPlayed = (index: number): boolean => {
@@ -31,29 +51,25 @@ export function GameBoard({ onPlayLeft, onPlayRight }: GameBoardProps) {
     return selectedDomino.left === targetEnd || selectedDomino.right === targetEnd;
   };
 
-  // Split board into rows for snake pattern
-  const getRows = () => {
-    const rows: typeof board[] = [];
-    for (let i = 0; i < board.length; i += TILES_PER_ROW) {
-      rows.push(board.slice(i, i + TILES_PER_ROW));
-    }
-    return rows;
-  };
-
-  // Render a single tile
-  const renderTile = (played: typeof board[0], globalIndex: number) => {
+  // Render a single tile with proper connection to neighbors
+  const renderTile = (played: typeof board[0], globalIndex: number, isFirst: boolean) => {
     const isDouble = played.domino.left === played.domino.right;
     const justPlayed = isLastPlayed(globalIndex);
-    const stableKey = `${Math.min(played.domino.left, played.domino.right)}-${Math.max(played.domino.left, played.domino.right)}`;
+    const stableKey = `${globalIndex}-${played.domino.left}-${played.domino.right}`;
+    const playerColors = getPlayerColorClasses();
+
+    // Negative margin to make tiles touch/overlap slightly (except first tile)
+    const marginStyle = isFirst ? {} : { marginLeft: '-2px' };
 
     return (
       <div
         key={stableKey}
-        className={`flex-shrink-0 ${
+        className={`flex-shrink-0 relative ${
           justPlayed
-            ? 'scale-110 animate-pulse ring-4 ring-yellow-400 ring-opacity-75 rounded-lg shadow-lg shadow-yellow-400/50'
+            ? `z-10 scale-110 animate-pulse ring-3 ${playerColors.ring} ring-opacity-90 rounded-lg shadow-lg ${playerColors.shadow}`
             : ''
         }`}
+        style={marginStyle}
       >
         <DominoTile
           domino={played.domino}
@@ -68,128 +84,71 @@ export function GameBoard({ onPlayLeft, onPlayRight }: GameBoardProps) {
     return (
       <div className="flex-1 flex items-center justify-center">
         <div className="text-white/50 text-xl">
-          {selectedDomino ? (
+          {!isYourTurn ? (
+            <span className="text-gray-400">Waiting for first move...</span>
+          ) : selectedDomino ? (
             <button
               onClick={onPlayLeft}
-              className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              className="bg-neon-amber hover:bg-neon-amber-glow text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-neon-amber"
             >
               Play First Tile
             </button>
           ) : (
-            'Select a tile to play'
+            <span className="text-neon-amber">Select a tile to play</span>
           )}
         </div>
       </div>
     );
   }
 
-  const rows = getRows();
-  const isMultiRow = rows.length > 1;
+  // Simple horizontal layout - single scrollable row
+  const canShowPlayZones = isYourTurn && selectedDomino;
+  const showLeftZone = canShowPlayZones && canPlayOnSide('left');
+  const showRightZone = canShowPlayZones && canPlayOnSide('right');
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4 overflow-auto">
-      <div className="flex flex-col gap-2">
-        {rows.map((row, rowIndex) => {
-          const isReversed = rowIndex % 2 === 1;
-          const globalStartIndex = rowIndex * TILES_PER_ROW;
-          const isFirstRow = rowIndex === 0;
-          const isLastRow = rowIndex === rows.length - 1;
+    <div className="flex-1 flex flex-col items-center justify-center p-4">
+      {/* Scrollable board container */}
+      <div className="w-full overflow-x-auto pb-2">
+        <div className="flex items-center justify-center min-w-max px-4">
+          {/* Left play zone */}
+          {showLeftZone && (
+            <button
+              onClick={onPlayLeft}
+              className="w-20 h-12 border-2 border-dashed border-neon-amber rounded-lg
+                         flex items-center justify-center text-neon-amber text-xl
+                         hover:bg-neon-amber/20 transition-colors flex-shrink-0 mr-2"
+            >
+              ← {ends.left}
+            </button>
+          )}
 
-          // Determine where play zones should appear
-          const showLeftZone = isFirstRow && !isReversed && selectedDomino && canPlayOnSide('left');
-          const showRightZone = isLastRow && (
-            (isReversed && selectedDomino && canPlayOnSide('right')) ||
-            (!isReversed && selectedDomino && canPlayOnSide('right'))
-          );
+          {/* All tiles in a single row */}
+          <div className="flex items-center">
+            {board.map((played, index) => {
+              const isFirst = index === 0;
+              return renderTile(played, index, isFirst);
+            })}
+          </div>
 
-          // For reversed rows, right zone appears at visual left
-          const showLeftZoneReversed = isFirstRow && isReversed && selectedDomino && canPlayOnSide('left');
-          const showRightZoneReversed = isLastRow && isReversed && selectedDomino && canPlayOnSide('right');
-
-          return (
-            <div key={rowIndex} className="flex items-center">
-              {/* Corner connector from previous row */}
-              {rowIndex > 0 && (
-                <div
-                  className={`w-8 flex items-center justify-center text-green-600 ${
-                    isReversed ? 'order-last ml-2' : 'order-first mr-2'
-                  }`}
-                >
-                  <div className="w-1 h-16 bg-green-700 rounded-full opacity-50" />
-                </div>
-              )}
-
-              {/* Row of tiles */}
-              <div
-                className={`flex items-center gap-1 ${
-                  isReversed ? 'flex-row-reverse' : 'flex-row'
-                }`}
-              >
-                {/* Left play zone (only on first row, non-reversed) */}
-                {showLeftZone && (
-                  <button
-                    onClick={onPlayLeft}
-                    className="w-12 h-24 border-2 border-dashed border-yellow-400 rounded-lg
-                               flex items-center justify-center text-yellow-400 text-2xl
-                               hover:bg-yellow-400/20 transition-colors flex-shrink-0"
-                  >
-                    +
-                  </button>
-                )}
-
-                {/* Left play zone for reversed first row */}
-                {showLeftZoneReversed && (
-                  <button
-                    onClick={onPlayLeft}
-                    className="w-12 h-24 border-2 border-dashed border-yellow-400 rounded-lg
-                               flex items-center justify-center text-yellow-400 text-2xl
-                               hover:bg-yellow-400/20 transition-colors flex-shrink-0"
-                  >
-                    +
-                  </button>
-                )}
-
-                {/* Tiles in this row */}
-                {row.map((played, localIndex) => {
-                  const globalIndex = globalStartIndex + localIndex;
-                  return renderTile(played, globalIndex);
-                })}
-
-                {/* Right play zone (only on last row) */}
-                {isLastRow && !isReversed && selectedDomino && canPlayOnSide('right') && (
-                  <button
-                    onClick={onPlayRight}
-                    className="w-12 h-24 border-2 border-dashed border-yellow-400 rounded-lg
-                               flex items-center justify-center text-yellow-400 text-2xl
-                               hover:bg-yellow-400/20 transition-colors flex-shrink-0"
-                  >
-                    +
-                  </button>
-                )}
-
-                {/* Right play zone for reversed last row */}
-                {isLastRow && isReversed && selectedDomino && canPlayOnSide('right') && (
-                  <button
-                    onClick={onPlayRight}
-                    className="w-12 h-24 border-2 border-dashed border-yellow-400 rounded-lg
-                               flex items-center justify-center text-yellow-400 text-2xl
-                               hover:bg-yellow-400/20 transition-colors flex-shrink-0"
-                  >
-                    +
-                  </button>
-                )}
-              </div>
-            </div>
-          );
-        })}
+          {/* Right play zone */}
+          {showRightZone && (
+            <button
+              onClick={onPlayRight}
+              className="w-20 h-12 border-2 border-dashed border-neon-amber rounded-lg
+                         flex items-center justify-center text-neon-amber text-xl
+                         hover:bg-neon-amber/20 transition-colors flex-shrink-0 ml-2"
+            >
+              {ends.right} →
+            </button>
+          )}
+        </div>
       </div>
 
-      {/* Row indicator for multi-row boards */}
-      {isMultiRow && (
-        <div className="mt-2 text-xs text-gray-500">
-          {board.length} tiles in {rows.length} rows
-        </div>
-      )}
+      {/* Tile count */}
+      <div className="mt-2 text-xs text-gray-500">
+        {board.length} tiles on board
+      </div>
     </div>
   );
 }

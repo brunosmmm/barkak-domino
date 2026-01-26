@@ -165,6 +165,8 @@ class Match(BaseModel):
     # Team assignments (for 4 players)
     team_a: list[str] = Field(default_factory=list)  # player_ids
     team_b: list[str] = Field(default_factory=list)
+    team_a_name: str = "Team A"  # Randomly assigned monkey/ape species
+    team_b_name: str = "Team B"
 
     # Scoring
     is_team_game: bool = False
@@ -175,6 +177,7 @@ class Match(BaseModel):
     # Player info persisted across rounds
     player_names: dict[str, str] = Field(default_factory=dict)  # id -> name
     player_positions: list[str] = Field(default_factory=list)  # ordered player ids (seat positions)
+    avatar_ids: list[int] = Field(default_factory=list)  # avatar IDs for positions 0-3 (randomly selected from 1-20)
 
     created_at: datetime = Field(default_factory=datetime.utcnow)
     last_activity: datetime = Field(default_factory=datetime.utcnow)

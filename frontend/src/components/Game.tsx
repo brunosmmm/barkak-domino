@@ -1,4 +1,3 @@
-import React from 'react';
 import { GameBoard } from './GameBoard';
 import { PlayerHand } from './PlayerHand';
 import { PlayerList } from './PlayerList';
@@ -8,6 +7,7 @@ import { RoundOverlay } from './RoundOverlay';
 import { PassNotification } from './PassNotification';
 import { ReactionPicker } from './ReactionPicker';
 import { ReactionDisplay } from './ReactionDisplay';
+import { Boneyard } from './Boneyard';
 import { useGameStore } from '../store/gameStore';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { Domino } from '../types';
@@ -91,6 +91,7 @@ export function Game() {
         <GameBoard
           onPlayLeft={handlePlayLeft}
           onPlayRight={handlePlayRight}
+          isYourTurn={isYourTurn}
         />
         <PlayerHand
           onTileSelect={handleTileSelect}
@@ -100,6 +101,9 @@ export function Game() {
 
       {/* Table visualization (shows teams and scores) */}
       <TableVisualization />
+
+      {/* Boneyard - face-down tiles shown for dramatic effect */}
+      <Boneyard />
 
       {/* Round over overlay */}
       <RoundOverlay

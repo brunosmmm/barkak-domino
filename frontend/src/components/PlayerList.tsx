@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameStore } from '../store/gameStore';
 
 export function PlayerList() {
@@ -9,8 +8,8 @@ export function PlayerList() {
   const { players, current_turn, status } = gameState;
 
   return (
-    <div className="bg-green-900/50 rounded-xl p-4 backdrop-blur">
-      <h3 className="text-white text-sm font-medium mb-3">Players</h3>
+    <div className="glass-panel p-4">
+      <h3 className="text-neon-amber-glow text-sm font-medium mb-3 neon-text">Players</h3>
       <div className="space-y-2">
         {players.map((player) => (
           <div
@@ -18,7 +17,7 @@ export function PlayerList() {
             className={`
               flex items-center justify-between p-2 rounded-lg
               ${current_turn === player.id && status === 'playing'
-                ? 'bg-yellow-600/30 ring-1 ring-yellow-400'
+                ? 'bg-neon-amber/20 ring-1 ring-neon-amber shadow-neon-amber'
                 : 'bg-black/20'}
             `}
           >
@@ -26,10 +25,10 @@ export function PlayerList() {
               {/* Connection status dot */}
               <span
                 className={`w-2 h-2 rounded-full ${
-                  player.connected ? 'bg-green-400' : 'bg-gray-500'
+                  player.connected ? 'bg-neon-amber-glow' : 'bg-gray-500'
                 }`}
               />
-              <span className={`text-sm ${player.is_you ? 'text-yellow-300 font-medium' : 'text-white'}`}>
+              <span className={`text-sm ${player.is_you ? 'text-neon-amber font-medium' : 'text-white'}`}>
                 {player.name}
                 {player.is_you && ' (You)'}
                 {player.is_cpu && ' (CPU)'}

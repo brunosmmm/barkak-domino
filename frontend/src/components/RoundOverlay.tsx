@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameStore } from '../store/gameStore';
 
 interface RoundOverlayProps {
@@ -40,12 +39,15 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
   };
 
   const getTeamLabel = (team: string): string => {
-    return team === 'team_a' ? 'Red Team' : 'Blue Team';
+    if (team === 'team_a') {
+      return gameState?.match?.team_a_name || 'Team A';
+    }
+    return gameState?.match?.team_b_name || 'Team B';
   };
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
-      <div className="bg-green-900/90 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-green-700">
+      <div className="bg-bar-dark/95 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-neon-amber/30 backdrop-blur-md">
         {/* Header */}
         <div className="text-center mb-6">
           <p className="text-gray-400 text-sm mb-1">Round {roundNumber}</p>
@@ -60,14 +62,14 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
           <p className="text-xl text-white">
             {isTeamGame ? (
               <>
-                <span className={winnerTeam === 'team_a' ? 'text-red-400' : 'text-blue-400'}>
+                <span className={winnerTeam === 'team_a' ? 'text-orange-400' : 'text-purple-400'}>
                   {getTeamLabel(winnerTeam || '')}
                 </span>
                 {' wins the round!'}
               </>
             ) : (
               <>
-                <span className="text-yellow-300">{winnerName}</span>
+                <span className="text-neon-amber">{winnerName}</span>
                 {' wins the round!'}
               </>
             )}
@@ -78,7 +80,7 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
         <div className="bg-black/30 rounded-lg p-4 mb-6">
           <div className="text-center">
             <p className="text-gray-400 text-sm">Points Awarded</p>
-            <p className="text-4xl font-bold text-yellow-300">+{pointsAwarded}</p>
+            <p className="text-4xl font-bold text-neon-amber">+{pointsAwarded}</p>
           </div>
 
           {/* Remaining pips breakdown */}
@@ -87,7 +89,7 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
               <div
                 key={playerId}
                 className={`flex justify-between px-2 py-1 rounded ${
-                  playerId === winnerId ? 'bg-green-700/50' : 'bg-black/20'
+                  playerId === winnerId ? 'bg-bar-felt/50' : 'bg-black/20'
                 }`}
               >
                 <span className="text-gray-300 truncate">{getPlayerName(playerId)}</span>
@@ -102,16 +104,16 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
           <p className="text-gray-400 text-sm text-center mb-2">Match Score</p>
           {isTeamGame ? (
             <div className="flex justify-center gap-4 text-xl font-bold">
-              <span className="text-red-400">Red: {scores.team_a}</span>
+              <span className="text-orange-400">{getTeamLabel('team_a')}: {scores.team_a}</span>
               <span className="text-gray-500">-</span>
-              <span className="text-blue-400">Blue: {scores.team_b}</span>
+              <span className="text-purple-400">{getTeamLabel('team_b')}: {scores.team_b}</span>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-2 text-sm">
               {Object.entries(scores).map(([playerId, score]) => (
                 <div key={playerId} className="flex justify-between px-2 py-1">
                   <span className="text-gray-300">{getPlayerName(playerId)}</span>
-                  <span className="text-yellow-300 font-bold">{score}</span>
+                  <span className="text-neon-amber font-bold">{score}</span>
                 </div>
               ))}
             </div>
@@ -120,8 +122,8 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
 
         {/* Match winner announcement */}
         {isMatchOver && (
-          <div className="bg-yellow-500/20 border border-yellow-500 rounded-lg p-4 mb-6 text-center">
-            <p className="text-xl text-yellow-300 font-bold">
+          <div className="bg-neon-amber/20 border border-neon-amber rounded-lg p-4 mb-6 text-center">
+            <p className="text-xl text-neon-amber font-bold">
               {isTeamGame
                 ? `${getTeamLabel(matchWinner || '')} wins the match!`
                 : `${getPlayerName(matchWinner || '')} wins the match!`}
@@ -134,14 +136,14 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
           {isMatchOver ? (
             <button
               onClick={onNewGame}
-              className="flex-1 bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg font-bold transition-colors"
+              className="flex-1 bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg font-bold transition-colors"
             >
               New Match
             </button>
           ) : isCreator ? (
             <button
               onClick={onNextRound}
-              className="flex-1 bg-green-600 hover:bg-green-500 text-white py-3 rounded-lg font-bold transition-colors"
+              className="flex-1 bg-bar-felt-light hover:bg-bar-felt text-white py-3 rounded-lg font-bold transition-colors"
             >
               Next Round
             </button>

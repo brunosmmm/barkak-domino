@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
 
 interface GameStatusProps {
@@ -29,10 +29,10 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
   const isCreator = players[0]?.is_you;
 
   return (
-    <div className="bg-green-900/50 rounded-xl p-4 backdrop-blur">
+    <div className="glass-panel p-4">
       {/* Connection status */}
       <div className="flex items-center gap-2 mb-3">
-        <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-400' : 'bg-red-400'}`} />
+        <span className={`w-2 h-2 rounded-full ${connected ? 'bg-neon-amber-glow' : 'bg-neon-red'}`} />
         <span className="text-xs text-gray-400">
           {connected ? 'Connected' : 'Disconnected'}
         </span>
@@ -58,7 +58,7 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
               {players.length >= 2 && (
                 <button
                   onClick={onStartGame}
-                  className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-2 rounded-lg font-medium transition-colors"
+                  className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-2 rounded-lg font-medium transition-colors"
                 >
                   Start Game
                 </button>
@@ -66,7 +66,7 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
               {players.length < 4 && (
                 <button
                   onClick={onAddCpu}
-                  className="w-full bg-purple-600 hover:bg-purple-500 text-white py-2 rounded-lg font-medium transition-colors"
+                  className="w-full bg-whiskey hover:bg-whiskey-light text-white py-2 rounded-lg font-medium transition-colors"
                 >
                   + Add CPU Player
                 </button>
@@ -76,13 +76,13 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
 
           <div className="bg-black/20 rounded-lg p-3 space-y-2">
             <p className="text-gray-300 text-sm text-center">
-              Game ID: <code className="bg-black/30 px-2 py-1 rounded text-yellow-300">{gameState.id}</code>
+              Game ID: <code className="bg-black/30 px-2 py-1 rounded text-neon-amber">{gameState.id}</code>
             </p>
             <button
               onClick={copyShareLink}
               className={`w-full py-2 rounded-lg font-medium transition-colors text-sm
                 ${copied
-                  ? 'bg-green-600 text-white'
+                  ? 'bg-bar-felt-light text-white'
                   : 'bg-blue-600 hover:bg-blue-500 text-white'}`}
             >
               {copied ? 'Link Copied!' : 'Copy Invite Link'}
@@ -101,16 +101,16 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
               </p>
               {gameState.match.is_team_game ? (
                 <div className="flex justify-center gap-3">
-                  <span className="text-red-400 font-bold">Red: {gameState.match.scores.team_a}</span>
+                  <span className="text-orange-400 font-bold">{gameState.match.team_a_name}: {gameState.match.scores.team_a}</span>
                   <span className="text-gray-500">-</span>
-                  <span className="text-blue-400 font-bold">Blue: {gameState.match.scores.team_b}</span>
+                  <span className="text-purple-400 font-bold">{gameState.match.team_b_name}: {gameState.match.scores.team_b}</span>
                 </div>
               ) : (
                 <div className="flex justify-center gap-2 flex-wrap">
                   {Object.entries(gameState.match.scores).map(([pid, score]) => {
                     const p = players.find(pl => pl.id === pid);
                     return (
-                      <span key={pid} className={`${p?.is_you ? 'text-yellow-300' : 'text-gray-300'}`}>
+                      <span key={pid} className={`${p?.is_you ? 'text-neon-amber' : 'text-gray-300'}`}>
                         {p?.name}: {score}
                       </span>
                     );
@@ -128,7 +128,7 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
                   <p className="text-orange-200/80 text-sm">You must pass your turn</p>
                 </div>
               ) : (
-                <p className="text-yellow-300 font-medium text-lg">Your Turn</p>
+                <p className="text-neon-amber font-medium text-lg">Your Turn</p>
               )
             ) : (
               <p className="text-white">
@@ -166,16 +166,16 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
               <p className="text-gray-400 text-xs mb-1">Round Complete</p>
               {gameState.match.is_team_game ? (
                 <div className="flex justify-center gap-3">
-                  <span className="text-red-400 font-bold">Red: {gameState.match.scores.team_a}</span>
+                  <span className="text-orange-400 font-bold">{gameState.match.team_a_name}: {gameState.match.scores.team_a}</span>
                   <span className="text-gray-500">-</span>
-                  <span className="text-blue-400 font-bold">Blue: {gameState.match.scores.team_b}</span>
+                  <span className="text-purple-400 font-bold">{gameState.match.team_b_name}: {gameState.match.scores.team_b}</span>
                 </div>
               ) : (
                 <div className="text-sm">
                   {Object.entries(gameState.match.scores).map(([pid, score]) => {
                     const p = players.find(pl => pl.id === pid);
                     return (
-                      <div key={pid} className={`${p?.is_you ? 'text-yellow-300' : 'text-gray-300'}`}>
+                      <div key={pid} className={`${p?.is_you ? 'text-neon-amber' : 'text-gray-300'}`}>
                         {p?.name}: {score}
                       </div>
                     );
@@ -194,14 +194,14 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
 
           {/* If there's a match winner, show match over message */}
           {gameState.match?.match_winner && (
-            <p className="text-yellow-300 font-bold">
+            <p className="text-neon-amber font-bold">
               Match Over!
             </p>
           )}
 
           <button
             onClick={onNewGame}
-            className="w-full bg-yellow-600 hover:bg-yellow-500 text-white py-3 rounded-lg font-bold transition-colors"
+            className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg font-bold transition-colors"
           >
             New Game
           </button>

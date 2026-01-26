@@ -1,5 +1,19 @@
-import React from 'react';
 import { useGameStore } from '../store/gameStore';
+
+// Player colors matching GameBoard.tsx - used for tile flash identification
+const PLAYER_RING_COLORS: Record<number, string> = {
+  0: 'ring-orange-400',
+  1: 'ring-purple-400',
+  2: 'ring-cyan-400',
+  3: 'ring-lime-400',
+};
+
+const PLAYER_TEXT_COLORS: Record<number, string> = {
+  0: 'text-orange-400',
+  1: 'text-purple-400',
+  2: 'text-cyan-400',
+  3: 'text-lime-400',
+};
 
 export function TableVisualization() {
   const { gameState } = useGameStore();
@@ -7,7 +21,7 @@ export function TableVisualization() {
   if (!gameState || !gameState.match) return null;
 
   const { match, players } = gameState;
-  const { is_team_game, team_a, team_b, scores } = match;
+  const { is_team_game, scores, avatar_ids } = match;
 
   // Position players around the table (0=bottom, 1=right, 2=top, 3=left)
   const positionClasses: Record<number, string> = {
@@ -17,15 +31,18 @@ export function TableVisualization() {
     3: 'left-0 top-1/2 -translate-y-1/2 -translate-x-1/2',
   };
 
-  const getTeamColor = (playerId: string): string => {
-    if (!is_team_game) return 'bg-gray-600';
-    if (team_a.includes(playerId)) return 'bg-red-600';
-    if (team_b.includes(playerId)) return 'bg-blue-600';
-    return 'bg-gray-600';
+  // Label positions for player names
+  const labelClasses: Record<number, string> = {
+    0: 'top-full mt-1 left-1/2 -translate-x-1/2',  // bottom player - name below
+    1: 'top-full mt-1 left-1/2 -translate-x-1/2',  // right player - name below
+    2: 'bottom-full mb-2 left-1/2 -translate-x-1/2', // top player - name ABOVE
+    3: 'top-full mt-1 left-1/2 -translate-x-1/2',  // left player - name below
   };
 
-  const getPlayerInitial = (name: string): string => {
-    return name.charAt(0).toUpperCase();
+  // Get avatar path for a position - uses randomly assigned avatar_ids from match
+  const getAvatarPath = (position: number): string => {
+    const avatarId = avatar_ids?.[position] || (position + 1);
+    return `/images/avatar-${avatarId}.png`;
   };
 
   // Sort players by position
@@ -33,62 +50,63 @@ export function TableVisualization() {
 
   return (
     <div className="fixed bottom-4 left-4 z-10">
-      {/* Container */}
-      <div className="bg-black/40 backdrop-blur rounded-xl p-3">
-        {/* Score display */}
-        {is_team_game ? (
-          <div className="flex gap-2 mb-2 text-xs">
-            <span className="text-red-400 font-bold">Red: {scores.team_a}</span>
-            <span className="text-gray-400">vs</span>
-            <span className="text-blue-400 font-bold">Blue: {scores.team_b}</span>
-          </div>
-        ) : (
-          <div className="text-xs text-gray-400 mb-2">
-            Round {match.current_round}
-          </div>
-        )}
-
-        {/* Table with player seats */}
-        <div className="relative w-24 h-24">
+      {/* Container with extra padding for labels */}
+      <div className="bg-black/60 backdrop-blur-sm rounded-lg pt-14 pb-10 px-12">
+        {/* Table with player seats - bigger */}
+        <div className="relative w-48 h-48 mx-auto">
           {/* Table surface */}
-          <div className="absolute inset-3 bg-green-800 rounded-lg border-2 border-green-900 shadow-inner" />
+          <div className="absolute inset-10 bg-bar-felt rounded-lg border-2 border-bar-dark shadow-inner" />
 
           {/* Player seats */}
-          {sortedPlayers.map((player) => (
-            <div
-              key={player.id}
-              className={`absolute ${positionClasses[player.position] || ''}`}
-            >
+          {sortedPlayers.map((player) => {
+            const playerColor = PLAYER_RING_COLORS[player.position] || PLAYER_RING_COLORS[0];
+            const textColor = PLAYER_TEXT_COLORS[player.position] || PLAYER_TEXT_COLORS[0];
+            const isCurrentTurn = player.id === gameState.current_turn;
+
+            return (
               <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold
-                  ${getTeamColor(player.id)}
-                  ${player.id === gameState.current_turn ? 'ring-2 ring-yellow-400 animate-pulse' : ''}
-                  ${player.is_you ? 'ring-2 ring-white' : ''}
-                  ${!player.connected ? 'opacity-50' : ''}
-                `}
-                title={`${player.name}${player.is_cpu ? ' (CPU)' : ''}${!player.connected ? ' (disconnected)' : ''}`}
+                key={player.id}
+                className={`absolute ${positionClasses[player.position] || ''}`}
               >
-                {player.is_cpu ? '🤖' : getPlayerInitial(player.name)}
+                {/* Avatar */}
+                <div
+                  className={`w-12 h-12 rounded-full overflow-hidden ring-2 relative
+                    ${isCurrentTurn ? `${playerColor} animate-pulse` : playerColor}
+                    ${player.is_you ? 'ring-[3px]' : ''}
+                    ${!player.connected ? 'opacity-50' : ''}
+                  `}
+                  title={`${player.name}${player.is_cpu ? ' (CPU)' : ''}${!player.connected ? ' (disconnected)' : ''}`}
+                >
+                  <img
+                    src={getAvatarPath(player.position)}
+                    alt={player.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {/* Player name label */}
+                <div className={`absolute ${labelClasses[player.position]} whitespace-nowrap`}>
+                  <span className={`text-[10px] ${textColor} ${player.is_you ? 'font-bold' : ''}`}>
+                    {player.name.length > 10 ? player.name.slice(0, 10) + '…' : player.name}
+                  </span>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
-        {/* Legend */}
-        {is_team_game && (
-          <div className="flex gap-2 mt-2 text-[10px] text-gray-400">
-            <span className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-red-600" /> Team A
-            </span>
-            <span className="flex items-center gap-1">
-              <span className="w-2 h-2 rounded-full bg-blue-600" /> Team B
-            </span>
-          </div>
-        )}
-
-        {/* Target score */}
-        <div className="text-[10px] text-gray-500 text-center mt-1">
-          First to {match.target_score}
+        {/* Score/info below the table */}
+        <div className="mt-14 text-center">
+          {is_team_game ? (
+            <div className="flex justify-center gap-2 text-xs font-bold">
+              <span className="text-orange-400">{match.team_a_name}: {scores.team_a}</span>
+              <span className="text-gray-500">vs</span>
+              <span className="text-purple-400">{match.team_b_name}: {scores.team_b}</span>
+            </div>
+          ) : (
+            <div className="text-xs text-gray-400">
+              Round {match.current_round} • Target: {match.target_score}
+            </div>
+          )}
         </div>
       </div>
     </div>

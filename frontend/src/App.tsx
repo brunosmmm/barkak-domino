@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Lobby } from './components/Lobby';
 import { Game } from './components/Game';
 import { useGameStore } from './store/gameStore';

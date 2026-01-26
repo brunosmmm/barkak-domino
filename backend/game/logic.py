@@ -18,11 +18,9 @@ def shuffle_and_deal(game: Game) -> None:
     all_dominoes = generate_domino_set()
     random.shuffle(all_dominoes)
 
-    # Determine tiles per player based on player count
-    # 2 players: 7 tiles each
-    # 3 players: 7 tiles each
-    # 4 players: 7 tiles each
-    tiles_per_player = 7
+    # Standard Puerto Rican dominoes: 6 tiles per player
+    # Remaining tiles form the boneyard (inaccessible, shown face-down)
+    tiles_per_player = 6
 
     for player in game.players:
         player.hand = all_dominoes[:tiles_per_player]

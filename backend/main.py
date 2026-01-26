@@ -527,10 +527,15 @@ async def join_game(game_id: str, request: JoinGameRequest):
 
 
 # Serve frontend static files in production
-FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "..", "frontend", "dist")
+# In Docker, backend is at /app and frontend dist is at /app/frontend/dist
+FRONTEND_DIR = os.path.join(os.path.dirname(__file__), "frontend", "dist")
 
 if os.path.exists(FRONTEND_DIR):
     app.mount("/assets", StaticFiles(directory=os.path.join(FRONTEND_DIR, "assets")), name="assets")
+    # Serve images from public folder (copied to dist during build)
+    images_dir = os.path.join(FRONTEND_DIR, "images")
+    if os.path.exists(images_dir):
+        app.mount("/images", StaticFiles(directory=images_dir), name="images")
 
     @app.get("/{full_path:path}")
     async def serve_frontend(full_path: str):

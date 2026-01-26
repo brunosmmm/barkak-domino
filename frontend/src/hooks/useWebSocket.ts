@@ -18,7 +18,6 @@ export function useWebSocket() {
     setLastPlayedTile,
     setPassNotification,
     addReaction,
-    removeReaction,
     gameState,
   } = useGameStore();
 
@@ -79,14 +78,15 @@ export function useWebSocket() {
 
       case 'tile_played':
         console.log('Tile played by', message.player_id, 'on', message.side);
-        // Track the last played tile for visual feedback
+        // Track the last played tile for visual feedback with player color
         // Position will be 0 for left plays, or the last index for right plays
         setLastPlayedTile({
           position: message.side === 'left' ? 0 : -1, // -1 means last position
           side: message.side,
+          playerId: message.player_id,
         });
         // Clear the highlight after animation completes
-        setTimeout(() => setLastPlayedTile(null), 1500);
+        setTimeout(() => setLastPlayedTile(null), 2000);
         break;
 
       case 'game_started':

@@ -43,8 +43,11 @@ export interface MatchState {
   scores: Record<string, number>;  // team_a/team_b or player_id -> score
   team_a: string[];
   team_b: string[];
+  team_a_name: string;  // Randomly selected monkey/ape species name
+  team_b_name: string;
   player_positions: string[];
   player_names: Record<string, string>;
+  avatar_ids: number[];  // Randomly selected avatar IDs (1-20) for positions 0-3
   completed_rounds: RoundResult[];
   match_winner: string | null;
 }

@@ -4,13 +4,40 @@ from typing import Optional
 from .models import Game, Player, Domino
 from .logic import get_valid_moves, play_tile, pass_turn
 
-# CPU player names
-CPU_NAMES = ["Bot Alice", "Bot Bob", "Bot Carol", "Bot Dave"]
+# CPU player names - 50+ monkey and ape species (randomly selected)
+# Teams use Chimps vs Gorillas, so those are excluded here
+MONKEY_SPECIES = [
+    # Great Apes
+    "Bonobo", "Orangutan",
+    # Lesser Apes (Gibbons)
+    "Siamang", "Lar Gibbon", "Agile Gibbon", "Hoolock",
+    # Old World Monkeys
+    "Mandrill", "Drill", "Gelada", "Baboon", "Macaque",
+    "Rhesus", "Colobus", "Guereza", "Guenon", "Langur",
+    "Douc", "Lutung", "Proboscis", "Mangabey", "Patas",
+    "Talapoin", "Kipunji", "Vervet", "Grivet", "Mona",
+    # New World Monkeys
+    "Capuchin", "Squirrel", "Howler", "Spider", "Woolly",
+    "Muriqui", "Douroucouli", "Marmoset", "Tamarin", "Saki",
+    "Uakari", "Titi", "Pygmy", "Emperor", "Cotton-top",
+    # More species
+    "Snub-nosed", "Roloway", "DeBrazza", "Tonkin", "Sulawesi",
+    "Celebes", "Toque", "Bonnet", "Pig-tailed", "Stump-tailed",
+    "Tibetan", "Barbary", "Crab-eating", "Lion-tailed", "Nilgiri"
+]
 
 
-def create_cpu_player(index: int = 0) -> Player:
-    """Create a CPU player with a name."""
-    name = CPU_NAMES[index % len(CPU_NAMES)]
+def create_cpu_player(index: int = 0, existing_names: list[str] = None) -> Player:
+    """Create a CPU player with a randomly selected monkey species name."""
+    if existing_names is None:
+        existing_names = []
+
+    # Get available names (not already used)
+    available = [n for n in MONKEY_SPECIES if n not in existing_names]
+    if not available:
+        available = MONKEY_SPECIES  # Fallback if somehow all used
+
+    name = random.choice(available)
     return Player(name=name, is_cpu=True, connected=True)
 
 
