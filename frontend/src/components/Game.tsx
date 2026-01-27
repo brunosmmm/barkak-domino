@@ -10,6 +10,7 @@ import { ReactionPicker } from './ReactionPicker';
 import { ReactionDisplay } from './ReactionDisplay';
 import { Boneyard } from './Boneyard';
 import { TurnTimer } from './TurnTimer';
+import { TilePicking } from './TilePicking';
 import { useGameStore } from '../store/gameStore';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { Domino } from '../types';
@@ -24,7 +25,7 @@ const PLAYER_COLORS: Record<number, { border: string; text: string }> = {
 
 export function Game() {
   const { gameState, selectedDomino, setSelectedDomino, reset } = useGameStore();
-  const { playTile, passTurn, startGame, addCpu, nextRound, sendReaction, disconnect } = useWebSocket();
+  const { playTile, passTurn, startGame, addCpu, nextRound, claimTile, sendReaction, disconnect } = useWebSocket();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   if (!gameState) {
@@ -138,6 +139,7 @@ export function Game() {
         {/* Status text */}
         <span className={`text-xs mx-2 ${isYourTurn ? 'text-neon-amber font-bold' : 'text-gray-400'}`}>
           {gameState.status === 'waiting' ? 'Waiting...' :
+           gameState.status === 'picking' ? 'Pick tiles!' :
            gameState.status === 'finished' ? 'Done' :
            isYourTurn ? 'GO!' : ''}
         </span>
@@ -195,18 +197,26 @@ export function Game() {
 
       {/* Main game area - takes full height on mobile */}
       <div className="flex-1 flex flex-col gap-2 lg:gap-4 min-h-0 overflow-hidden">
-        <GameBoard
-          onPlayLeft={handlePlayLeft}
-          onPlayRight={handlePlayRight}
-          isYourTurn={isYourTurn}
-        />
-        <PlayerHand
-          onTileSelect={handleTileSelect}
-          isYourTurn={isYourTurn}
-          canPass={canPass()}
-          onPass={handlePass}
-        />
-
+        {/* Picking phase - show tile selection grid */}
+        {gameState.status === 'picking' ? (
+          <div className="flex-1 flex items-center justify-center glass-panel rounded-lg overflow-auto">
+            <TilePicking onClaimTile={claimTile} />
+          </div>
+        ) : (
+          <>
+            <GameBoard
+              onPlayLeft={handlePlayLeft}
+              onPlayRight={handlePlayRight}
+              isYourTurn={isYourTurn}
+            />
+            <PlayerHand
+              onTileSelect={handleTileSelect}
+              isYourTurn={isYourTurn}
+              canPass={canPass()}
+              onPass={handlePass}
+            />
+          </>
+        )}
       </div>
 
 

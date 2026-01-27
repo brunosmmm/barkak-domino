@@ -8,7 +8,53 @@ interface RoundOverlayProps {
 export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
   const { roundOverInfo, matchOverInfo, gameState, showRoundOverlay, setShowRoundOverlay } = useGameStore();
 
-  if (!showRoundOverlay || !roundOverInfo) return null;
+  // Show overlay if we have round info, OR if game is finished (e.g., after refresh)
+  const gameIsFinished = gameState?.status === 'finished';
+  const hasRoundInfo = showRoundOverlay && roundOverInfo;
+
+  // If game is finished but we don't have round info (refresh scenario), show simple overlay
+  if (gameIsFinished && !hasRoundInfo) {
+    const isCreator = gameState?.players[0]?.is_you;
+    const winner = gameState?.players.find(p => p.id === gameState?.winner_id);
+
+    return (
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+        <div className="bg-bar-dark/95 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-neon-amber/30 backdrop-blur-md">
+          <div className="text-center mb-6">
+            <h2 className="text-3xl font-bold text-white mb-2">Round Over</h2>
+            {winner && (
+              <p className="text-xl text-gray-300">
+                <span className="text-neon-amber">{winner.name}</span> won this round
+              </p>
+            )}
+          </div>
+
+          <div className="flex flex-col gap-3">
+            {isCreator ? (
+              <button
+                onClick={onNextRound}
+                className="w-full bg-bar-felt-light hover:bg-bar-felt text-white py-3 rounded-lg font-bold transition-colors"
+              >
+                Next Round
+              </button>
+            ) : (
+              <p className="text-center text-gray-400 py-3">
+                Waiting for host to start next round...
+              </p>
+            )}
+            <button
+              onClick={onNewGame}
+              className="w-full bg-red-600/80 hover:bg-red-500 text-white py-2 rounded-lg font-medium transition-colors"
+            >
+              Leave Game
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!hasRoundInfo) return null;
 
   const {
     roundNumber,

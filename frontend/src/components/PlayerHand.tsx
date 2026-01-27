@@ -30,6 +30,18 @@ export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: Player
     );
   };
 
+  // Check if domino can play on BOTH sides (special indicator)
+  const canPlayBothSides = (domino: Domino): boolean => {
+    if (!isYourTurn) return false;
+    if (gameState.board.length === 0) return false; // First move doesn't have "both sides"
+    if (gameState.ends.left === gameState.ends.right) return false; // Same value on both ends
+
+    const { left, right } = gameState.ends;
+    const canLeft = domino.left === left || domino.right === left;
+    const canRight = domino.left === right || domino.right === right;
+    return canLeft && canRight;
+  };
+
   const isDominoSelected = (d: Domino): boolean => {
     if (!selectedDomino) return false;
     return (
@@ -45,29 +57,43 @@ export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: Player
           Your Hand ({hand.length})
         </span>
         <div className="flex flex-wrap gap-1 lg:gap-2 justify-center">
-          {hand.map((domino, index) => (
-            <div key={`${domino.left}-${domino.right}-${index}`}>
-              {/* Small tiles on mobile, medium on desktop */}
-              <div className="lg:hidden">
-                <DominoTile
-                  domino={domino}
-                  selected={isDominoSelected(domino)}
-                  disabled={!canPlay(domino)}
-                  onClick={() => canPlay(domino) && onTileSelect(domino)}
-                  size="sm"
-                />
+          {hand.map((domino, index) => {
+            const bothSides = canPlayBothSides(domino);
+            return (
+              <div
+                key={`${domino.left}-${domino.right}-${index}`}
+                className={`relative ${bothSides ? 'ring-2 ring-green-400 ring-offset-1 ring-offset-transparent rounded-lg' : ''}`}
+              >
+                {/* "Both sides" indicator badge */}
+                {bothSides && (
+                  <div className="absolute -top-1 -right-1 z-10 w-4 h-4 bg-green-500 rounded-full
+                                  flex items-center justify-center text-[8px] text-white font-bold
+                                  shadow-lg shadow-green-500/50 animate-pulse">
+                    2
+                  </div>
+                )}
+                {/* Small tiles on mobile, medium on desktop */}
+                <div className="lg:hidden">
+                  <DominoTile
+                    domino={domino}
+                    selected={isDominoSelected(domino)}
+                    disabled={!canPlay(domino)}
+                    onClick={() => canPlay(domino) && onTileSelect(domino)}
+                    size="sm"
+                  />
+                </div>
+                <div className="hidden lg:block">
+                  <DominoTile
+                    domino={domino}
+                    selected={isDominoSelected(domino)}
+                    disabled={!canPlay(domino)}
+                    onClick={() => canPlay(domino) && onTileSelect(domino)}
+                    size="md"
+                  />
+                </div>
               </div>
-              <div className="hidden lg:block">
-                <DominoTile
-                  domino={domino}
-                  selected={isDominoSelected(domino)}
-                  disabled={!canPlay(domino)}
-                  onClick={() => canPlay(domino) && onTileSelect(domino)}
-                  size="md"
-                />
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
       {hand.length === 0 && (

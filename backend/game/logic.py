@@ -55,21 +55,49 @@ def find_starting_player(game: Game) -> str:
 
 
 def start_game(game: Game, starting_player_id: str | None = None) -> None:
-    """Initialize and start the game.
+    """Initialize and start the game - enters PICKING phase.
 
     Args:
         game: The game to start
+        starting_player_id: Optional player ID to start (used after picking complete).
+    """
+    # Generate and shuffle tiles for picking - assign to fixed grid positions
+    all_dominoes = generate_domino_set()
+    random.shuffle(all_dominoes)
+    game.picking_tiles = {i: tile for i, tile in enumerate(all_dominoes)}
+
+    # Clear hands for picking
+    for player in game.players:
+        player.hand = []
+
+    game.board = []
+    game.boneyard = []
+    game.ends = BoardEnds()
+    game.status = GameStatus.PICKING
+    game.current_turn = None  # No turn order during picking
+    game.turn_started_at = None
+    game.picking_started_at = datetime.utcnow()  # Start picking timer
+
+
+def start_playing_phase(game: Game, starting_player_id: str | None = None) -> None:
+    """Transition from PICKING to PLAYING phase.
+
+    Args:
+        game: The game to start playing
         starting_player_id: Optional player ID to start. If None, uses highest double rule.
     """
-    shuffle_and_deal(game)
-    # Use provided starting player (e.g., previous round winner) or find by highest double
+    # Remaining tiles go to boneyard
+    game.boneyard = list(game.picking_tiles.values())
+    game.picking_tiles = {}
+    game.picking_started_at = None
+
+    # Use provided starting player or find by highest double
     if starting_player_id and game.get_player(starting_player_id):
         game.current_turn = starting_player_id
     else:
         game.current_turn = find_starting_player(game)
+
     game.status = GameStatus.PLAYING
-    game.board = []
-    game.ends = BoardEnds()
     game.turn_started_at = datetime.utcnow()  # Start turn timer
 
 
@@ -319,6 +347,97 @@ def start_new_round(game: Game) -> None:
     game.boneyard = []
     game.ends = BoardEnds()
     game.winner_id = None
+    game.picking_tiles = {}
+    game.picking_started_at = None
     for player in game.players:
         player.hand = []
     # Don't reset scores or round_number - those are tracked by Match
+
+
+def claim_tile(game: Game, player_id: str, grid_position: int) -> tuple[bool, str]:
+    """
+    Claim a face-down tile during the PICKING phase.
+    Returns (success, message).
+
+    Args:
+        game: The game
+        player_id: Player claiming the tile
+        grid_position: Fixed grid position (0-27) of the tile to claim
+    """
+    if game.status != GameStatus.PICKING:
+        return False, "Game is not in picking phase"
+
+    player = game.get_player(player_id)
+    if not player:
+        return False, "Player not found"
+
+    # Check if player already has 6 tiles
+    if len(player.hand) >= 6:
+        return False, "You already have 6 tiles"
+
+    # Validate grid position has an available tile
+    if grid_position not in game.picking_tiles:
+        return False, "That tile is not available"
+
+    # Remove tile from grid and add to player's hand
+    tile = game.picking_tiles.pop(grid_position)
+    player.hand.append(tile)
+
+    # Check if picking is complete (all players have 6 tiles)
+    if check_picking_complete(game):
+        start_playing_phase(game)
+
+    return True, "Tile claimed"
+
+
+def check_picking_complete(game: Game) -> bool:
+    """Check if all players have picked their 6 tiles."""
+    return all(len(p.hand) >= 6 for p in game.players)
+
+
+def cpu_claim_tile(game: Game, cpu_player_id: str) -> tuple[bool, str, int | None]:
+    """
+    Have a CPU player claim a random available tile.
+    Returns (success, message, claimed_grid_position).
+    """
+    if game.status != GameStatus.PICKING:
+        return False, "Game is not in picking phase", None
+
+    player = game.get_player(cpu_player_id)
+    if not player or not player.is_cpu:
+        return False, "Not a CPU player", None
+
+    if len(player.hand) >= 6:
+        return False, "CPU already has 6 tiles", None
+
+    if not game.picking_tiles:
+        return False, "No tiles available", None
+
+    # Pick a random available grid position
+    grid_position = random.choice(list(game.picking_tiles.keys()))
+    success, message = claim_tile(game, cpu_player_id, grid_position)
+    return success, message, grid_position if success else None
+
+
+def auto_assign_remaining_tiles(game: Game, player_id: str) -> list[int]:
+    """
+    Auto-assign random tiles to a player until they have 6.
+    Used for picking timeout.
+    Returns list of grid positions that were assigned.
+    """
+    player = game.get_player(player_id)
+    if not player:
+        return []
+
+    assigned_positions = []
+    while len(player.hand) < 6 and game.picking_tiles:
+        grid_position = random.choice(list(game.picking_tiles.keys()))
+        tile = game.picking_tiles.pop(grid_position)
+        player.hand.append(tile)
+        assigned_positions.append(grid_position)
+
+    # Check if picking is complete
+    if check_picking_complete(game):
+        start_playing_phase(game)
+
+    return assigned_positions

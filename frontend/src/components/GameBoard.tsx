@@ -100,9 +100,20 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
   const canShowPlayZones = isYourTurn && selectedDomino;
   const showLeftZone = canShowPlayZones && canPlayOnSide('left');
   const showRightZone = canShowPlayZones && canPlayOnSide('right');
+  const canPlayBothSides = showLeftZone && showRightZone;
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0 overflow-hidden">
+      {/* "Choose a side" prompt when both options available */}
+      {canPlayBothSides && (
+        <div className="mb-2 px-4 py-1.5 bg-gradient-to-r from-green-500/20 via-emerald-500/30 to-green-500/20
+                        border border-green-400/50 rounded-full animate-pulse">
+          <span className="text-green-300 text-sm font-medium">
+            ✨ Can play on both sides! Choose one ✨
+          </span>
+        </div>
+      )}
+
       {/* Scrollable board container */}
       <div className="w-full overflow-x-auto pb-2 flex-1 flex items-center justify-center">
         <div className="flex items-center justify-center min-w-max px-2 lg:px-4">
@@ -110,9 +121,12 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
           {showLeftZone && (
             <button
               onClick={onPlayLeft}
-              className="w-20 h-12 border-2 border-dashed border-neon-amber rounded-lg
-                         flex items-center justify-center text-neon-amber text-xl
-                         hover:bg-neon-amber/20 transition-colors flex-shrink-0 mr-2"
+              className={`w-20 h-12 border-2 border-dashed rounded-lg
+                         flex items-center justify-center text-xl
+                         transition-all flex-shrink-0 mr-2
+                         ${canPlayBothSides
+                           ? 'border-green-400 text-green-400 hover:bg-green-400/20 animate-pulse shadow-lg shadow-green-400/30'
+                           : 'border-neon-amber text-neon-amber hover:bg-neon-amber/20'}`}
             >
               ← {ends.left}
             </button>
@@ -130,9 +144,12 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
           {showRightZone && (
             <button
               onClick={onPlayRight}
-              className="w-20 h-12 border-2 border-dashed border-neon-amber rounded-lg
-                         flex items-center justify-center text-neon-amber text-xl
-                         hover:bg-neon-amber/20 transition-colors flex-shrink-0 ml-2"
+              className={`w-20 h-12 border-2 border-dashed rounded-lg
+                         flex items-center justify-center text-xl
+                         transition-all flex-shrink-0 ml-2
+                         ${canPlayBothSides
+                           ? 'border-green-400 text-green-400 hover:bg-green-400/20 animate-pulse shadow-lg shadow-green-400/30'
+                           : 'border-neon-amber text-neon-amber hover:bg-neon-amber/20'}`}
             >
               {ends.right} →
             </button>

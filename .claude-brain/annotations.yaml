@@ -105,10 +105,16 @@ annotations:
     message: 'chore: remove .pyc from tracking and add .gitignore'
 - id: ann_010358_9e1779
   type: todo
-  status: TODO
+  status: INPROGRESS
   created: '2026-01-26T01:03:58.507176+00:00'
-  last_activity: '2026-01-26T01:03:58.507176+00:00'
-  activity_log: []
+  last_activity: '2026-01-27T19:13:55.434727+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T19:13:55.434727+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_191355_e8a245
+    source: auto
   text: 'Add "epic moment" detection and visual effects for statistically unlikely
     plays.
 
@@ -163,73 +169,7 @@ annotations:
   - animation
   - ux
   - engagement
-- id: ann_010908_8a4951
-  type: idea
-  status: TODO
-  created: '2026-01-26T01:09:08.778713+00:00'
-  last_activity: '2026-01-26T01:09:08.778713+00:00'
-  activity_log: []
-  text: '## Visual Distinction for Multiple Play Options
-
-
-    When a player has a domino that can be played on both ends of the board, make
-    it visually clear that there are multiple options.
-
-
-    ### Scenarios:
-
-    1. **Same tile can go left OR right** - Board ends are different values, but the
-    selected tile matches both
-
-    2. **Tile orientation matters** - The tile could be flipped to match different
-    patterns
-
-
-    ### UI Ideas:
-
-    - Highlight both ends of the board when a playable tile is selected
-
-    - Show arrows or indicators pointing to valid play spots
-
-    - Animate/pulse the valid board ends
-
-    - Color-code: green glow on valid ends
-
-    - Show a split button: "Play Left ← | → Play Right"
-
-    - When hovering over an end, show preview of how the tile would be placed
-
-
-    ### Current Behavior:
-
-    - User must manually choose left/right after selecting a tile
-
-    - Not obvious when both options are available
-
-
-    ### Suggested Implementation:
-
-    1. When tile is selected, calculate which ends it can play on
-
-    2. If multiple ends valid, show both with visual indicators
-
-    3. Clicking on a highlighted end plays there directly
-
-    4. Alternative: show "Choose side" modal with previews'
-  context:
-    repository_id: _local/barkak-domino
-    task_id: task_010827_7fa151
-  perceived_complexity: 0.45
-  complexity_factors:
-  - frontend_ux
-  - interaction_design
-  - visual_feedback
-  priority: medium
-  tags:
-  - ux
-  - visual-feedback
-  - tile-selection
-  - game-interaction
+  updated: '2026-01-27T19:13:55.434727+00:00'
 - id: ann_013542_2f3fa8
   type: idea
   status: TODO
@@ -301,10 +241,16 @@ annotations:
   - enhancement
 - id: ann_023656_baa5a9
   type: idea
-  status: TODO
+  status: INPROGRESS
   created: '2026-01-26T02:36:56.237057+00:00'
-  last_activity: '2026-01-26T02:36:56.237057+00:00'
-  activity_log: []
+  last_activity: '2026-01-27T19:45:32.004547+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T19:45:32.004547+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_194531_a7c551
+    source: auto
   text: 'Interactive tile picking phase before game starts.
 
 
@@ -345,6 +291,7 @@ annotations:
   - game-logic
   - ux
   - multiplayer
+  updated: '2026-01-27T19:45:32.004547+00:00'
 - id: ann_030448_f007ab
   type: idea
   status: TODO

@@ -3,7 +3,7 @@ import { useGameStore } from '../store/gameStore';
 
 export function ReactionDisplay() {
   const { activeReactions, removeReaction } = useGameStore();
-  const timersRef = useRef<Map<number, NodeJS.Timeout>>(new Map());
+  const timersRef = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
 
   // Auto-remove reactions after 3 seconds with proper cleanup
   useEffect(() => {

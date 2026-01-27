@@ -112,6 +112,7 @@ export function useWebSocket() {
         break;
 
       case 'error':
+        console.error('[DEBUG] Error from server:', message.message);
         setError(message.message);
         break;
 
@@ -126,6 +127,14 @@ export function useWebSocket() {
         });
         // Clear the highlight after animation completes
         setTimeout(() => setLastPlayedTile(null), 2000);
+        break;
+
+      case 'tile_claimed':
+        console.log('Tile claimed by', message.player_id, 'at position', message.tile_index);
+        break;
+
+      case 'tiles_auto_assigned':
+        console.log('Tiles auto-assigned to', message.player_id, 'positions:', message.positions, 'reason:', message.reason);
         break;
 
       case 'game_started':
@@ -175,7 +184,7 @@ export function useWebSocket() {
         // Use getState() to get the latest state, not the stale closure value
         const currentState = useGameStore.getState().gameState;
         const passingPlayer = currentState?.players.find(p => p.id === message.player_id);
-        const playerName = passingPlayer?.name || message.player_name || 'Someone';
+        const playerName = passingPlayer?.name || 'Someone';
         const isYou = passingPlayer?.is_you;
 
         // Pick a random mocking message
@@ -259,6 +268,10 @@ export function useWebSocket() {
     send({ type: 'next_round' });
   }, [send]);
 
+  const claimTile = useCallback((tileIndex: number) => {
+    send({ type: 'claim_tile', tile_index: tileIndex });
+  }, [send]);
+
   const sendReaction = useCallback((emoji: string) => {
     send({ type: 'reaction', emoji });
   }, [send]);
@@ -285,6 +298,7 @@ export function useWebSocket() {
     startGame,
     addCpu,
     nextRound,
+    claimTile,
     sendReaction,
     requestValidMoves,
     disconnect,

@@ -61,7 +61,7 @@ export interface TurnTimer {
 export interface GameState {
   id: string;
   variant: 'block' | 'draw' | 'all_fives';
-  status: 'waiting' | 'playing' | 'finished';
+  status: 'waiting' | 'picking' | 'playing' | 'finished';
   current_turn: string | null;
   your_player_id: string;
   your_hand: Domino[];
@@ -73,6 +73,8 @@ export interface GameState {
   round_number: number;
   match: MatchState | null;
   turn_timer: TurnTimer | null;
+  // Picking phase: grid positions (0-27) that still have tiles
+  available_tile_positions?: number[];
 }
 
 export interface ValidMove {
@@ -87,6 +89,8 @@ export type WSMessage =
   | { type: 'player_connected'; player_id: string; player_name: string }
   | { type: 'player_disconnected'; player_id: string }
   | { type: 'tile_played'; player_id: string; domino: Domino; side: string }
+  | { type: 'tile_claimed'; player_id: string; tile_index: number }
+  | { type: 'tiles_auto_assigned'; player_id: string; positions: number[]; reason: string }
   | { type: 'turn_passed'; player_id: string }
   | { type: 'game_started' }
   | { type: 'game_over'; winner_id: string; winner_name: string }

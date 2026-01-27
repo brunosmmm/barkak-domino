@@ -14,6 +14,7 @@ class GameVariant(str, Enum):
 
 class GameStatus(str, Enum):
     WAITING = "waiting"
+    PICKING = "picking"  # Players are picking tiles from face-down pool
     PLAYING = "playing"
     FINISHED = "finished"
 
@@ -85,6 +86,10 @@ class Game(BaseModel):
     last_activity: datetime = Field(default_factory=datetime.utcnow)
     turn_started_at: Optional[datetime] = None  # When current turn started (for timer)
     turn_timeout: int = 30  # Seconds before auto-play (0 = disabled)
+    # Tile picking phase fields
+    picking_tiles: dict[int, Domino] = Field(default_factory=dict)  # Grid position (0-27) -> tile
+    picking_started_at: datetime | None = None  # For picking timeout
+    picking_timeout: int = 60  # Seconds before auto-assign remaining tiles
 
     def touch(self):
         """Update last activity timestamp."""

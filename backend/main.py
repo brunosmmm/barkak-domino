@@ -12,12 +12,15 @@ from game.models import (
     Game, CreateGameRequest, JoinGameRequest, PlayTileRequest,
     Domino, GameStatus, Match
 )
-from game.logic import play_tile, pass_turn, start_game, get_valid_moves, has_valid_move
+from game.logic import play_tile, pass_turn, start_game, get_valid_moves, has_valid_move, claim_tile, cpu_claim_tile, check_picking_complete, auto_assign_remaining_tiles
 from game.manager import manager
 from game.rooms import room_manager
 from game.cpu import is_cpu_turn, execute_cpu_turn
 import asyncio
 import random
+
+# Track games with active CPU picking tasks to prevent concurrent task spawning
+_cpu_picking_active: set[str] = set()
 
 
 async def cleanup_task():
@@ -30,6 +33,51 @@ async def cleanup_task():
                 print(f"Cleaned up {count} stale games: {reasons}")
         except Exception as e:
             print(f"Cleanup error: {e}")
+
+
+async def picking_timer_task():
+    """Background task to check for picking phase timeouts."""
+    while True:
+        await asyncio.sleep(5)  # Check every 5 seconds
+        try:
+            for game in room_manager.list_active_games():
+                if game.status != GameStatus.PICKING:
+                    continue
+                if not game.picking_started_at:
+                    continue
+
+                elapsed = (datetime.utcnow() - game.picking_started_at).total_seconds()
+                if elapsed >= game.picking_timeout:
+                    await handle_picking_timeout(game.id)
+        except Exception as e:
+            print(f"Picking timer error: {e}")
+
+
+async def handle_picking_timeout(game_id: str):
+    """Handle picking timeout - auto-assign remaining tiles to players who haven't picked enough."""
+    game = room_manager.get_game(game_id)
+    if not game or game.status != GameStatus.PICKING:
+        return
+
+    # Find players who need more tiles (humans only - CPUs should have picked already)
+    for player in game.players:
+        if not player.is_cpu and len(player.hand) < 6:
+            assigned = auto_assign_remaining_tiles(game, player.id)
+            if assigned:
+                # Notify about auto-assignment
+                await manager.broadcast_to_game(game_id, {
+                    "type": "tiles_auto_assigned",
+                    "player_id": player.id,
+                    "positions": assigned,
+                    "reason": "timeout"
+                })
+
+    await broadcast_game_state(game_id)
+
+    # If picking is now complete (transitioned to PLAYING), notify
+    if game.status == GameStatus.PLAYING:
+        await manager.broadcast_to_game(game_id, {"type": "game_started"})
+        await process_cpu_turns(game_id)
 
 
 async def turn_timer_task():
@@ -121,16 +169,22 @@ async def lifespan(app: FastAPI):
     # Start background tasks
     cleanup = asyncio.create_task(cleanup_task())
     turn_timer = asyncio.create_task(turn_timer_task())
+    picking_timer = asyncio.create_task(picking_timer_task())
     yield
     # Cancel background tasks on shutdown
     cleanup.cancel()
     turn_timer.cancel()
+    picking_timer.cancel()
     try:
         await cleanup
     except asyncio.CancelledError:
         pass
     try:
         await turn_timer
+    except asyncio.CancelledError:
+        pass
+    try:
+        await picking_timer
     except asyncio.CancelledError:
         pass
     print("Dominoes server shutting down...")
@@ -245,9 +299,13 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str, player_id: str)
             exclude=player_id
         )
 
+        # If game is in picking phase, start CPU tile claims in background
+        # (don't await - that would block the message handler)
+        if game.status == GameStatus.PICKING:
+            asyncio.create_task(process_cpu_tile_claims(game_id))
         # If game is already playing and it's a CPU's turn, process CPU turns
         # (handles auto-start scenario where CPU should play first)
-        if game.status == GameStatus.PLAYING and is_cpu_turn(game):
+        elif game.status == GameStatus.PLAYING and is_cpu_turn(game):
             await process_cpu_turns(game_id)
 
         # Handle messages
@@ -359,6 +417,40 @@ async def handle_message(game_id: str, player_id: str, data: dict):
             await broadcast_game_state(game_id)
 
             if game_started:
+                await manager.broadcast_to_game(game_id, {"type": "game_started"})
+                await process_cpu_turns(game_id)
+        else:
+            await manager.send_to_player(game_id, player_id, {
+                "type": "error",
+                "message": message
+            })
+
+    elif msg_type == "claim_tile":
+        tile_index = data.get("tile_index")
+        if tile_index is None:
+            await manager.send_to_player(game_id, player_id, {
+                "type": "error",
+                "message": "Missing tile_index"
+            })
+            return
+
+        success, message = claim_tile(game, player_id, tile_index)
+
+        if success:
+            # Broadcast that a tile was claimed
+            await manager.broadcast_to_game(game_id, {
+                "type": "tile_claimed",
+                "player_id": player_id,
+                "tile_index": tile_index
+            })
+
+            # Broadcast updated game state
+            await broadcast_game_state(game_id)
+
+            # If picking is complete, continue CPU claiming in background
+            if game.status == GameStatus.PICKING:
+                asyncio.create_task(process_cpu_tile_claims(game_id))
+            elif game.status == GameStatus.PLAYING:
                 await manager.broadcast_to_game(game_id, {"type": "game_started"})
                 await process_cpu_turns(game_id)
         else:
@@ -527,6 +619,59 @@ async def process_cpu_turns(game_id: str):
             break
 
 
+async def process_cpu_tile_claims(game_id: str):
+    """Process tile claims for all CPU players during picking phase.
+
+    CPUs pick simultaneously with humans but with delays to give
+    humans a fair chance. This runs as a background task and picks
+    one tile at a time (round-robin across CPUs) until all have 6.
+    """
+    # Prevent multiple concurrent tasks for the same game
+    if game_id in _cpu_picking_active:
+        return
+    _cpu_picking_active.add(game_id)
+
+    try:
+        game = room_manager.get_game(game_id)
+        if not game or game.status != GameStatus.PICKING:
+            return
+
+        # Keep picking until all CPUs have 6 tiles or game moves on
+        while game and game.status == GameStatus.PICKING:
+            # Find CPUs that still need tiles
+            cpus_needing_tiles = [p for p in game.players if p.is_cpu and len(p.hand) < 6]
+            if not cpus_needing_tiles:
+                break
+
+            # Pick one tile for ONE random CPU (round-robin would be predictable)
+            cpu = random.choice(cpus_needing_tiles)
+
+            # Delay before picking (1.5-3 seconds) - gives humans time to pick
+            delay = random.uniform(1.5, 3.0)
+            await asyncio.sleep(delay)
+
+            # Re-check game status after delay
+            game = room_manager.get_game(game_id)
+            if not game or game.status != GameStatus.PICKING:
+                break
+
+            success, message, tile_index = cpu_claim_tile(game, cpu.id)
+            if success:
+                await manager.broadcast_to_game(game_id, {
+                    "type": "tile_claimed",
+                    "player_id": cpu.id,
+                    "tile_index": tile_index
+                })
+                await broadcast_game_state(game_id)
+
+        # If picking complete, transition to playing
+        if game and game.status == GameStatus.PLAYING:
+            await manager.broadcast_to_game(game_id, {"type": "game_started"})
+            await process_cpu_turns(game_id)
+    finally:
+        _cpu_picking_active.discard(game_id)
+
+
 async def send_game_state(game_id: str, player_id: str):
     """Send full game state to a specific player."""
     game = room_manager.get_game(game_id)
@@ -607,7 +752,9 @@ def create_player_game_view(game: Game, player_id: str) -> dict:
         "boneyard_count": len(game.boneyard),
         "round_number": game.round_number,
         "match": match_state,
-        "turn_timer": turn_timer_info
+        "turn_timer": turn_timer_info,
+        # Picking phase: grid positions that still have tiles (face-down)
+        "available_tile_positions": list(game.picking_tiles.keys()) if game.status == GameStatus.PICKING else []
     }
 
 

@@ -164,6 +164,17 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
         </div>
       )}
 
+      {status === 'picking' && (
+        <div className="space-y-3">
+          <p className="text-white text-center">
+            Pick your tiles!
+          </p>
+          <p className="text-gray-400 text-sm text-center">
+            Click on face-down tiles to claim them
+          </p>
+        </div>
+      )}
+
       {status === 'finished' && (
         <div className="text-center space-y-4">
           {/* Match score display */}
@@ -213,6 +224,16 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
           </button>
         </div>
       )}
+
+      {/* Leave game button - always visible */}
+      <div className="mt-4 pt-3 border-t border-gray-700">
+        <button
+          onClick={onNewGame}
+          className="w-full bg-red-600/80 hover:bg-red-500 text-white py-2 rounded-lg text-sm font-medium transition-colors"
+        >
+          Leave Game
+        </button>
+      </div>
     </div>
   );
 }
