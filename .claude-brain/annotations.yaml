@@ -345,24 +345,6 @@ annotations:
   - game-logic
   - ux
   - multiplayer
-- id: ann_030917_80da33
-  type: bug
-  status: TODO
-  created: '2026-01-26T03:09:17.177608+00:00'
-  last_activity: '2026-01-26T03:09:17.177608+00:00'
-  activity_log: []
-  text: Taunts/reactions have huge latency when sent between players. Need to investigate
-    WebSocket broadcast timing and potential network delays.
-  context:
-    repository_id: _local/barkak-domino
-    git_branch: master
-    task_id: task_030654_83462e
-  perceived_complexity: 0.45
-  priority: medium
-  tags:
-  - websocket
-  - performance
-  - ux
 - id: ann_030312_2dc982
   type: todo
   status: TODO

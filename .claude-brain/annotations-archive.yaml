@@ -547,7 +547,7 @@ archived:
   type: bug
   status: DONE
   created: '2026-01-27T03:06:02.762188+00:00'
-  last_activity: '2026-01-27T18:33:25.910449+00:00'
+  last_activity: '2026-01-27T18:37:56.093110+00:00'
   activity_log:
   - timestamp: '2026-01-27T18:14:30.396781+00:00'
     action: status_change
@@ -587,3 +587,44 @@ archived:
 
 
       - Auto-start game when created with eno'
+  - hash: 74f141f79d816e3bec1b24fa27e465a75dcd57ff
+    hash_short: 74f141f
+    linked_at: '2026-01-27T18:37:56.093110+00:00'
+    message: 'chore: update shared knowledge with background tag for dev command'
+- id: ann_030917_80da33
+  type: bug
+  status: DONE
+  created: '2026-01-26T03:09:17.177608+00:00'
+  last_activity: '2026-01-27T18:47:08.290909+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T18:44:16.372978+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_184416_df8966
+    source: auto
+  - timestamp: '2026-01-27T18:47:08.290909+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_184416_df8966
+    source: auto
+  text: Taunts/reactions have huge latency when sent between players. Need to investigate
+    WebSocket broadcast timing and potential network delays.
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_030654_83462e
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - websocket
+  - performance
+  - ux
+  updated: '2026-01-27T18:47:08.290909+00:00'
+  resolution:
+    type: fixed
+    summary: 'Fixed perceived latency in reaction display: reduced animation duration
+      from 300ms to 150ms, removed stagger delay, and fixed timer memory leak'
+    approach: bugfix
+  completed: '2026-01-27T18:47:08.290909+00:00'
