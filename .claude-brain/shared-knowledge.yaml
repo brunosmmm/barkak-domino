@@ -1,0 +1,57 @@
+entries:
+- id: know_023703_fdc279
+  scope: convention
+  text: cd backend && source venv/bin/activate && uvicorn main:app --reload & cd frontend
+    && npm run dev
+  created: '2026-01-27T02:37:03.594172+00:00'
+  last_verified: '2026-01-27T02:37:03.594172+00:00'
+  confidence: 1.0
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+  tags:
+  - project-command
+  - dev
+- id: know_023704_be2f6f
+  scope: convention
+  text: cd backend && source venv/bin/activate && uvicorn main:app --reload
+  created: '2026-01-27T02:37:04.040868+00:00'
+  last_verified: '2026-01-27T02:37:04.040868+00:00'
+  confidence: 1.0
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+  tags:
+  - project-command
+  - dev-backend
+- id: know_023704_3fa5ed
+  scope: convention
+  text: cd frontend && npm run dev
+  created: '2026-01-27T02:37:04.489504+00:00'
+  last_verified: '2026-01-27T02:37:04.489504+00:00'
+  confidence: 1.0
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+  tags:
+  - project-command
+  - dev-frontend
+- id: know_023704_ea35ee
+  scope: convention
+  text: cd frontend && npm run build
+  created: '2026-01-27T02:37:04.927945+00:00'
+  last_verified: '2026-01-27T02:37:04.927945+00:00'
+  confidence: 1.0
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+  tags:
+  - project-command
+  - build
+- id: know_023705_471732
+  scope: convention
+  text: cd backend && source venv/bin/activate && pytest
+  created: '2026-01-27T02:37:05.353760+00:00'
+  last_verified: '2026-01-27T02:37:05.353760+00:00'
+  confidence: 1.0
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+  tags:
+  - project-command
+  - test
