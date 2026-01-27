@@ -9,6 +9,7 @@ import { PassNotification } from './PassNotification';
 import { ReactionPicker } from './ReactionPicker';
 import { ReactionDisplay } from './ReactionDisplay';
 import { Boneyard } from './Boneyard';
+import { TurnTimer } from './TurnTimer';
 import { useGameStore } from '../store/gameStore';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { Domino } from '../types';
@@ -128,6 +129,11 @@ export function Game() {
           {/* Arrow showing turn direction */}
           <span className="text-gray-400 text-sm ml-1">→</span>
         </div>
+
+        {/* Turn timer (compact) */}
+        {gameState.status === 'playing' && gameState.turn_timer && (
+          <TurnTimer compact />
+        )}
 
         {/* Status text */}
         <span className={`text-xs mx-2 ${isYourTurn ? 'text-neon-amber font-bold' : 'text-gray-400'}`}>

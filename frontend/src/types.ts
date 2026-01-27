@@ -52,6 +52,12 @@ export interface MatchState {
   match_winner: string | null;
 }
 
+export interface TurnTimer {
+  timeout: number;     // Total timeout in seconds
+  remaining: number;   // Remaining time in seconds
+  started_at: string;  // ISO timestamp when turn started
+}
+
 export interface GameState {
   id: string;
   variant: 'block' | 'draw' | 'all_fives';
@@ -66,6 +72,7 @@ export interface GameState {
   boneyard_count: number;
   round_number: number;
   match: MatchState | null;
+  turn_timer: TurnTimer | null;
 }
 
 export interface ValidMove {

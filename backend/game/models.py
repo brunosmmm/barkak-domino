@@ -83,6 +83,8 @@ class Game(BaseModel):
     match_id: Optional[str] = None  # Link to parent match for multi-round play
     created_at: datetime = Field(default_factory=datetime.utcnow)
     last_activity: datetime = Field(default_factory=datetime.utcnow)
+    turn_started_at: Optional[datetime] = None  # When current turn started (for timer)
+    turn_timeout: int = 30  # Seconds before auto-play (0 = disabled)
 
     def touch(self):
         """Update last activity timestamp."""

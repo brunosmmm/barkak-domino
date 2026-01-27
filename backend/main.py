@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from contextlib import asynccontextmanager
+from datetime import datetime
 import json
 import os
 
@@ -11,7 +12,7 @@ from game.models import (
     Game, CreateGameRequest, JoinGameRequest, PlayTileRequest,
     Domino, GameStatus, Match
 )
-from game.logic import play_tile, pass_turn, start_game, get_valid_moves
+from game.logic import play_tile, pass_turn, start_game, get_valid_moves, has_valid_move
 from game.manager import manager
 from game.rooms import room_manager
 from game.cpu import is_cpu_turn, execute_cpu_turn
@@ -31,17 +32,105 @@ async def cleanup_task():
             print(f"Cleanup error: {e}")
 
 
+async def turn_timer_task():
+    """Background task to check for turn timeouts and auto-play."""
+    while True:
+        await asyncio.sleep(1)  # Check every second
+        try:
+            for game in room_manager.list_active_games():
+                if game.status != GameStatus.PLAYING:
+                    continue
+                if game.turn_timeout <= 0:
+                    continue
+                if not game.turn_started_at:
+                    continue
+                # Skip CPU turns - they handle themselves
+                if is_cpu_turn(game):
+                    continue
+
+                # Only enforce timeout for connected players
+                current_player = game.get_player(game.current_turn)
+                if not current_player or not current_player.connected:
+                    continue
+
+                elapsed = (datetime.utcnow() - game.turn_started_at).total_seconds()
+                if elapsed >= game.turn_timeout:
+                    await handle_turn_timeout(game.id)
+        except Exception as e:
+            print(f"Turn timer error: {e}")
+
+
+async def handle_turn_timeout(game_id: str):
+    """Handle a turn timeout by auto-playing or passing."""
+    game = room_manager.get_game(game_id)
+    if not game or game.status != GameStatus.PLAYING:
+        return
+
+    player_id = game.current_turn
+    if not player_id:
+        return
+
+    player = game.get_player(player_id)
+    if not player or player.is_cpu:
+        return
+
+    # Get valid moves
+    valid_moves = get_valid_moves(game, player_id)
+
+    if valid_moves:
+        # Auto-play a random valid move
+        domino, side = random.choice(valid_moves)
+        success, _ = play_tile(game, player_id, domino, side)
+
+        if success:
+            await manager.broadcast_to_game(game_id, {
+                "type": "tile_played",
+                "player_id": player_id,
+                "domino": {"left": domino.left, "right": domino.right},
+                "side": side,
+                "auto_played": True  # Flag that this was auto-played due to timeout
+            })
+            await broadcast_game_state(game_id)
+
+            if game.status == GameStatus.FINISHED:
+                await handle_round_end(game_id, game)
+            else:
+                await process_cpu_turns(game_id)
+    else:
+        # No valid moves - auto-pass
+        success, _ = pass_turn(game, player_id)
+
+        if success:
+            await manager.broadcast_to_game(game_id, {
+                "type": "turn_passed",
+                "player_id": player_id,
+                "auto_passed": True  # Flag that this was auto-passed due to timeout
+            })
+            await broadcast_game_state(game_id)
+
+            if game.status == GameStatus.FINISHED:
+                await handle_round_end(game_id, game)
+            else:
+                await process_cpu_turns(game_id)
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application lifespan handler."""
     print("Dominoes server starting...")
-    # Start background cleanup task
+    # Start background tasks
     cleanup = asyncio.create_task(cleanup_task())
+    turn_timer = asyncio.create_task(turn_timer_task())
     yield
-    # Cancel cleanup task on shutdown
+    # Cancel background tasks on shutdown
     cleanup.cancel()
+    turn_timer.cancel()
     try:
         await cleanup
+    except asyncio.CancelledError:
+        pass
+    try:
+        await turn_timer
     except asyncio.CancelledError:
         pass
     print("Dominoes server shutting down...")
@@ -141,6 +230,11 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str, player_id: str)
     player.connected = True
 
     try:
+        # If it's this player's turn and they just connected, reset their turn timer
+        # This handles the case where game auto-started before player connected
+        if game.status == GameStatus.PLAYING and game.current_turn == player_id:
+            game.turn_started_at = datetime.utcnow()
+
         # Send initial game state
         await send_game_state(game_id, player_id)
 
@@ -473,6 +567,17 @@ def create_player_game_view(game: Game, player_id: str) -> dict:
         if match:
             match_state = room_manager.get_match_state(match)
 
+    # Calculate turn timer info
+    turn_timer_info = None
+    if game.turn_timeout > 0 and game.turn_started_at and game.status == GameStatus.PLAYING:
+        elapsed = (datetime.utcnow() - game.turn_started_at).total_seconds()
+        remaining = max(0, game.turn_timeout - elapsed)
+        turn_timer_info = {
+            "timeout": game.turn_timeout,
+            "remaining": round(remaining, 1),
+            "started_at": game.turn_started_at.isoformat() + "Z"
+        }
+
     return {
         "id": game.id,
         "variant": game.variant.value,
@@ -501,7 +606,8 @@ def create_player_game_view(game: Game, player_id: str) -> dict:
         "winner_id": game.winner_id,
         "boneyard_count": len(game.boneyard),
         "round_number": game.round_number,
-        "match": match_state
+        "match": match_state,
+        "turn_timer": turn_timer_info
     }
 
 

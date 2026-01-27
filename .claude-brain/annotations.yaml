@@ -345,24 +345,6 @@ annotations:
   - game-logic
   - ux
   - multiplayer
-- id: ann_030332_fc7bec
-  type: idea
-  status: TODO
-  created: '2026-01-27T03:03:32.387483+00:00'
-  last_activity: '2026-01-27T03:03:32.387483+00:00'
-  activity_log: []
-  text: Player should have maximum time to play turn, otherwise random piece gets
-    auto-played (turn timer feature)
-  context:
-    repository_id: github.com/brunosmmm/barkak-domino
-    git_branch: main
-    task_id: task_025129_b61c77
-  perceived_complexity: 0.6
-  priority: medium
-  tags:
-  - gameplay
-  - feature
-  - timer
 - id: ann_030448_f007ab
   type: idea
   status: TODO

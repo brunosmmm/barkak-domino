@@ -165,6 +165,10 @@ class GameRoomManager:
         """List all games that are waiting for players."""
         return [g for g in self.games.values() if g.status == GameStatus.WAITING]
 
+    def list_active_games(self) -> list[Game]:
+        """List all games that are currently being played."""
+        return [g for g in self.games.values() if g.status == GameStatus.PLAYING]
+
     def cleanup_stale_games(self) -> tuple[int, list[str]]:
         """
         Remove stale games based on various conditions.

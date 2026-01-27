@@ -640,7 +640,7 @@ archived:
   type: todo
   status: DONE
   created: '2026-01-27T03:03:12.945099+00:00'
-  last_activity: '2026-01-27T18:52:02.219482+00:00'
+  last_activity: '2026-01-27T18:53:04.522435+00:00'
   activity_log:
   - timestamp: '2026-01-27T18:51:15.969148+00:00'
     action: status_change
@@ -673,3 +673,49 @@ archived:
       names with truncation, increased padding and spacing'
     approach: bugfix
   completed: '2026-01-27T18:52:02.219482+00:00'
+  commit_refs:
+  - hash: 6e11c98a27ca1391092cc839d9840bb0010e3adc
+    hash_short: 6e11c98
+    linked_at: '2026-01-27T18:53:04.522435+00:00'
+    message: 'feat(mobile): improve top bar with larger avatars and full names
+
+
+      - Increase avatar size from 32px t'
+- id: ann_030332_fc7bec
+  type: idea
+  status: DONE
+  created: '2026-01-27T03:03:32.387483+00:00'
+  last_activity: '2026-01-27T18:58:08.983776+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T18:53:56.062173+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_185355_b31c32
+    source: auto
+  - timestamp: '2026-01-27T18:58:08.983776+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_185355_b31c32
+    source: auto
+  text: Player should have maximum time to play turn, otherwise random piece gets
+    auto-played (turn timer feature)
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.6
+  priority: medium
+  tags:
+  - gameplay
+  - feature
+  - timer
+  updated: '2026-01-27T18:58:08.983776+00:00'
+  resolution:
+    type: fixed
+    summary: 'Added 30-second turn timer: backend tracks turn_started_at, background
+      task checks timeouts and auto-plays random valid move or passes. Frontend shows
+      circular timer in mobile header and progress bar in desktop sidebar.'
+    approach: bugfix
+  completed: '2026-01-27T18:58:08.983776+00:00'

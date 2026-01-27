@@ -1,5 +1,6 @@
 """Game logic for dominoes."""
 import random
+from datetime import datetime
 from typing import Optional
 from .models import Domino, Game, GameStatus, Player, PlayedDomino, BoardEnds
 
@@ -69,6 +70,7 @@ def start_game(game: Game, starting_player_id: str | None = None) -> None:
     game.status = GameStatus.PLAYING
     game.board = []
     game.ends = BoardEnds()
+    game.turn_started_at = datetime.utcnow()  # Start turn timer
 
 
 def can_play_on_side(domino: Domino, end_value: Optional[int]) -> bool:
@@ -202,6 +204,7 @@ def advance_turn(game: Game) -> None:
     current_index = game.get_player_index(game.current_turn)
     next_index = (current_index + 1) % len(game.players)
     game.current_turn = game.players[next_index].id
+    game.turn_started_at = datetime.utcnow()  # Reset turn timer
 
 
 def check_game_over(game: Game) -> bool:

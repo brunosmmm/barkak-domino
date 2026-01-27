@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useGameStore } from '../store/gameStore';
+import { TurnTimer } from './TurnTimer';
 
 interface GameStatusProps {
   onPass: () => void;
@@ -93,6 +94,11 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
 
       {status === 'playing' && (
         <div className="space-y-3">
+          {/* Turn timer */}
+          {gameState.turn_timer && (
+            <TurnTimer />
+          )}
+
           {/* Match score display */}
           {gameState.match && (
             <div className="bg-black/20 rounded-lg p-2 text-center text-sm">
