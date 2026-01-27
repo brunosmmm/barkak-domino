@@ -16,3 +16,7 @@ venv/
 # Node
 node_modules/
 dist/
+
+frontend/playwright-report/
+frontend/tests/e2e/test-results
+

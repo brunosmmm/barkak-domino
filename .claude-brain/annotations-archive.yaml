@@ -932,7 +932,7 @@ archived:
   type: bug
   status: DONE
   created: '2026-01-27T22:55:44.009473+00:00'
-  last_activity: '2026-01-27T23:30:57.332487+00:00'
+  last_activity: '2026-01-27T23:33:48.512198+00:00'
   activity_log:
   - timestamp: '2026-01-27T22:55:55.509902+00:00'
     action: status_change
@@ -975,6 +975,11 @@ archived:
       data-game-id attribute, updated tests to handle auto-start to picking phase'
     approach: bugfix
   completed: '2026-01-27T23:30:57.332487+00:00'
+  commit_refs:
+  - hash: 1cab07648a30fcfc87acd52d58b5eb90f8581c50
+    hash_short: 1cab076
+    linked_at: '2026-01-27T23:33:48.512198+00:00'
+    message: 'feat(ui): add table surface with avatars and picking timer'
 - id: ann_225544_3e7cky3bdefb
   type: bug
   status: DONE
