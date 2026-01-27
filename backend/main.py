@@ -87,6 +87,11 @@ async def create_game(request: CreateGameRequest):
     # Create match wrapper for multi-round play
     match = room_manager.create_match(game, target_score=request.target_score)
 
+    # Auto-start if game is full (e.g., 1 human + 3 CPUs = 4 players)
+    if len(game.players) == game.max_players:
+        room_manager.finalize_match_teams(game)
+        start_game(game)
+
     return {
         "game_id": game.id,
         "player_id": player.id,
@@ -145,6 +150,11 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str, player_id: str)
             {"type": "player_connected", "player_id": player_id, "player_name": player.name},
             exclude=player_id
         )
+
+        # If game is already playing and it's a CPU's turn, process CPU turns
+        # (handles auto-start scenario where CPU should play first)
+        if game.status == GameStatus.PLAYING and is_cpu_turn(game):
+            await process_cpu_turns(game_id)
 
         # Handle messages
         while True:

@@ -465,7 +465,7 @@ archived:
   type: work
   status: DONE
   created: '2026-01-27T17:55:19.744772+00:00'
-  last_activity: '2026-01-27T17:56:55.292293+00:00'
+  last_activity: '2026-01-27T18:11:48.122049+00:00'
   activity_log:
   - timestamp: '2026-01-27T17:55:28.290934+00:00'
     action: status_change
@@ -497,6 +497,14 @@ archived:
       First Tile button
     approach: bugfix
   completed: '2026-01-27T17:56:55.292293+00:00'
+  commit_refs:
+  - hash: 314538587f70255f9d4e4b4daab1a36218068c14
+    hash_short: '3145385'
+    linked_at: '2026-01-27T18:11:48.122049+00:00'
+    message: 'feat(frontend): add session persistence and UX improvements
+
+
+      - Auto-play clicked domino when user st'
 - id: ann_031155_337516
   type: idea
   status: DONE
@@ -535,3 +543,39 @@ archived:
     summary: Session persistence via localStorage - auto-reconnect on page refresh/reload
     approach: bugfix
   completed: '2026-01-27T18:07:37.434501+00:00'
+- id: ann_030602_b03768
+  type: bug
+  status: DONE
+  created: '2026-01-27T03:06:02.762188+00:00'
+  last_activity: '2026-01-27T18:16:48.907421+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T18:14:30.396781+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_181430_daedbb
+    source: auto
+  - timestamp: '2026-01-27T18:16:48.907421+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_181430_daedbb
+    source: auto
+  text: When game is created with 3 CPU players, it auto-starts immediately (should
+    wait for user to click Start?)
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.35
+  priority: medium
+  tags:
+  - gameplay
+  - lobby
+  - cpu
+  updated: '2026-01-27T18:16:48.907421+00:00'
+  resolution:
+    type: fixed
+    summary: Auto-start game when created with enough CPUs to fill all slots
+    approach: bugfix
+  completed: '2026-01-27T18:16:48.907421+00:00'

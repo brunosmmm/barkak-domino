@@ -2,6 +2,23 @@ import { useEffect, useRef, useCallback } from 'react';
 import { useGameStore } from '../store/gameStore';
 import type { WSMessage, Domino } from '../types';
 
+const RECONNECT_KEY = 'barkak-reconnect-attempts';
+const MAX_RECONNECT_ATTEMPTS = 3;
+
+function getReconnectAttempts(): number {
+  return parseInt(sessionStorage.getItem(RECONNECT_KEY) || '0', 10);
+}
+
+function incrementReconnectAttempts(): number {
+  const attempts = getReconnectAttempts() + 1;
+  sessionStorage.setItem(RECONNECT_KEY, String(attempts));
+  return attempts;
+}
+
+function resetReconnectAttempts(): void {
+  sessionStorage.removeItem(RECONNECT_KEY);
+}
+
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<number | null>(null);
@@ -19,6 +36,7 @@ export function useWebSocket() {
     setPassNotification,
     addReaction,
     gameState,
+    reset,
   } = useGameStore();
 
   const connect = useCallback(() => {
@@ -32,15 +50,36 @@ export function useWebSocket() {
 
     ws.onopen = () => {
       console.log('WebSocket connected');
+      resetReconnectAttempts(); // Reset on successful connection
       setConnected(true);
       setError(null);
     };
 
-    ws.onclose = () => {
-      console.log('WebSocket disconnected');
+    ws.onclose = (event) => {
+      console.log('WebSocket disconnected, code:', event.code);
       setConnected(false);
 
-      // Attempt reconnection after 2 seconds
+      // If game/player not found (4004), clear session and go back to lobby
+      if (event.code === 4004) {
+        console.log('Game not found, clearing session');
+        resetReconnectAttempts();
+        reset();
+        return;
+      }
+
+      // Track failed connection attempts (code 1006 = abnormal closure, often means server rejected)
+      const attempts = incrementReconnectAttempts();
+      console.log(`Connection attempt ${attempts}/${MAX_RECONNECT_ATTEMPTS}`);
+
+      // If too many failures, game probably doesn't exist - clear session
+      if (attempts >= MAX_RECONNECT_ATTEMPTS) {
+        console.log('Too many failed attempts, clearing session');
+        resetReconnectAttempts();
+        reset();
+        return;
+      }
+
+      // Attempt reconnection after 2 seconds for other disconnects
       reconnectTimeoutRef.current = window.setTimeout(() => {
         console.log('Attempting reconnection...');
         connect();
