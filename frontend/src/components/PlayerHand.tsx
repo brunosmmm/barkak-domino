@@ -51,17 +51,20 @@ export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: Player
   };
 
   return (
-    <div className="glass-panel p-2 lg:p-3 mx-auto flex-shrink-0 relative z-20">
+    <div className="glass-panel p-2 lg:p-3 mx-auto flex-shrink-0 relative z-20" data-testid="player-hand">
       <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4">
-        <span className="text-neon-amber-glow text-xs lg:text-sm font-medium neon-text whitespace-nowrap">
+        <span className="text-neon-amber-glow text-xs lg:text-sm font-medium neon-text whitespace-nowrap" data-testid="hand-count">
           Your Hand ({hand.length})
         </span>
-        <div className="flex flex-wrap gap-1 lg:gap-2 justify-center">
+        <div className="flex flex-wrap gap-1 lg:gap-2 justify-center" data-testid="hand-tiles">
           {hand.map((domino, index) => {
             const bothSides = canPlayBothSides(domino);
             return (
               <div
                 key={`${domino.left}-${domino.right}-${index}`}
+                data-testid={`hand-tile-${index}`}
+                data-domino={`${domino.left}-${domino.right}`}
+                data-playable={canPlay(domino)}
                 className={`relative ${bothSides ? 'ring-2 ring-green-400 ring-offset-1 ring-offset-transparent rounded-lg' : ''}`}
               >
                 {/* "Both sides" indicator badge */}
@@ -104,6 +107,7 @@ export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: Player
       {isYourTurn && canPass && onPass && (
         <button
           onClick={onPass}
+          data-testid="pass-btn"
           className="mt-2 w-full bg-orange-600 active:bg-orange-500 text-white py-3 rounded-lg font-bold
                      shadow-lg shadow-orange-500/30 border-2 border-orange-400"
         >

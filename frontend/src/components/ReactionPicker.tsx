@@ -35,11 +35,13 @@ export function ReactionPicker({ onReaction }: ReactionPickerProps) {
   };
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" data-testid="reaction-picker">
       {/* Toggle button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         disabled={cooldown}
+        data-testid="reaction-toggle-btn"
+        data-cooldown={cooldown}
         className={`w-12 h-12 rounded-full text-2xl transition-all
           ${cooldown
             ? 'bg-gray-600 cursor-not-allowed opacity-50'
@@ -54,7 +56,8 @@ export function ReactionPicker({ onReaction }: ReactionPickerProps) {
       {/* Emoji picker popup */}
       {isOpen && !cooldown && (
         <div
-          className="absolute bg-gray-900/95 backdrop-blur rounded-xl p-3 shadow-2xl border border-gray-700"
+          data-testid="reaction-popup"
+          className="absolute z-50 bg-gray-900/95 backdrop-blur rounded-xl p-3 shadow-2xl border border-gray-700"
           style={{
             bottom: '60px',
             right: '0',
@@ -66,6 +69,8 @@ export function ReactionPicker({ onReaction }: ReactionPickerProps) {
               <button
                 key={emoji}
                 onClick={() => handleReaction(emoji)}
+                data-testid={`reaction-${label.toLowerCase().replace(' ', '-')}`}
+                data-emoji={emoji}
                 className="w-11 h-11 text-2xl hover:bg-white/20 rounded-lg transition-transform hover:scale-110 flex items-center justify-center"
                 title={label}
               >

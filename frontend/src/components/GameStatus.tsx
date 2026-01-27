@@ -30,10 +30,10 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
   const isCreator = players[0]?.is_you;
 
   return (
-    <div className="glass-panel p-4">
+    <div className="glass-panel p-4" data-testid="game-status" data-game-status={status}>
       {/* Connection status */}
       <div className="flex items-center gap-2 mb-3">
-        <span className={`w-2 h-2 rounded-full ${connected ? 'bg-neon-amber-glow' : 'bg-neon-red'}`} />
+        <span className={`w-2 h-2 rounded-full ${connected ? 'bg-neon-amber-glow' : 'bg-neon-red'}`} data-testid="connection-indicator" data-connected={connected} />
         <span className="text-xs text-gray-400">
           {connected ? 'Connected' : 'Disconnected'}
         </span>
@@ -48,17 +48,18 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
 
       {/* Game status */}
       {status === 'waiting' && (
-        <div className="space-y-3">
-          <p className="text-white text-center">
+        <div className="space-y-3" data-testid="waiting-status">
+          <p className="text-white text-center" data-testid="player-count">
             Waiting for players... ({players.length}/{gameState.players.length > 0 ? 4 : 4})
           </p>
 
           {/* Host controls */}
           {isCreator && (
-            <div className="space-y-2">
+            <div className="space-y-2" data-testid="host-controls">
               {players.length >= 2 && (
                 <button
                   onClick={onStartGame}
+                  data-testid="start-game-btn"
                   className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-2 rounded-lg font-medium transition-colors"
                 >
                   Start Game
@@ -67,6 +68,7 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
               {players.length < 4 && (
                 <button
                   onClick={onAddCpu}
+                  data-testid="add-cpu-btn"
                   className="w-full bg-whiskey hover:bg-whiskey-light text-white py-2 rounded-lg font-medium transition-colors"
                 >
                   + Add CPU Player
@@ -77,10 +79,11 @@ export function GameStatus({ onPass, onStartGame, onNewGame, onAddCpu, isYourTur
 
           <div className="bg-black/20 rounded-lg p-3 space-y-2">
             <p className="text-gray-300 text-sm text-center">
-              Game ID: <code className="bg-black/30 px-2 py-1 rounded text-neon-amber">{gameState.id}</code>
+              Game ID: <code className="bg-black/30 px-2 py-1 rounded text-neon-amber" data-testid="game-id">{gameState.id}</code>
             </p>
             <button
               onClick={copyShareLink}
+              data-testid="copy-invite-btn"
               className={`w-full py-2 rounded-lg font-medium transition-colors text-sm
                 ${copied
                   ? 'bg-bar-felt-light text-white'

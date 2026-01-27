@@ -62,8 +62,8 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
   };
 
   return (
-    <div className="h-full flex items-center justify-center p-4 overflow-auto">
-      <div className="bg-bar-dark/90 rounded-2xl p-8 w-full max-w-md backdrop-blur-md shadow-2xl border border-neon-amber/30">
+    <div className="h-full flex items-center justify-center p-4 overflow-auto" data-testid="lobby">
+      <div className="bg-bar-dark/90 rounded-2xl p-8 w-full max-w-md backdrop-blur-md shadow-2xl border border-neon-amber/30" data-testid="lobby-container">
         {/* Logo */}
         <div className="flex justify-center mb-6">
           <img src="/images/logo.png" alt="Barkak Domino" className="h-20 w-auto drop-shadow-lg" />
@@ -76,18 +76,20 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
         )}
 
         {mode === 'menu' && (
-          <div className="space-y-4">
+          <div className="space-y-4" data-testid="lobby-menu">
             <input
               type="text"
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Your Name"
+              data-testid="player-name-input"
               className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
                          border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
             />
             <button
               onClick={() => setMode('create')}
               disabled={!playerName.trim()}
+              data-testid="create-game-btn"
               className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg
                          font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -96,6 +98,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             <button
               onClick={() => setMode('join')}
               disabled={!playerName.trim()}
+              data-testid="join-game-btn"
               className="w-full bg-bar-felt hover:bg-bar-felt-light text-white py-3 rounded-lg
                          font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -105,9 +108,10 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
         )}
 
         {mode === 'create' && (
-          <div className="space-y-4">
+          <div className="space-y-4" data-testid="lobby-create">
             <button
               onClick={() => setMode('menu')}
+              data-testid="back-btn"
               className="text-gray-400 hover:text-white text-sm"
             >
               ← Back
@@ -122,6 +126,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                   setMaxPlayers(max);
                   if (cpuPlayers >= max) setCpuPlayers(max - 1);
                 }}
+                data-testid="max-players-select"
                 className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
                            border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
               >
@@ -136,6 +141,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               <select
                 value={cpuPlayers}
                 onChange={(e) => setCpuPlayers(Number(e.target.value))}
+                data-testid="cpu-players-select"
                 className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
                            border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
               >
@@ -148,6 +154,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             <button
               onClick={handleCreate}
               disabled={loading}
+              data-testid="confirm-create-btn"
               className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg
                          font-medium transition-colors disabled:opacity-50"
             >
@@ -157,10 +164,11 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
         )}
 
         {mode === 'join' && (
-          <div className="space-y-4">
+          <div className="space-y-4" data-testid="lobby-join">
             {!initialJoinGameId && (
               <button
                 onClick={() => setMode('menu')}
+                data-testid="back-btn"
                 className="text-gray-400 hover:text-white text-sm"
               >
                 ← Back
@@ -168,7 +176,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             )}
 
             {initialJoinGameId && (
-              <p className="text-center text-gray-300">
+              <p className="text-center text-gray-300" data-testid="invite-message">
                 You've been invited to join game <code className="bg-black/30 px-2 py-1 rounded text-neon-amber">{initialJoinGameId}</code>
               </p>
             )}
@@ -178,6 +186,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               value={playerName}
               onChange={(e) => setPlayerName(e.target.value)}
               placeholder="Your Name"
+              data-testid="player-name-input-join"
               className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
                          border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
             />
@@ -189,12 +198,14 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                   value={gameIdToJoin}
                   onChange={(e) => setGameIdToJoin(e.target.value)}
                   placeholder="Game ID"
+                  data-testid="game-id-input"
                   className="flex-1 px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
                              border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
                 />
                 <button
                   onClick={() => handleJoin(gameIdToJoin)}
                   disabled={loading || !gameIdToJoin.trim() || !playerName.trim()}
+                  data-testid="join-by-id-btn"
                   className="bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white px-6 py-3 rounded-lg
                              font-medium transition-colors disabled:opacity-50"
                 >
@@ -207,6 +218,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               <button
                 onClick={() => handleJoin(initialJoinGameId)}
                 disabled={loading || !playerName.trim()}
+                data-testid="confirm-join-btn"
                 className="w-full bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg
                            font-medium transition-colors disabled:opacity-50"
               >
@@ -215,16 +227,17 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             )}
 
             {!initialJoinGameId && openGames.length > 0 && (
-              <div>
+              <div data-testid="open-games-list">
                 <p className="text-gray-300 text-sm mb-2">Open Games:</p>
                 <div className="space-y-2">
                   {openGames.map(game => (
                     <div
                       key={game.id}
+                      data-testid={`game-item-${game.id}`}
                       className="flex items-center justify-between bg-bar-wood/50 p-3 rounded-lg"
                     >
                       <div>
-                        <code className="text-neon-amber">{game.id}</code>
+                        <code className="text-neon-amber" data-testid="game-id">{game.id}</code>
                         <p className="text-gray-400 text-xs">
                           {game.player_names.join(', ')} ({game.players}/{game.max_players})
                         </p>
@@ -232,6 +245,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                       <button
                         onClick={() => handleJoin(game.id)}
                         disabled={loading || !playerName.trim()}
+                        data-testid={`join-game-${game.id}`}
                         className="bg-bar-felt-light hover:bg-bar-felt text-white px-4 py-2 rounded
                                    text-sm font-medium transition-colors disabled:opacity-50"
                       >
@@ -244,7 +258,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
             )}
 
             {!initialJoinGameId && openGames.length === 0 && (
-              <p className="text-gray-400 text-center text-sm">
+              <p className="text-gray-400 text-center text-sm" data-testid="no-games-message">
                 No open games. Create one!
               </p>
             )}

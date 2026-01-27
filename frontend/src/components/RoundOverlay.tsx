@@ -18,7 +18,7 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
     const winner = gameState?.players.find(p => p.id === gameState?.winner_id);
 
     return (
-      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50" data-testid="round-overlay">
         <div className="bg-bar-dark/95 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-neon-amber/30 backdrop-blur-md">
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold text-white mb-2">Round Over</h2>
@@ -33,17 +33,19 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
             {isCreator ? (
               <button
                 onClick={onNextRound}
+                data-testid="next-round-btn"
                 className="w-full bg-bar-felt-light hover:bg-bar-felt text-white py-3 rounded-lg font-bold transition-colors"
               >
                 Next Round
               </button>
             ) : (
-              <p className="text-center text-gray-400 py-3">
+              <p className="text-center text-gray-400 py-3" data-testid="waiting-for-host">
                 Waiting for host to start next round...
               </p>
             )}
             <button
               onClick={onNewGame}
+              data-testid="leave-game-btn"
               className="w-full bg-red-600/80 hover:bg-red-500 text-white py-2 rounded-lg font-medium transition-colors"
             >
               Leave Game
@@ -92,12 +94,12 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50" data-testid="round-overlay" data-round={roundNumber}>
       <div className="bg-bar-dark/95 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl border border-neon-amber/30 backdrop-blur-md">
         {/* Header */}
         <div className="text-center mb-6">
           <p className="text-gray-400 text-sm mb-1">Round {roundNumber}</p>
-          <h2 className="text-3xl font-bold text-white">
+          <h2 className="text-3xl font-bold text-white" data-testid="round-result">
             {wasBlocked ? 'Blocked!' : 'Domino!'}
           </h2>
         </div>
@@ -182,6 +184,7 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
           {isMatchOver ? (
             <button
               onClick={onNewGame}
+              data-testid="new-match-btn"
               className="flex-1 bg-neon-amber hover:bg-neon-amber-glow shadow-neon-amber text-white py-3 rounded-lg font-bold transition-colors"
             >
               New Match
@@ -189,12 +192,13 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
           ) : isCreator ? (
             <button
               onClick={onNextRound}
+              data-testid="next-round-btn"
               className="flex-1 bg-bar-felt-light hover:bg-bar-felt text-white py-3 rounded-lg font-bold transition-colors"
             >
               Next Round
             </button>
           ) : (
-            <p className="flex-1 text-center text-gray-400 py-3">
+            <p className="flex-1 text-center text-gray-400 py-3" data-testid="waiting-for-host">
               Waiting for host to start next round...
             </p>
           )}
@@ -204,6 +208,7 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
         {!isCreator && !isMatchOver && (
           <button
             onClick={() => setShowRoundOverlay(false)}
+            data-testid="close-overlay-btn"
             className="w-full mt-3 text-gray-400 hover:text-white text-sm transition-colors"
           >
             Close

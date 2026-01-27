@@ -886,7 +886,7 @@ archived:
   type: idea
   status: DONE
   created: '2026-01-27T03:04:48.133424+00:00'
-  last_activity: '2026-01-27T21:10:49.054652+00:00'
+  last_activity: '2026-01-27T21:32:53.033314+00:00'
   activity_log:
   - timestamp: '2026-01-27T21:09:15.424654+00:00'
     action: status_change
@@ -920,3 +920,134 @@ archived:
       included.
     approach: bugfix
   completed: '2026-01-27T21:10:49.054652+00:00'
+  commit_refs:
+  - hash: 1cab07648a30fcfc87acd52d58b5eb90f8581c50
+    hash_short: 1cab076
+    linked_at: '2026-01-27T21:32:53.033314+00:00'
+    message: 'feat(ui): add table surface with avatars and picking timer
+
+
+      - Add TableSurface component with wood r'
+- id: ann_225544_3e7cky2a73bb
+  type: bug
+  status: DONE
+  created: '2026-01-27T22:55:44.009473+00:00'
+  last_activity: '2026-01-27T23:30:57.332487+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T22:55:55.509902+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_225555_2175a3
+    source: auto
+  - timestamp: '2026-01-27T23:30:57.332487+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_225555_2175a3
+    source: auto
+  text: 'E2E test: Missing data-testid="game-id" selector
+
+
+    The lobby test "creates game with CPUs" fails because the game-id element is not
+    found.
+
+    Tests expect `[data-testid="game-id"]` to exist after game creation.
+
+
+    Suspects: Lobby.tsx or Game.tsx - the component that displays game ID after creation
+
+    Path to trace: Check where game ID is displayed in UI and add the data-testid
+    attribute'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.3
+  priority: high
+  tags:
+  - e2e
+  - testing
+  - selector
+  updated: '2026-01-27T23:30:57.332487+00:00'
+  resolution:
+    type: fixed
+    summary: 'Fixed E2E test failures by handling game auto-start behavior: added
+      data-game-id attribute, updated tests to handle auto-start to picking phase'
+    approach: bugfix
+  completed: '2026-01-27T23:30:57.332487+00:00'
+- id: ann_225544_3e7cky3bdefb
+  type: bug
+  status: DONE
+  created: '2026-01-27T22:55:44.428589+00:00'
+  last_activity: '2026-01-27T23:31:11.910887+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T23:31:11.910887+00:00'
+    action: status_change
+    from: TODO
+    to: DONE
+  text: "E2E test: Multiplayer join tests expect wrong game status\n\nTests expect\
+    \ status=\"waiting\" but game now auto-transitions to \"picking\" phase.\nAffected\
+    \ tests:\n- \"two players can see each other\" \n- \"four players can join the\
+    \ same game\"\n\nSuspects: tests/e2e/specs/multiplayer/join.test.ts\nPath to trace:\
+    \ Update assertions to expect \"picking\" or add wait logic for the correct phase"
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.25
+  priority: high
+  tags:
+  - e2e
+  - testing
+  - multiplayer
+  updated: '2026-01-27T23:31:11.910887+00:00'
+  resolution:
+    type: fixed
+    summary: Updated test assertions to accept either waiting or picking status since
+      games auto-start when all slots are filled
+  completed: '2026-01-27T23:31:11.910887+00:00'
+- id: ann_225544_3e7ckyacb458
+  type: bug
+  status: DONE
+  created: '2026-01-27T22:55:44.836385+00:00'
+  last_activity: '2026-01-27T23:31:13.135295+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T23:31:13.135295+00:00'
+    action: status_change
+    from: TODO
+    to: DONE
+  text: 'E2E test: Page navigation timeouts (net::ERR_ABORTED)
+
+
+    23 tests fail with "page.goto: net::ERR_ABORTED; maybe frame was detached?"
+
+    Affects: picking.test.ts, playing.test.ts, reactions.test.ts
+
+
+    Root cause hypotheses:
+
+    1. Browser contexts not properly isolated between tests
+
+    2. Test parallelism causing resource contention
+
+    3. Frontend dev server struggling under load
+
+
+    Suspects: playwright.config.ts, test fixtures
+
+    Path to trace: Check worker count, browser context reuse settings, consider --workers=1'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.5
+  priority: high
+  tags:
+  - e2e
+  - testing
+  - stability
+  - playwright
+  updated: '2026-01-27T23:31:13.135295+00:00'
+  resolution:
+    type: fixed
+    summary: Disabled fullyParallel and limited workers to 1 to prevent resource contention;
+      root cause was createAndStartGame not handling auto-start
+  completed: '2026-01-27T23:31:13.135295+00:00'

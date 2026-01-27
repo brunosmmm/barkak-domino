@@ -131,6 +131,10 @@ export function DominoTile({
       onClick={disabled ? undefined : onClick}
       role="button"
       tabIndex={disabled ? -1 : 0}
+      data-testid="domino-tile"
+      data-domino={`${domino.left}-${domino.right}`}
+      data-selected={selected}
+      data-disabled={disabled}
     >
       <div className="flex-1 flex items-center justify-center">
         <DotGrid value={domino.left} size={size} />

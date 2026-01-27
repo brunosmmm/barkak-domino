@@ -239,3 +239,113 @@ annotations:
   - ui
   - visualization
   - enhancement
+- id: ann_213736_3e7cky63f932
+  type: bug
+  status: TODO
+  created: '2026-01-27T21:37:36.016725+00:00'
+  last_activity: '2026-01-27T21:37:36.016725+00:00'
+  activity_log: []
+  text: 'The horizontal scrolling board layout is not functional for longer games.
+    Need to implement an automatic meandering/snaking path system where dominoes arrange
+    themselves in a path that stays visible within the table bounds, turning/wrapping
+    as needed.
+
+
+    Current approach: Single horizontal scrollable row that extends infinitely right.
+
+    Problem: Poor UX on mobile, requires manual scrolling, tiles go off-screen.
+
+    Solution: Dynamic path that snakes/meanders within visible table area.'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    file: frontend/src/components/GameBoard.tsx
+    task_id: task_211729_b6d339
+  perceived_complexity: 0.75
+  complexity_factors:
+  - multi_file
+  - algorithm_design
+  - responsive_layout
+  - state_management
+  priority: critical
+  complexity: high
+  tags:
+  - ui
+  - game-board
+  - layout
+  - mobile
+- id: ann_213922_3e7ckyac0c09
+  type: idea
+  status: INPROGRESS
+  created: '2026-01-27T21:39:22.939389+00:00'
+  last_activity: '2026-01-27T22:10:41.703074+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T21:50:31.276094+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_215031_42f4b5
+    source: auto
+  text: 'Create a Puppeteer-based automated testing system for end-to-end gameplay
+    testing that Claude can use autonomously to debug features.
+
+
+    ## Goals
+
+    - Fully autonomous game testing without human intervention
+
+    - Visual verification of game states (tiles, board, players)
+
+    - Simulate multi-player games (multiple browser instances)
+
+    - Integration with Claude Code for automatic debugging workflows
+
+
+    ## Components Needed
+
+    1. **Puppeteer test harness** - Launch game, control multiple players
+
+    2. **Game state extraction** - Read DOM to understand current game state
+
+    3. **Action API** - Click tiles, pass turns, send reactions, etc.
+
+    4. **Assertion helpers** - Verify expected game states
+
+    5. **Screenshot/recording** - Capture failures for debugging
+
+    6. **Claude integration** - Hooks/skills for Claude to run tests and interpret
+    results
+
+
+    ## Use Cases
+
+    - Regression testing after changes
+
+    - Reproduce reported bugs automatically
+
+    - Stress testing (rapid moves, disconnects)
+
+    - Visual testing (UI renders correctly)
+
+    - Claude-driven debugging: "test the tile picking phase" → runs tests → reports
+    issues'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_211729_b6d339
+  perceived_complexity: 0.85
+  complexity_factors:
+  - multi_file
+  - new_infrastructure
+  - integration
+  - tooling
+  priority: medium
+  complexity: high
+  tags:
+  - testing
+  - puppeteer
+  - automation
+  - e2e
+  - debugging
+  - umbrella
+  updated: '2026-01-27T22:10:41.703074+00:00'

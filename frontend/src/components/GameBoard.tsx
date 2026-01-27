@@ -85,7 +85,7 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
 
   if (board.length === 0) {
     return (
-      <div className="flex-1 p-2 lg:p-4 min-h-0">
+      <div className="flex-1 p-2 lg:p-4 min-h-0" data-testid="game-board" data-board-empty="true">
         <TableSurface
           players={players}
           currentTurn={gameState.current_turn}
@@ -110,7 +110,7 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
   const canPlayBothSides = showLeftZone && showRightZone;
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0 overflow-hidden">
+    <div className="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0 overflow-hidden" data-testid="game-board" data-board-tiles={board.length}>
       {/* "Choose a side" prompt when both options available */}
       {canPlayBothSides && (
         <div className="mb-2 px-4 py-1.5 bg-gradient-to-r from-green-500/20 via-emerald-500/30 to-green-500/20
@@ -134,6 +134,8 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
               {showLeftZone && (
                 <button
                   onClick={onPlayLeft}
+                  data-testid="play-left-btn"
+                  data-end-value={ends.left}
                   className={`w-20 h-12 border-2 border-dashed rounded-lg
                              flex items-center justify-center text-xl
                              transition-all flex-shrink-0 mr-2
@@ -146,7 +148,7 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
               )}
 
               {/* All tiles in a single row */}
-              <div className="flex items-center tile-on-table">
+              <div className="flex items-center tile-on-table" data-testid="board-tiles">
                 {board.map((played, index) => {
                   const isFirst = index === 0;
                   return renderTile(played, index, isFirst);
@@ -157,6 +159,8 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
               {showRightZone && (
                 <button
                   onClick={onPlayRight}
+                  data-testid="play-right-btn"
+                  data-end-value={ends.right}
                   className={`w-20 h-12 border-2 border-dashed rounded-lg
                              flex items-center justify-center text-xl
                              transition-all flex-shrink-0 ml-2

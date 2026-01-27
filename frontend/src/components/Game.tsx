@@ -89,7 +89,7 @@ export function Game() {
   };
 
   return (
-    <div className="h-full flex flex-col lg:flex-row p-2 lg:p-4 gap-2 lg:gap-4 overflow-hidden">
+    <div className="h-full flex flex-col lg:flex-row p-2 lg:p-4 gap-2 lg:gap-4 overflow-hidden" data-testid="game-container" data-game-status={gameState.status} data-game-id={gameState.id}>
       {/* Mobile header bar - shows turn order with avatars */}
       <div className={`lg:hidden flex items-center justify-between p-3 flex-shrink-0 rounded-lg ${
         isYourTurn && gameState.status === 'playing'
@@ -198,7 +198,7 @@ export function Game() {
       <div className="flex-1 flex flex-col gap-2 lg:gap-4 min-h-0 overflow-hidden">
         {/* Picking phase - show tile selection grid */}
         {gameState.status === 'picking' ? (
-          <div className="flex-1 flex items-center justify-center glass-panel rounded-lg overflow-auto">
+          <div className="flex-1 flex items-center justify-center glass-panel rounded-lg overflow-auto" data-testid="picking-phase">
             <TilePicking onClaimTile={claimTile} />
           </div>
         ) : (
@@ -236,9 +236,9 @@ export function Game() {
       {/* Floating reactions display */}
       <ReactionDisplay />
 
-      {/* Reaction picker button (bottom right) */}
+      {/* Reaction picker button (bottom right, above player hand) */}
       {gameState.status === 'playing' && (
-        <div className="fixed bottom-4 right-4 z-30">
+        <div className="fixed bottom-24 lg:bottom-4 right-4 z-40">
           <ReactionPicker onReaction={sendReaction} />
         </div>
       )}
