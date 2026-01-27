@@ -547,7 +547,7 @@ archived:
   type: bug
   status: DONE
   created: '2026-01-27T03:06:02.762188+00:00'
-  last_activity: '2026-01-27T18:16:48.907421+00:00'
+  last_activity: '2026-01-27T18:33:25.910449+00:00'
   activity_log:
   - timestamp: '2026-01-27T18:14:30.396781+00:00'
     action: status_change
@@ -579,3 +579,11 @@ archived:
     summary: Auto-start game when created with enough CPUs to fill all slots
     approach: bugfix
   completed: '2026-01-27T18:16:48.907421+00:00'
+  commit_refs:
+  - hash: afa2b041f8670a4f8a7b7b300c1f76a1a667f107
+    hash_short: afa2b04
+    linked_at: '2026-01-27T18:33:25.910449+00:00'
+    message: 'fix: auto-start game with CPUs and improve session recovery
+
+
+      - Auto-start game when created with eno'
