@@ -13,8 +13,11 @@ export default {
           darker: '#050505',    // Deepest shadow
           felt: '#1a3d2e',      // Dark green felt
           'felt-light': '#2d5a47', // Lighter felt accent
+          'felt-dark': '#0f2a1f',  // Darker felt for shadows
           wood: '#2d1f14',      // Dark wood/leather
           'wood-light': '#4a3528', // Lighter wood
+          'wood-dark': '#1a0f08',  // Darkest wood
+          'wood-rim': '#3d2a1c',   // Wood rim highlight
         },
         neon: {
           amber: '#f59e0b',     // Primary neon amber

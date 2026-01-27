@@ -816,3 +816,107 @@ archived:
       both sides'
     approach: bugfix
   completed: '2026-01-27T19:16:00.401583+00:00'
+- id: ann_023656_baa5a9
+  type: idea
+  status: DONE
+  created: '2026-01-26T02:36:56.237057+00:00'
+  last_activity: '2026-01-27T21:02:01.096952+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T19:45:32.004547+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_194531_a7c551
+    source: auto
+  - timestamp: '2026-01-27T21:02:01.096952+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+  text: 'Interactive tile picking phase before game starts.
+
+
+    **Feature:** Instead of automatically dealing tiles, show a grid of face-down
+    tiles. Players asynchronously click to claim tiles (no turn order needed during
+    picking).
+
+
+    **Flow:**
+
+    1. Game created → Show 28 face-down tiles in a grid
+
+    2. All players can click tiles simultaneously to claim them
+
+    3. Each player claims 6 tiles (their limit)
+
+    4. Once all players have 6 tiles, game begins with normal turn order
+
+    5. Remaining tiles become the boneyard (shown but inaccessible)
+
+
+    **Implementation:**
+
+    - Backend: Track which tiles are claimed by whom during picking phase
+
+    - Frontend: Grid of clickable face-down tiles, show claimed count per player
+
+    - WebSocket: Broadcast tile claims in real-time'
+  context:
+    repository_id: _local/barkak-domino
+    git_branch: master
+    task_id: task_023445_38f20a
+  perceived_complexity: 0.7
+  priority: medium
+  tags:
+  - frontend
+  - backend
+  - game-logic
+  - ux
+  - multiplayer
+  updated: '2026-01-27T21:02:01.096952+00:00'
+  resolution:
+    type: fixed
+    summary: Implemented interactive tile picking phase with PICKING status, face-down
+      grid, CPU background picking with delays, 60-second timeout with auto-assign,
+      and Leave Game button
+    approach: code
+    key_insight: CPU tile claiming must run as background task (asyncio.create_task)
+      to avoid blocking WebSocket message handler
+  completed: '2026-01-27T21:02:01.096952+00:00'
+- id: ann_030448_f007ab
+  type: idea
+  status: DONE
+  created: '2026-01-27T03:04:48.133424+00:00'
+  last_activity: '2026-01-27T21:10:49.054652+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T21:09:15.424654+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_210915_8628a1
+    source: auto
+  - timestamp: '2026-01-27T21:10:49.054652+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_210915_8628a1
+    source: auto
+  text: Consider drawing table beneath pieces - opaque background layer with semi-transparent
+    table surface for better visual depth
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.4
+  priority: low
+  tags:
+  - ui
+  - visual
+  - game-board
+  updated: '2026-01-27T21:10:49.054652+00:00'
+  resolution:
+    type: fixed
+    summary: Added TableSurface component with wood rim and green felt layers. GameBoard
+      now renders tiles on a realistic table surface with shadows. Responsive sizing
+      included.
+    approach: bugfix
+  completed: '2026-01-27T21:10:49.054652+00:00'

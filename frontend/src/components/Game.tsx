@@ -3,7 +3,6 @@ import { GameBoard } from './GameBoard';
 import { PlayerHand } from './PlayerHand';
 import { PlayerList } from './PlayerList';
 import { GameStatus } from './GameStatus';
-import { TableVisualization } from './TableVisualization';
 import { RoundOverlay } from './RoundOverlay';
 import { PassNotification } from './PassNotification';
 import { ReactionPicker } from './ReactionPicker';
@@ -219,11 +218,6 @@ export function Game() {
         )}
       </div>
 
-
-      {/* Table visualization - hidden on portrait mobile, shown on landscape/desktop */}
-      <div className="hidden landscape:block lg:block">
-        <TableVisualization />
-      </div>
 
       {/* Boneyard - hidden on mobile portrait */}
       <div className="hidden landscape:block lg:block">

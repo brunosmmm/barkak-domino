@@ -73,6 +73,7 @@ export interface GameState {
   round_number: number;
   match: MatchState | null;
   turn_timer: TurnTimer | null;
+  picking_timer: TurnTimer | null;  // Reuses same structure
   // Picking phase: grid positions (0-27) that still have tiles
   available_tile_positions?: number[];
 }

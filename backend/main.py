@@ -723,6 +723,17 @@ def create_player_game_view(game: Game, player_id: str) -> dict:
             "started_at": game.turn_started_at.isoformat() + "Z"
         }
 
+    # Calculate picking timer info
+    picking_timer_info = None
+    if game.picking_started_at and game.status == GameStatus.PICKING:
+        elapsed = (datetime.utcnow() - game.picking_started_at).total_seconds()
+        remaining = max(0, game.picking_timeout - elapsed)
+        picking_timer_info = {
+            "timeout": game.picking_timeout,
+            "remaining": round(remaining, 1),
+            "started_at": game.picking_started_at.isoformat() + "Z"
+        }
+
     return {
         "id": game.id,
         "variant": game.variant.value,
@@ -753,6 +764,7 @@ def create_player_game_view(game: Game, player_id: str) -> dict:
         "round_number": game.round_number,
         "match": match_state,
         "turn_timer": turn_timer_info,
+        "picking_timer": picking_timer_info,
         # Picking phase: grid positions that still have tiles (face-down)
         "available_tile_positions": list(game.picking_tiles.keys()) if game.status == GameStatus.PICKING else []
     }
