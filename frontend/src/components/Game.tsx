@@ -47,6 +47,12 @@ export function Game() {
   };
 
   const handleTileSelect = (domino: Domino) => {
+    // Auto-play on first move (empty board)
+    if (gameState.board.length === 0 && isYourTurn) {
+      playTile(domino, 'left');
+      return;
+    }
+
     if (selectedDomino?.left === domino.left && selectedDomino?.right === domino.right) {
       setSelectedDomino(null);
     } else {

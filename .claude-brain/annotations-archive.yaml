@@ -461,3 +461,77 @@ archived:
   related_tasks:
   - task_023816_e3e561
   completed: '2026-01-27T02:49:17.408609+00:00'
+- id: ann_175519_3e7cky253d43
+  type: work
+  status: DONE
+  created: '2026-01-27T17:55:19.744772+00:00'
+  last_activity: '2026-01-27T17:56:55.292293+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T17:55:28.290934+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_175528_35825c
+    source: auto
+  - timestamp: '2026-01-27T17:56:55.292293+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_175528_35825c
+    source: auto
+  text: Remove redundant "play first piece" button when user starts - auto-play clicked
+    domino instead
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - ux
+  - game-logic
+  - frontend
+  updated: '2026-01-27T17:56:55.292293+00:00'
+  resolution:
+    type: fixed
+    summary: Auto-play clicked domino when user starts first - removed redundant Play
+      First Tile button
+    approach: bugfix
+  completed: '2026-01-27T17:56:55.292293+00:00'
+- id: ann_031155_337516
+  type: idea
+  status: DONE
+  created: '2026-01-27T03:11:55.239599+00:00'
+  last_activity: '2026-01-27T18:07:37.434501+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T18:06:26.585823+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_180626_d189a8
+    source: auto
+  - timestamp: '2026-01-27T18:07:37.434501+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_180626_d189a8
+    source: auto
+  text: Session persistence - save gameId/playerId to localStorage and auto-reconnect
+    on page load. Allows players to refresh, close tab, or recover from accidental
+    navigation without losing their game.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.5
+  priority: high
+  tags:
+  - feature
+  - persistence
+  - ux
+  - mobile
+  updated: '2026-01-27T18:07:37.434501+00:00'
+  resolution:
+    type: fixed
+    summary: Session persistence via localStorage - auto-reconnect on page refresh/reload
+    approach: bugfix
+  completed: '2026-01-27T18:07:37.434501+00:00'

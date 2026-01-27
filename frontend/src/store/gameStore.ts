@@ -1,6 +1,46 @@
 import { create } from 'zustand';
 import type { GameState, Domino, ValidMove } from '../types';
 
+// Session persistence helpers
+const SESSION_KEY = 'barkak-domino-session';
+
+interface SessionData {
+  gameId: string;
+  playerId: string;
+  playerName: string;
+}
+
+function saveSession(data: SessionData): void {
+  try {
+    localStorage.setItem(SESSION_KEY, JSON.stringify(data));
+  } catch (e) {
+    console.warn('Failed to save session to localStorage:', e);
+  }
+}
+
+function loadSession(): SessionData | null {
+  try {
+    const stored = localStorage.getItem(SESSION_KEY);
+    if (stored) {
+      return JSON.parse(stored);
+    }
+  } catch (e) {
+    console.warn('Failed to load session from localStorage:', e);
+  }
+  return null;
+}
+
+function clearSession(): void {
+  try {
+    localStorage.removeItem(SESSION_KEY);
+  } catch (e) {
+    console.warn('Failed to clear session from localStorage:', e);
+  }
+}
+
+// Load saved session on startup
+const savedSession = loadSession();
+
 interface RoundOverInfo {
   roundNumber: number;
   winnerId: string | null;
@@ -60,10 +100,10 @@ interface GameStore {
 }
 
 export const useGameStore = create<GameStore>((set) => ({
-  // Initial state
-  gameId: null,
-  playerId: null,
-  playerName: null,
+  // Initial state - restore from localStorage if available
+  gameId: savedSession?.gameId ?? null,
+  playerId: savedSession?.playerId ?? null,
+  playerName: savedSession?.playerName ?? null,
   connected: false,
   gameState: null,
   validMoves: [],
@@ -77,8 +117,10 @@ export const useGameStore = create<GameStore>((set) => ({
   activeReactions: [],
 
   // Actions
-  setCredentials: (gameId, playerId, playerName) =>
-    set({ gameId, playerId, playerName }),
+  setCredentials: (gameId, playerId, playerName) => {
+    saveSession({ gameId, playerId, playerName });
+    set({ gameId, playerId, playerName });
+  },
 
   setConnected: (connected) => set({ connected }),
 
@@ -111,7 +153,8 @@ export const useGameStore = create<GameStore>((set) => ({
     activeReactions: state.activeReactions.filter(r => r.id !== id)
   })),
 
-  reset: () =>
+  reset: () => {
+    clearSession();
     set({
       gameId: null,
       playerId: null,
@@ -127,5 +170,6 @@ export const useGameStore = create<GameStore>((set) => ({
       lastPlayedTile: null,
       passNotification: null,
       activeReactions: [],
-    }),
+    });
+  },
 }));

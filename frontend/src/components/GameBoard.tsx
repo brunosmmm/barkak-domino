@@ -88,13 +88,6 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
         <div className="text-white/50 text-xl">
           {!isYourTurn ? (
             <span className="text-gray-400">Waiting for first move...</span>
-          ) : selectedDomino ? (
-            <button
-              onClick={onPlayLeft}
-              className="bg-neon-amber hover:bg-neon-amber-glow text-white px-6 py-3 rounded-lg font-medium transition-colors shadow-neon-amber"
-            >
-              Play First Tile
-            </button>
           ) : (
             <span className="text-neon-amber">Select a tile to play</span>
           )}
@@ -111,8 +104,8 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0 overflow-hidden">
       {/* Scrollable board container */}
-      <div className="w-full overflow-x-auto pb-2 flex-1 flex items-center">
-        <div className="flex items-center justify-start lg:justify-center min-w-max px-2 lg:px-4">
+      <div className="w-full overflow-x-auto pb-2 flex-1 flex items-center justify-center">
+        <div className="flex items-center justify-center min-w-max px-2 lg:px-4">
           {/* Left play zone */}
           {showLeftZone && (
             <button
