@@ -595,7 +595,7 @@ archived:
   type: bug
   status: DONE
   created: '2026-01-26T03:09:17.177608+00:00'
-  last_activity: '2026-01-27T18:47:08.290909+00:00'
+  last_activity: '2026-01-27T18:48:57.573645+00:00'
   activity_log:
   - timestamp: '2026-01-27T18:44:16.372978+00:00'
     action: status_change
@@ -628,3 +628,48 @@ archived:
       from 300ms to 150ms, removed stagger delay, and fixed timer memory leak'
     approach: bugfix
   completed: '2026-01-27T18:47:08.290909+00:00'
+  commit_refs:
+  - hash: 1b25cb54b924c3070087eba27704370f699b72c1
+    hash_short: 1b25cb5
+    linked_at: '2026-01-27T18:48:57.573645+00:00'
+    message: 'fix(frontend): reduce reaction display latency and fix timer leak
+
+
+      - Reduce animation duration from '
+- id: ann_030312_2dc982
+  type: todo
+  status: DONE
+  created: '2026-01-27T03:03:12.945099+00:00'
+  last_activity: '2026-01-27T18:52:02.219482+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T18:51:15.969148+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_185115_6fbf8d
+    source: auto
+  - timestamp: '2026-01-27T18:52:02.219482+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_185115_6fbf8d
+    source: auto
+  text: On mobile, increase the top bar height for better avatar visibility and ability
+    to display full player names
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.3
+  priority: low
+  tags:
+  - mobile
+  - ux
+  - ui
+  updated: '2026-01-27T18:52:02.219482+00:00'
+  resolution:
+    type: fixed
+    summary: 'Increased mobile top bar: larger avatars (32px→40px), show all player
+      names with truncation, increased padding and spacing'
+    approach: bugfix
+  completed: '2026-01-27T18:52:02.219482+00:00'

@@ -90,13 +90,13 @@ export function Game() {
   return (
     <div className="h-full flex flex-col lg:flex-row p-2 lg:p-4 gap-2 lg:gap-4 overflow-hidden">
       {/* Mobile header bar - shows turn order with avatars */}
-      <div className={`lg:hidden flex items-center justify-between p-2 flex-shrink-0 rounded-lg ${
+      <div className={`lg:hidden flex items-center justify-between p-3 flex-shrink-0 rounded-lg ${
         isYourTurn && gameState.status === 'playing'
           ? 'bg-neon-amber/20 border border-neon-amber'
           : 'glass-panel'
       }`}>
         {/* Player avatars in turn order */}
-        <div className="flex items-center gap-1 flex-1">
+        <div className="flex items-center gap-2 flex-1">
           {[...gameState.players].sort((a, b) => a.position - b.position).map((player) => {
             const isCurrent = player.id === gameState.current_turn;
             const avatarId = gameState.match?.avatar_ids?.[player.position] || (player.position + 1);
@@ -104,10 +104,10 @@ export function Game() {
             return (
               <div
                 key={player.id}
-                className={`relative flex flex-col items-center ${isCurrent ? 'scale-110' : 'opacity-50'}`}
+                className={`relative flex flex-col items-center ${isCurrent ? 'scale-110' : 'opacity-60'}`}
               >
                 <div
-                  className={`w-8 h-8 rounded-full overflow-hidden border-2 ${colors.border} ${
+                  className={`w-10 h-10 rounded-full overflow-hidden border-2 ${colors.border} ${
                     isCurrent ? 'shadow-lg animate-pulse' : ''
                   }`}
                 >
@@ -117,16 +117,16 @@ export function Game() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                {isCurrent && (
-                  <span className={`text-[8px] font-bold mt-0.5 ${colors.text}`}>
-                    {player.is_you ? 'YOU' : player.name.slice(0, 6)}
-                  </span>
-                )}
+                <span className={`text-[9px] font-medium mt-0.5 max-w-[48px] truncate ${
+                  isCurrent ? `font-bold ${colors.text}` : 'text-gray-400'
+                }`}>
+                  {player.is_you ? 'YOU' : player.name}
+                </span>
               </div>
             );
           })}
           {/* Arrow showing turn direction */}
-          <span className="text-gray-400 text-xs ml-1">→</span>
+          <span className="text-gray-400 text-sm ml-1">→</span>
         </div>
 
         {/* Status text */}

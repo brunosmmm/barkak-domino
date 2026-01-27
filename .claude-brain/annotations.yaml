@@ -345,24 +345,6 @@ annotations:
   - game-logic
   - ux
   - multiplayer
-- id: ann_030312_2dc982
-  type: todo
-  status: TODO
-  created: '2026-01-27T03:03:12.945099+00:00'
-  last_activity: '2026-01-27T03:03:12.945099+00:00'
-  activity_log: []
-  text: On mobile, increase the top bar height for better avatar visibility and ability
-    to display full player names
-  context:
-    repository_id: github.com/brunosmmm/barkak-domino
-    git_branch: main
-    task_id: task_025129_b61c77
-  perceived_complexity: 0.3
-  priority: low
-  tags:
-  - mobile
-  - ux
-  - ui
 - id: ann_030332_fc7bec
   type: idea
   status: TODO
