@@ -254,9 +254,10 @@ class GameRoomManager:
                 match.player_positions.append(player.id)
                 match.individual_scores.scores[player.id] = 0
 
-        # Randomly select 4 unique avatars from the pool of 20
+        # Randomly select 4 unique avatars from available pool (excluding removed avatars)
         if not match.avatar_ids:
-            match.avatar_ids = random.sample(range(1, 21), min(4, len(game.players)))
+            available_avatars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 20]
+            match.avatar_ids = random.sample(available_avatars, min(4, len(game.players)))
 
         # Set up teams for 4 players
         if len(game.players) == 4:
@@ -353,12 +354,17 @@ class GameRoomManager:
         if not game:
             return False
 
+        # Get the previous round winner to start the next round
+        previous_winner_id = None
+        if match.completed_rounds:
+            previous_winner_id = match.completed_rounds[-1].winner_id
+
         # Reset game state for new round
         start_new_round(game)
         game.round_number = len(match.completed_rounds) + 1
 
-        # Start the game (shuffle and deal)
-        start_game(game)
+        # Start the game - previous round winner starts
+        start_game(game, starting_player_id=previous_winner_id)
         match.touch()
         return True
 

@@ -53,10 +53,19 @@ def find_starting_player(game: Game) -> str:
     return best_player_id
 
 
-def start_game(game: Game) -> None:
-    """Initialize and start the game."""
+def start_game(game: Game, starting_player_id: str | None = None) -> None:
+    """Initialize and start the game.
+
+    Args:
+        game: The game to start
+        starting_player_id: Optional player ID to start. If None, uses highest double rule.
+    """
     shuffle_and_deal(game)
-    game.current_turn = find_starting_player(game)
+    # Use provided starting player (e.g., previous round winner) or find by highest double
+    if starting_player_id and game.get_player(starting_player_id):
+        game.current_turn = starting_player_id
+    else:
+        game.current_turn = find_starting_player(game)
     game.status = GameStatus.PLAYING
     game.board = []
     game.ends = BoardEnds()

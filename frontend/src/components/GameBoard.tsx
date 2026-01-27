@@ -58,24 +58,26 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
     const stableKey = `${globalIndex}-${played.domino.left}-${played.domino.right}`;
     const playerColors = getPlayerColorClasses();
 
-    // Negative margin to make tiles touch/overlap slightly (except first tile)
-    const marginStyle = isFirst ? {} : { marginLeft: '-2px' };
+    // Negative margin to make tiles touch (except first tile)
+    const marginStyle = isFirst ? {} : { marginLeft: '-1px' };
 
     return (
       <div
         key={stableKey}
         className={`flex-shrink-0 relative ${
           justPlayed
-            ? `z-10 scale-110 animate-pulse ring-3 ${playerColors.ring} ring-opacity-90 rounded-lg shadow-lg ${playerColors.shadow}`
+            ? `z-10 animate-pulse ring-2 ${playerColors.ring} ring-opacity-90 rounded shadow-lg ${playerColors.shadow}`
             : ''
         }`}
         style={marginStyle}
       >
-        <DominoTile
-          domino={played.domino}
-          horizontal={!isDouble}
-          size="md"
-        />
+        {/* Small tiles on mobile, medium on desktop */}
+        <div className="lg:hidden">
+          <DominoTile domino={played.domino} horizontal={!isDouble} size="sm" />
+        </div>
+        <div className="hidden lg:block">
+          <DominoTile domino={played.domino} horizontal={!isDouble} size="md" />
+        </div>
       </div>
     );
   };
@@ -107,10 +109,10 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
   const showRightZone = canShowPlayZones && canPlayOnSide('right');
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center p-4">
+    <div className="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0 overflow-hidden">
       {/* Scrollable board container */}
-      <div className="w-full overflow-x-auto pb-2">
-        <div className="flex items-center justify-center min-w-max px-4">
+      <div className="w-full overflow-x-auto pb-2 flex-1 flex items-center">
+        <div className="flex items-center justify-start lg:justify-center min-w-max px-2 lg:px-4">
           {/* Left play zone */}
           {showLeftZone && (
             <button

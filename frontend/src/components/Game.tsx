@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { GameBoard } from './GameBoard';
 import { PlayerHand } from './PlayerHand';
 import { PlayerList } from './PlayerList';
@@ -12,9 +13,18 @@ import { useGameStore } from '../store/gameStore';
 import { useWebSocket } from '../hooks/useWebSocket';
 import type { Domino } from '../types';
 
+// Player colors by position - matches TableVisualization
+const PLAYER_COLORS: Record<number, { border: string; text: string }> = {
+  0: { border: 'border-orange-400', text: 'text-orange-400' },
+  1: { border: 'border-purple-400', text: 'text-purple-400' },
+  2: { border: 'border-cyan-400', text: 'text-cyan-400' },
+  3: { border: 'border-lime-400', text: 'text-lime-400' },
+};
+
 export function Game() {
   const { gameState, selectedDomino, setSelectedDomino, reset } = useGameStore();
   const { playTile, passTurn, startGame, addCpu, nextRound, sendReaction, disconnect } = useWebSocket();
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   if (!gameState) {
     return (
@@ -72,9 +82,94 @@ export function Game() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row p-4 gap-4">
-      {/* Sidebar */}
-      <div className="lg:w-64 space-y-4">
+    <div className="h-full flex flex-col lg:flex-row p-2 lg:p-4 gap-2 lg:gap-4 overflow-hidden">
+      {/* Mobile header bar - shows turn order with avatars */}
+      <div className={`lg:hidden flex items-center justify-between p-2 flex-shrink-0 rounded-lg ${
+        isYourTurn && gameState.status === 'playing'
+          ? 'bg-neon-amber/20 border border-neon-amber'
+          : 'glass-panel'
+      }`}>
+        {/* Player avatars in turn order */}
+        <div className="flex items-center gap-1 flex-1">
+          {[...gameState.players].sort((a, b) => a.position - b.position).map((player) => {
+            const isCurrent = player.id === gameState.current_turn;
+            const avatarId = gameState.match?.avatar_ids?.[player.position] || (player.position + 1);
+            const colors = PLAYER_COLORS[player.position] || PLAYER_COLORS[0];
+            return (
+              <div
+                key={player.id}
+                className={`relative flex flex-col items-center ${isCurrent ? 'scale-110' : 'opacity-50'}`}
+              >
+                <div
+                  className={`w-8 h-8 rounded-full overflow-hidden border-2 ${colors.border} ${
+                    isCurrent ? 'shadow-lg animate-pulse' : ''
+                  }`}
+                >
+                  <img
+                    src={`/images/avatar-${avatarId}.png`}
+                    alt={player.name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                {isCurrent && (
+                  <span className={`text-[8px] font-bold mt-0.5 ${colors.text}`}>
+                    {player.is_you ? 'YOU' : player.name.slice(0, 6)}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+          {/* Arrow showing turn direction */}
+          <span className="text-gray-400 text-xs ml-1">→</span>
+        </div>
+
+        {/* Status text */}
+        <span className={`text-xs mx-2 ${isYourTurn ? 'text-neon-amber font-bold' : 'text-gray-400'}`}>
+          {gameState.status === 'waiting' ? 'Waiting...' :
+           gameState.status === 'finished' ? 'Done' :
+           isYourTurn ? 'GO!' : ''}
+        </span>
+
+        <button
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+          className="p-1.5 text-neon-amber hover:bg-neon-amber/20 rounded-lg transition-colors"
+          aria-label="Toggle menu"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {showMobileMenu ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
+      </div>
+
+      {/* Mobile menu overlay */}
+      {showMobileMenu && (
+        <div className="lg:hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm" onClick={() => setShowMobileMenu(false)}>
+          <div className="absolute top-16 left-2 right-2 space-y-2 max-h-[80vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+            <PlayerList />
+            <GameStatus
+              onPass={handlePass}
+              onStartGame={startGame}
+              onNewGame={handleNewGame}
+              onAddCpu={addCpu}
+              isYourTurn={isYourTurn}
+              canPass={canPass()}
+            />
+            <button
+              onClick={() => setShowMobileMenu(false)}
+              className="w-full bg-gray-700 text-white py-2 rounded-lg"
+            >
+              Close Menu
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Desktop Sidebar - hidden on mobile */}
+      <div className="hidden lg:block lg:w-64 space-y-4">
         <PlayerList />
         <GameStatus
           onPass={handlePass}
@@ -86,8 +181,8 @@ export function Game() {
         />
       </div>
 
-      {/* Main game area */}
-      <div className="flex-1 flex flex-col gap-4">
+      {/* Main game area - takes full height on mobile */}
+      <div className="flex-1 flex flex-col gap-2 lg:gap-4 min-h-0 overflow-hidden">
         <GameBoard
           onPlayLeft={handlePlayLeft}
           onPlayRight={handlePlayRight}
@@ -96,14 +191,22 @@ export function Game() {
         <PlayerHand
           onTileSelect={handleTileSelect}
           isYourTurn={isYourTurn}
+          canPass={canPass()}
+          onPass={handlePass}
         />
+
       </div>
 
-      {/* Table visualization (shows teams and scores) */}
-      <TableVisualization />
 
-      {/* Boneyard - face-down tiles shown for dramatic effect */}
-      <Boneyard />
+      {/* Table visualization - hidden on portrait mobile, shown on landscape/desktop */}
+      <div className="hidden landscape:block lg:block">
+        <TableVisualization />
+      </div>
+
+      {/* Boneyard - hidden on mobile portrait */}
+      <div className="hidden landscape:block lg:block">
+        <Boneyard />
+      </div>
 
       {/* Round over overlay */}
       <RoundOverlay

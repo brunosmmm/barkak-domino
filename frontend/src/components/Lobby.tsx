@@ -62,7 +62,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
+    <div className="h-full flex items-center justify-center p-4 overflow-auto">
       <div className="bg-bar-dark/90 rounded-2xl p-8 w-full max-w-md backdrop-blur-md shadow-2xl border border-neon-amber/30">
         {/* Logo */}
         <div className="flex justify-center mb-6">

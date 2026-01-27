@@ -169,21 +169,53 @@ annotations:
   created: '2026-01-26T01:09:08.778713+00:00'
   last_activity: '2026-01-26T01:09:08.778713+00:00'
   activity_log: []
-  text: "## Visual Distinction for Multiple Play Options\n\nWhen a player has a domino\
-    \ that can be played on both ends of the board, make it visually clear that there\
-    \ are multiple options.\n\n### Scenarios:\n1. **Same tile can go left OR right**\
-    \ - Board ends are different values, but the selected tile matches both\n2. **Tile\
-    \ orientation matters** - The tile could be flipped to match different patterns\n\
-    \n### UI Ideas:\n- Highlight both ends of the board when a playable tile is selected\n\
-    - Show arrows or indicators pointing to valid play spots\n- Animate/pulse the\
-    \ valid board ends\n- Color-code: green glow on valid ends\n- Show a split button:\
-    \ \"Play Left \u2190 | \u2192 Play Right\"\n- When hovering over an end, show\
-    \ preview of how the tile would be placed\n\n### Current Behavior:\n- User must\
-    \ manually choose left/right after selecting a tile\n- Not obvious when both options\
-    \ are available\n\n### Suggested Implementation:\n1. When tile is selected, calculate\
-    \ which ends it can play on\n2. If multiple ends valid, show both with visual\
-    \ indicators\n3. Clicking on a highlighted end plays there directly\n4. Alternative:\
-    \ show \"Choose side\" modal with previews"
+  text: '## Visual Distinction for Multiple Play Options
+
+
+    When a player has a domino that can be played on both ends of the board, make
+    it visually clear that there are multiple options.
+
+
+    ### Scenarios:
+
+    1. **Same tile can go left OR right** - Board ends are different values, but the
+    selected tile matches both
+
+    2. **Tile orientation matters** - The tile could be flipped to match different
+    patterns
+
+
+    ### UI Ideas:
+
+    - Highlight both ends of the board when a playable tile is selected
+
+    - Show arrows or indicators pointing to valid play spots
+
+    - Animate/pulse the valid board ends
+
+    - Color-code: green glow on valid ends
+
+    - Show a split button: "Play Left ← | → Play Right"
+
+    - When hovering over an end, show preview of how the tile would be placed
+
+
+    ### Current Behavior:
+
+    - User must manually choose left/right after selecting a tile
+
+    - Not obvious when both options are available
+
+
+    ### Suggested Implementation:
+
+    1. When tile is selected, calculate which ends it can play on
+
+    2. If multiple ends valid, show both with visual indicators
+
+    3. Clicking on a highlighted end plays there directly
+
+    4. Alternative: show "Choose side" modal with previews'
   context:
     repository_id: _local/barkak-domino
     task_id: task_010827_7fa151
@@ -273,16 +305,34 @@ annotations:
   created: '2026-01-26T02:36:56.237057+00:00'
   last_activity: '2026-01-26T02:36:56.237057+00:00'
   activity_log: []
-  text: "Interactive tile picking phase before game starts.\n\n**Feature:** Instead\
-    \ of automatically dealing tiles, show a grid of face-down tiles. Players asynchronously\
-    \ click to claim tiles (no turn order needed during picking).\n\n**Flow:**\n1.\
-    \ Game created \u2192 Show 28 face-down tiles in a grid\n2. All players can click\
-    \ tiles simultaneously to claim them\n3. Each player claims 6 tiles (their limit)\n\
-    4. Once all players have 6 tiles, game begins with normal turn order\n5. Remaining\
-    \ tiles become the boneyard (shown but inaccessible)\n\n**Implementation:**\n\
-    - Backend: Track which tiles are claimed by whom during picking phase\n- Frontend:\
-    \ Grid of clickable face-down tiles, show claimed count per player\n- WebSocket:\
-    \ Broadcast tile claims in real-time"
+  text: 'Interactive tile picking phase before game starts.
+
+
+    **Feature:** Instead of automatically dealing tiles, show a grid of face-down
+    tiles. Players asynchronously click to claim tiles (no turn order needed during
+    picking).
+
+
+    **Flow:**
+
+    1. Game created → Show 28 face-down tiles in a grid
+
+    2. All players can click tiles simultaneously to claim them
+
+    3. Each player claims 6 tiles (their limit)
+
+    4. Once all players have 6 tiles, game begins with normal turn order
+
+    5. Remaining tiles become the boneyard (shown but inaccessible)
+
+
+    **Implementation:**
+
+    - Backend: Track which tiles are claimed by whom during picking phase
+
+    - Frontend: Grid of clickable face-down tiles, show claimed count per player
+
+    - WebSocket: Broadcast tile claims in real-time'
   context:
     repository_id: _local/barkak-domino
     git_branch: master
@@ -313,3 +363,95 @@ annotations:
   - websocket
   - performance
   - ux
+- id: ann_030312_2dc982
+  type: todo
+  status: TODO
+  created: '2026-01-27T03:03:12.945099+00:00'
+  last_activity: '2026-01-27T03:03:12.945099+00:00'
+  activity_log: []
+  text: On mobile, increase the top bar height for better avatar visibility and ability
+    to display full player names
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.3
+  priority: low
+  tags:
+  - mobile
+  - ux
+  - ui
+- id: ann_030332_fc7bec
+  type: idea
+  status: TODO
+  created: '2026-01-27T03:03:32.387483+00:00'
+  last_activity: '2026-01-27T03:03:32.387483+00:00'
+  activity_log: []
+  text: Player should have maximum time to play turn, otherwise random piece gets
+    auto-played (turn timer feature)
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.6
+  priority: medium
+  tags:
+  - gameplay
+  - feature
+  - timer
+- id: ann_030448_f007ab
+  type: idea
+  status: TODO
+  created: '2026-01-27T03:04:48.133424+00:00'
+  last_activity: '2026-01-27T03:04:48.133424+00:00'
+  activity_log: []
+  text: Consider drawing table beneath pieces - opaque background layer with semi-transparent
+    table surface for better visual depth
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.4
+  priority: low
+  tags:
+  - ui
+  - visual
+  - game-board
+- id: ann_030602_b03768
+  type: bug
+  status: TODO
+  created: '2026-01-27T03:06:02.762188+00:00'
+  last_activity: '2026-01-27T03:06:02.762188+00:00'
+  activity_log: []
+  text: When game is created with 3 CPU players, it auto-starts immediately (should
+    wait for user to click Start?)
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.35
+  priority: medium
+  tags:
+  - gameplay
+  - lobby
+  - cpu
+- id: ann_031155_337516
+  type: idea
+  status: TODO
+  created: '2026-01-27T03:11:55.239599+00:00'
+  last_activity: '2026-01-27T03:11:55.239599+00:00'
+  activity_log: []
+  text: Session persistence - save gameId/playerId to localStorage and auto-reconnect
+    on page load. Allows players to refresh, close tab, or recover from accidental
+    navigation without losing their game.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_025129_b61c77
+  perceived_complexity: 0.5
+  priority: high
+  tags:
+  - feature
+  - persistence
+  - ux
+  - mobile

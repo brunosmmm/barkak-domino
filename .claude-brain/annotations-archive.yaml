@@ -206,10 +206,9 @@ archived:
   updated: '2026-01-26T01:45:27.334162+00:00'
   resolution:
     type: fixed
-    summary: "Implemented reaction/taunt emoji system with 12 emojis (\U0001F602\U0001F624\
-      \U0001F525\U0001F480\U0001F921\U0001F451\U0001F3AF\U0001F4AA\U0001F608\U0001F64F\
-      \U0001F44E\U0001F340), floating display that shows player name, 2-second cooldown\
-      \ between reactions, picker button in bottom right during gameplay"
+    summary: Implemented reaction/taunt emoji system with 12 emojis (😂😤🔥💀🤡👑🎯💪😈🙏👎🍀),
+      floating display that shows player name, 2-second cooldown between reactions,
+      picker button in bottom right during gameplay
     approach: bugfix
   related_tasks:
   - task_014011_1dfd09
@@ -423,3 +422,42 @@ archived:
   related_tasks:
   - task_031843_d81515
   completed: '2026-01-26T03:23:47.710333+00:00'
+- id: ann_191031_5a7586
+  type: bug
+  status: DONE
+  created: '2026-01-26T19:10:31.238857+00:00'
+  last_activity: '2026-01-27T02:49:17.408609+00:00'
+  activity_log:
+  - timestamp: '2026-01-27T02:38:16.849784+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_023816_e3e561
+    source: auto
+  - timestamp: '2026-01-27T02:49:17.408609+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_023816_e3e561
+    source: auto
+  text: Game is unplayable on phone in portrait mode - needs responsive layout fixes
+    for mobile portrait orientation
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.55
+  priority: high
+  tags:
+  - mobile
+  - responsive
+  - ux
+  updated: '2026-01-27T02:49:17.408609+00:00'
+  resolution:
+    type: fixed
+    summary: Fixed mobile portrait mode layout - sidebar hidden behind hamburger menu,
+      viewport locked with 100dvh, tiles scaled down, no more scrolling/background
+      shifting
+    approach: bugfix
+  related_tasks:
+  - task_023816_e3e561
+  completed: '2026-01-27T02:49:17.408609+00:00'

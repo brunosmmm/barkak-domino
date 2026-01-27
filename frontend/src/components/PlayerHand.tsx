@@ -5,9 +5,11 @@ import type { Domino } from '../types';
 interface PlayerHandProps {
   onTileSelect: (domino: Domino) => void;
   isYourTurn: boolean;
+  canPass?: boolean;
+  onPass?: () => void;
 }
 
-export function PlayerHand({ onTileSelect, isYourTurn }: PlayerHandProps) {
+export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: PlayerHandProps) {
   const { gameState, selectedDomino } = useGameStore();
 
   if (!gameState) return null;
@@ -37,26 +39,50 @@ export function PlayerHand({ onTileSelect, isYourTurn }: PlayerHandProps) {
   };
 
   return (
-    <div className="glass-panel p-3 max-w-2xl mx-auto">
-      <div className="flex items-center justify-center gap-4">
-        <span className="text-neon-amber-glow text-sm font-medium neon-text whitespace-nowrap">
+    <div className="glass-panel p-2 lg:p-3 mx-auto flex-shrink-0 relative z-20">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4">
+        <span className="text-neon-amber-glow text-xs lg:text-sm font-medium neon-text whitespace-nowrap">
           Your Hand ({hand.length})
         </span>
-        <div className="flex flex-wrap gap-2 justify-center">
+        <div className="flex flex-wrap gap-1 lg:gap-2 justify-center">
           {hand.map((domino, index) => (
-            <DominoTile
-              key={`${domino.left}-${domino.right}-${index}`}
-              domino={domino}
-              selected={isDominoSelected(domino)}
-              disabled={!canPlay(domino)}
-              onClick={() => canPlay(domino) && onTileSelect(domino)}
-              size="md"
-            />
+            <div key={`${domino.left}-${domino.right}-${index}`}>
+              {/* Small tiles on mobile, medium on desktop */}
+              <div className="lg:hidden">
+                <DominoTile
+                  domino={domino}
+                  selected={isDominoSelected(domino)}
+                  disabled={!canPlay(domino)}
+                  onClick={() => canPlay(domino) && onTileSelect(domino)}
+                  size="sm"
+                />
+              </div>
+              <div className="hidden lg:block">
+                <DominoTile
+                  domino={domino}
+                  selected={isDominoSelected(domino)}
+                  disabled={!canPlay(domino)}
+                  onClick={() => canPlay(domino) && onTileSelect(domino)}
+                  size="md"
+                />
+              </div>
+            </div>
           ))}
         </div>
       </div>
       {hand.length === 0 && (
         <p className="text-gray-400 text-center py-2">No tiles remaining</p>
+      )}
+
+      {/* Pass button - appears when player must pass */}
+      {isYourTurn && canPass && onPass && (
+        <button
+          onClick={onPass}
+          className="mt-2 w-full bg-orange-600 active:bg-orange-500 text-white py-3 rounded-lg font-bold
+                     shadow-lg shadow-orange-500/30 border-2 border-orange-400"
+        >
+          ⏭️ PASS TURN
+        </button>
       )}
     </div>
   );

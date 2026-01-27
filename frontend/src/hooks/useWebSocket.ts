@@ -133,8 +133,10 @@ export function useWebSocket() {
       case 'turn_passed':
         console.log('Turn passed by', message.player_id);
         // Find the player name and show a mocking notification
-        const passingPlayer = gameState?.players.find(p => p.id === message.player_id);
-        const playerName = passingPlayer?.name || 'Someone';
+        // Use getState() to get the latest state, not the stale closure value
+        const currentState = useGameStore.getState().gameState;
+        const passingPlayer = currentState?.players.find(p => p.id === message.player_id);
+        const playerName = passingPlayer?.name || message.player_name || 'Someone';
         const isYou = passingPlayer?.is_you;
 
         // Pick a random mocking message
