@@ -63,8 +63,9 @@ function PlayerAvatar({
           {player.tile_count}
         </div>
       </div>
-      {/* Full name */}
-      <span className={`text-xs lg:text-sm ${colors.text} ${player.is_you ? 'font-bold' : ''} whitespace-nowrap`}>
+      {/* Full name with backdrop */}
+      <span className={`text-xs lg:text-sm ${colors.text} font-bold whitespace-nowrap
+        bg-black/60 px-2 py-0.5 rounded-md`}>
         {player.is_you ? 'YOU' : player.name}
       </span>
     </div>

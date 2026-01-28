@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useGameStore } from '../store/gameStore';
+import { DominoTile } from './DominoTile';
 
 // Player colors by position - matches TableVisualization
 const PLAYER_COLORS: Record<number, { bg: string; border: string; text: string }> = {
@@ -182,19 +183,9 @@ export function TilePicking({ onClaimTile }: TilePickingProps) {
                 key={`${domino.left}-${domino.right}-${idx}`}
                 data-testid={`picked-tile-${idx}`}
                 data-domino={`${domino.left}-${domino.right}`}
-                className={`
-                  w-12 h-20 sm:w-14 sm:h-24 rounded-lg bg-gradient-to-br from-amber-100 to-amber-200
-                  border-2 ${myColors.border} shadow-md flex flex-col items-center justify-center
-                  animate-fade-in
-                `}
+                className="animate-fade-in"
               >
-                <div className="flex-1 flex items-center justify-center">
-                  <DominoPips value={domino.left} />
-                </div>
-                <div className="w-8 h-px bg-amber-400/60" />
-                <div className="flex-1 flex items-center justify-center">
-                  <DominoPips value={domino.right} />
-                </div>
+                <DominoTile domino={domino} size="sm" />
               </div>
             ))}
           </div>
@@ -208,38 +199,6 @@ export function TilePicking({ onClaimTile }: TilePickingProps) {
           : `${availableCount} tiles remaining`
         }
       </p>
-    </div>
-  );
-}
-
-// Simple pip display component
-function DominoPips({ value }: { value: number }) {
-  // Pip positions for each value (normalized 0-1 coordinates)
-  const pipPositions: Record<number, [number, number][]> = {
-    0: [],
-    1: [[0.5, 0.5]],
-    2: [[0.25, 0.25], [0.75, 0.75]],
-    3: [[0.25, 0.25], [0.5, 0.5], [0.75, 0.75]],
-    4: [[0.25, 0.25], [0.75, 0.25], [0.25, 0.75], [0.75, 0.75]],
-    5: [[0.25, 0.25], [0.75, 0.25], [0.5, 0.5], [0.25, 0.75], [0.75, 0.75]],
-    6: [[0.25, 0.25], [0.75, 0.25], [0.25, 0.5], [0.75, 0.5], [0.25, 0.75], [0.75, 0.75]],
-  };
-
-  const pips = pipPositions[value] || [];
-
-  return (
-    <div className="relative w-6 h-6 sm:w-8 sm:h-8">
-      {pips.map(([x, y], i) => (
-        <div
-          key={i}
-          className="absolute w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-slate-800"
-          style={{
-            left: `${x * 100}%`,
-            top: `${y * 100}%`,
-            transform: 'translate(-50%, -50%)',
-          }}
-        />
-      ))}
     </div>
   );
 }

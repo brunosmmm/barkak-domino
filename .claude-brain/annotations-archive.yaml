@@ -1056,3 +1056,151 @@ archived:
     summary: Disabled fullyParallel and limited workers to 1 to prevent resource contention;
       root cause was createAndStartGame not handling auto-start
   completed: '2026-01-27T23:31:13.135295+00:00'
+- id: ann_010919_3e7ckyeca421
+  type: bug
+  status: DONE
+  created: '2026-01-28T01:09:19.982885+00:00'
+  last_activity: '2026-01-28T01:09:45.490886+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T01:09:28.495478+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_010928_1b5bea
+    source: auto
+  - timestamp: '2026-01-28T01:09:45.490886+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_010928_1b5bea
+    source: auto
+  text: Fix layout shift in mobile header when turn indicator appears. The conditional
+    border class causes 1px shift.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    file: frontend/src/components/Game.tsx
+    line: 94
+    task_id: task_010127_893c75
+  perceived_complexity: 0.2
+  priority: medium
+  updated: '2026-01-28T01:09:45.490886+00:00'
+  resolution:
+    type: fixed
+    summary: Added transparent border to mobile header bar base classes to prevent
+      1px layout shift when turn indicator activates
+    approach: bugfix
+  completed: '2026-01-28T01:09:45.490886+00:00'
+- id: ann_011103_3e7ckyad6c57
+  type: bug
+  status: DONE
+  created: '2026-01-28T01:11:03.343716+00:00'
+  last_activity: '2026-01-28T01:12:34.668398+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T01:11:10.158779+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_011109_e6f46a
+    source: auto
+  - timestamp: '2026-01-28T01:12:34.668398+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_011109_e6f46a
+    source: auto
+  text: 'Debug: Game stuck in bad state - player cannot play after timer expired.
+    Investigate turn timer auto-pass mechanism.'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_011022_206857
+  perceived_complexity: 0.5
+  priority: high
+  tags:
+  - timer
+  - auto-pass
+  - state
+  updated: '2026-01-28T01:12:34.668398+00:00'
+  resolution:
+    type: fixed
+    summary: Fixed game stuck state after timer expiration - selectedDomino now cleared
+      when turn changes or tile auto-played, errors cleared on state update
+    approach: bugfix
+  completed: '2026-01-28T01:12:34.668398+00:00'
+- id: ann_011434_3e7cky54bbea
+  type: work
+  status: DONE
+  created: '2026-01-28T01:14:34.182080+00:00'
+  last_activity: '2026-01-28T01:15:18.757381+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T01:14:40.313317+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_011440_782a5a
+    source: auto
+  - timestamp: '2026-01-28T01:15:18.757381+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_011440_782a5a
+    source: auto
+  text: Unify tile styles - use DominoTile component in picking phase instead of custom
+    DominoPips
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    file: frontend/src/components/TilePicking.tsx
+    task_id: task_011109_e6f46a
+  perceived_complexity: 0.35
+  updated: '2026-01-28T01:15:18.757381+00:00'
+  resolution:
+    type: fixed
+    summary: Replaced custom DominoPips with DominoTile component in picking phase
+      - tiles now have consistent ivory/bone styling with 3D dots
+    approach: refactoring
+  completed: '2026-01-28T01:15:18.757381+00:00'
+- id: ann_011535_3e7cky84ecee
+  type: bug
+  status: DONE
+  created: '2026-01-28T01:15:35.958741+00:00'
+  last_activity: '2026-01-28T01:20:22.834346+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T01:19:19.335100+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_011919_e8455d
+    source: auto
+  - timestamp: '2026-01-28T01:20:22.834346+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_011919_e8455d
+    source: auto
+  text: 'Two UI bugs persist after attempted fixes:
+
+    1. Green announcement banner at top causes table layout shift when appearing
+
+    2. Semi-opaque panel behind player avatars in mobile header not visible
+
+
+    Need to investigate why previous fixes didn''t work.'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_011440_782a5a
+  perceived_complexity: 0.4
+  priority: medium
+  tags:
+  - ui
+  - layout
+  - mobile
+  updated: '2026-01-28T01:20:22.834346+00:00'
+  resolution:
+    type: fixed
+    summary: Fixed green banner layout shift by always rendering with opacity toggle,
+      fixed avatar backdrop by moving opacity to content only
+    approach: bugfix
+  completed: '2026-01-28T01:20:22.834346+00:00'

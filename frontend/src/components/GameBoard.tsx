@@ -111,15 +111,16 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
 
   return (
     <div className="flex-1 flex flex-col items-center justify-center p-2 lg:p-4 min-h-0 overflow-hidden" data-testid="game-board" data-board-tiles={board.length}>
-      {/* "Choose a side" prompt when both options available */}
-      {canPlayBothSides && (
-        <div className="mb-2 px-4 py-1.5 bg-gradient-to-r from-green-500/20 via-emerald-500/30 to-green-500/20
-                        border border-green-400/50 rounded-full animate-pulse z-10">
-          <span className="text-green-300 text-sm font-medium">
-            Can play on both sides! Choose one
-          </span>
-        </div>
-      )}
+      {/* "Choose a side" prompt - always reserve space to prevent layout shift */}
+      <div className={`mb-2 px-4 py-1.5 rounded-full z-10 transition-opacity duration-200 ${
+        canPlayBothSides
+          ? 'bg-gradient-to-r from-green-500/20 via-emerald-500/30 to-green-500/20 border border-green-400/50 animate-pulse opacity-100'
+          : 'opacity-0'
+      }`}>
+        <span className="text-green-300 text-sm font-medium">
+          Can play on both sides! Choose one
+        </span>
+      </div>
 
       {/* Table surface with scrollable board */}
       <div className="w-full flex-1 min-h-0">

@@ -91,10 +91,10 @@ export function Game() {
   return (
     <div className="h-full flex flex-col lg:flex-row p-2 lg:p-4 gap-2 lg:gap-4 overflow-hidden" data-testid="game-container" data-game-status={gameState.status} data-game-id={gameState.id}>
       {/* Mobile header bar - shows turn order with avatars */}
-      <div className={`lg:hidden flex items-center justify-between p-3 flex-shrink-0 rounded-lg ${
+      <div className={`lg:hidden flex items-center justify-between p-3 flex-shrink-0 rounded-lg border ${
         isYourTurn && gameState.status === 'playing'
-          ? 'bg-neon-amber/20 border border-neon-amber'
-          : 'glass-panel'
+          ? 'bg-neon-amber/20 border-neon-amber'
+          : 'glass-panel border-transparent'
       }`}>
         {/* Player avatars in turn order */}
         <div className="flex items-center gap-2 flex-1">
@@ -105,11 +105,11 @@ export function Game() {
             return (
               <div
                 key={player.id}
-                className={`relative flex flex-col items-center ${isCurrent ? 'scale-110' : 'opacity-60'}`}
+                className={`relative flex flex-col items-center px-1.5 py-1 rounded-lg bg-black/50 ${isCurrent ? 'scale-110' : ''}`}
               >
                 <div
                   className={`w-10 h-10 rounded-full overflow-hidden border-2 ${colors.border} ${
-                    isCurrent ? 'shadow-lg animate-pulse' : ''
+                    isCurrent ? 'shadow-lg animate-pulse' : 'opacity-60'
                   }`}
                 >
                   <img
@@ -118,8 +118,8 @@ export function Game() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className={`text-[9px] font-medium mt-0.5 max-w-[48px] truncate ${
-                  isCurrent ? `font-bold ${colors.text}` : 'text-gray-400'
+                <span className={`text-[10px] font-semibold mt-0.5 max-w-[48px] truncate ${
+                  isCurrent ? `font-bold ${colors.text}` : 'text-gray-300 opacity-80'
                 }`}>
                   {player.is_you ? 'YOU' : player.name}
                 </span>

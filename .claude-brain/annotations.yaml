@@ -278,7 +278,7 @@ annotations:
   type: idea
   status: INPROGRESS
   created: '2026-01-27T21:39:22.939389+00:00'
-  last_activity: '2026-01-28T01:01:27.948764+00:00'
+  last_activity: '2026-01-28T01:05:28.557758+00:00'
   activity_log:
   - timestamp: '2026-01-27T21:50:31.276094+00:00'
     action: status_change
@@ -349,3 +349,11 @@ annotations:
   - debugging
   - umbrella
   updated: '2026-01-28T01:01:27.948764+00:00'
+  commit_refs:
+  - hash: bf9666b35bd980bca7eb5aad8c114b21bbd64ee9
+    hash_short: bf9666b
+    linked_at: '2026-01-28T01:05:28.557758+00:00'
+    message: 'fix(e2e): fix state extractor and reaction cooldown tests
+
+
+      - State extractor now checks picked-tiles'

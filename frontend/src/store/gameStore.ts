@@ -124,7 +124,29 @@ export const useGameStore = create<GameStore>((set) => ({
 
   setConnected: (connected) => set({ connected }),
 
-  setGameState: (gameState) => set({ gameState }),
+  setGameState: (gameState) => set((state) => {
+    // Clear selected domino if it's no longer in our hand (e.g., auto-played on timeout)
+    // or if it's no longer our turn
+    let selectedDomino = state.selectedDomino;
+    const isOurTurn = gameState.current_turn === gameState.your_player_id;
+
+    if (selectedDomino) {
+      if (!isOurTurn) {
+        // Not our turn anymore, clear selection
+        selectedDomino = null;
+      } else if (gameState.your_hand) {
+        // Still our turn, but check if tile was auto-played
+        const stillHaveIt = gameState.your_hand.some(
+          d => d.left === selectedDomino!.left && d.right === selectedDomino!.right
+        );
+        if (!stillHaveIt) {
+          selectedDomino = null;
+        }
+      }
+    }
+    // Clear error on successful state update (stale errors like "don't have that domino")
+    return { gameState, selectedDomino, error: null };
+  }),
 
   setValidMoves: (validMoves) => set({ validMoves }),
 
