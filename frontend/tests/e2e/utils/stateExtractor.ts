@@ -59,9 +59,11 @@ export async function extractGameState(page: Page): Promise<ExtractedGameState> 
     const statusAttr = getAttr('[data-testid="game-container"]', 'data-game-status');
     const status = (statusAttr as 'waiting' | 'picking' | 'playing' | 'finished') || 'waiting';
 
-    // Get hand tiles
-    const handElements = document.querySelectorAll('[data-testid="hand-tiles"] > div[data-domino]');
+    // Get hand tiles (check both regular hand and picking phase preview)
     const myHand: { left: number; right: number }[] = [];
+
+    // During playing phase: hand-tiles container
+    const handElements = document.querySelectorAll('[data-testid="hand-tiles"] > div[data-domino]');
     handElements.forEach((el) => {
       const domino = el.getAttribute('data-domino');
       if (domino) {
@@ -69,6 +71,18 @@ export async function extractGameState(page: Page): Promise<ExtractedGameState> 
         myHand.push({ left, right });
       }
     });
+
+    // During picking phase: picked-tiles-container
+    if (myHand.length === 0) {
+      const pickedElements = document.querySelectorAll('[data-testid="picked-tiles-container"] > div[data-domino]');
+      pickedElements.forEach((el) => {
+        const domino = el.getAttribute('data-domino');
+        if (domino) {
+          const [left, right] = domino.split('-').map(Number);
+          myHand.push({ left, right });
+        }
+      });
+    }
 
     // Get board tile count
     const boardTilesAttr = getAttr('[data-testid="game-board"]', 'data-board-tiles');

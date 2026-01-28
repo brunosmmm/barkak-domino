@@ -68,7 +68,8 @@ test.describe('Reactions', () => {
     await expect(page.locator(selectors.reactionToggleBtn)).toHaveAttribute('data-cooldown', 'true');
 
     // Should not be able to open popup during cooldown
-    await page.locator(selectors.reactionToggleBtn).click();
+    // Use force:true to click immediately without waiting for button to be enabled
+    await page.locator(selectors.reactionToggleBtn).click({ force: true });
     await page.waitForTimeout(100);
 
     await expect(page.locator(selectors.reactionPopup)).not.toBeVisible();
