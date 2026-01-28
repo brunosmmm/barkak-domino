@@ -357,3 +357,22 @@ annotations:
 
 
       - State extractor now checks picked-tiles'
+- id: ann_012523_3e7ckye8cb2b
+  type: todo
+  status: TODO
+  created: '2026-01-28T01:25:23.858337+00:00'
+  last_activity: '2026-01-28T01:25:23.858337+00:00'
+  activity_log: []
+  text: Allow non-CPU players to select an avatar from available avatars when joining
+    a game. Currently avatars are auto-assigned by position.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_012145_4f94a3
+  perceived_complexity: 0.55
+  priority: medium
+  tags:
+  - feature
+  - ui
+  - multiplayer
+  - avatar

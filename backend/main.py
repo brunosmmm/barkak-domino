@@ -22,6 +22,9 @@ import random
 # Track games with active CPU picking tasks to prevent concurrent task spawning
 _cpu_picking_active: set[str] = set()
 
+# Test mode - set TEST_MODE=1 to make CPUs pick instantly
+TEST_MODE = os.environ.get("TEST_MODE", "0") == "1"
+
 
 async def cleanup_task():
     """Background task to periodically clean up stale games."""
@@ -588,8 +591,10 @@ async def process_cpu_turns(game_id: str):
 
     while is_cpu_turn(game):
         # Add a random delay for UX (feels more human-like)
-        delay = random.uniform(5.0, 20.0)
-        await asyncio.sleep(delay)
+        # In TEST_MODE, play instantly
+        if not TEST_MODE:
+            delay = random.uniform(5.0, 20.0)
+            await asyncio.sleep(delay)
 
         cpu_player_id = game.current_turn
         success, message, move = await execute_cpu_turn(game, cpu_player_id)
@@ -647,8 +652,10 @@ async def process_cpu_tile_claims(game_id: str):
             cpu = random.choice(cpus_needing_tiles)
 
             # Delay before picking (1.5-3 seconds) - gives humans time to pick
-            delay = random.uniform(1.5, 3.0)
-            await asyncio.sleep(delay)
+            # In TEST_MODE, pick instantly
+            if not TEST_MODE:
+                delay = random.uniform(1.5, 3.0)
+                await asyncio.sleep(delay)
 
             # Re-check game status after delay
             game = room_manager.get_game(game_id)

@@ -23,9 +23,22 @@ const PLAYER_COLORS: Record<number, { border: string; text: string }> = {
 };
 
 export function Game() {
-  const { gameState, selectedDomino, setSelectedDomino, reset } = useGameStore();
+  const { gameState, selectedDomino, setSelectedDomino, reset, addReaction } = useGameStore();
   const { playTile, passTurn, startGame, addCpu, nextRound, claimTile, sendReaction, disconnect } = useWebSocket();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  // Send reaction with optimistic update (show immediately, don't wait for server roundtrip)
+  const handleSendReaction = (emoji: string) => {
+    // Optimistically add reaction locally for immediate feedback
+    if (gameState) {
+      const you = gameState.players.find(p => p.is_you);
+      if (you) {
+        addReaction(you.id, 'You', emoji);
+      }
+    }
+    // Also send to server for other players
+    sendReaction(emoji);
+  };
 
   if (!gameState) {
     return (
@@ -239,7 +252,7 @@ export function Game() {
       {/* Reaction picker button (bottom right, above player hand) */}
       {gameState.status === 'playing' && (
         <div className="fixed bottom-24 lg:bottom-4 right-4 z-40">
-          <ReactionPicker onReaction={sendReaction} />
+          <ReactionPicker onReaction={handleSendReaction} />
         </div>
       )}
     </div>

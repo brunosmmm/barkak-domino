@@ -32,10 +32,13 @@ export function ReactionDisplay() {
   if (activeReactions.length === 0) return null;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-40 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[100] overflow-hidden" data-testid="reaction-display">
       {activeReactions.map((reaction, index) => (
         <div
           key={reaction.id}
+          data-testid={`reaction-bubble-${index}`}
+          data-player-id={reaction.playerId}
+          data-emoji={reaction.emoji}
           className="absolute animate-bounce"
           style={{
             // Stagger positions based on index (no animation delay)

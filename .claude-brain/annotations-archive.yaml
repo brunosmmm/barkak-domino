@@ -1165,7 +1165,7 @@ archived:
   type: bug
   status: DONE
   created: '2026-01-28T01:15:35.958741+00:00'
-  last_activity: '2026-01-28T01:20:22.834346+00:00'
+  last_activity: '2026-01-28T01:24:42.951119+00:00'
   activity_log:
   - timestamp: '2026-01-28T01:19:19.335100+00:00'
     action: status_change
@@ -1204,3 +1204,47 @@ archived:
       fixed avatar backdrop by moving opacity to content only
     approach: bugfix
   completed: '2026-01-28T01:20:22.834346+00:00'
+  commit_refs:
+  - hash: 3958acf043e6ff960731eb699a536b5d05e4df9b
+    hash_short: 3958acf
+    linked_at: '2026-01-28T01:24:42.951119+00:00'
+    message: 'fix(ui): improve game UI polish and fix state bugs
+
+
+      - Fix layout shift from conditional banners (gre'
+- id: ann_012548_3e7ckyd1c701
+  type: work
+  status: DONE
+  created: '2026-01-28T01:25:48.439181+00:00'
+  last_activity: '2026-01-28T01:28:01.705475+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T01:25:56.870452+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_012556_ddab7c
+    source: auto
+  - timestamp: '2026-01-28T01:28:01.705475+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_012556_ddab7c
+    source: auto
+  text: Design E2E tests for the taunt/reaction system to verify it works correctly
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_012145_4f94a3
+  perceived_complexity: 0.5
+  tags:
+  - testing
+  - e2e
+  - reactions
+  updated: '2026-01-28T01:28:01.705475+00:00'
+  resolution:
+    type: fixed
+    summary: 'Designed comprehensive E2E tests for reaction system: UI tests (popup,
+      buttons, cooldown), display tests (reaction appears, auto-dismiss), and multiplayer
+      tests (broadcast to other players). Added data-testid attributes to ReactionDisplay.'
+    approach: bugfix
+  completed: '2026-01-28T01:28:01.705475+00:00'

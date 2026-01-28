@@ -89,6 +89,9 @@ export const selectors = {
   reactionToggleBtn: '[data-testid="reaction-toggle-btn"]',
   reactionPopup: '[data-testid="reaction-popup"]',
   reaction: (name: string) => `[data-testid="reaction-${name}"]`,
+  reactionDisplay: '[data-testid="reaction-display"]',
+  reactionBubble: (index: number) => `[data-testid="reaction-bubble-${index}"]`,
+  anyReactionBubble: '[data-testid^="reaction-bubble-"]',
 
   // Round overlay
   roundOverlay: '[data-testid="round-overlay"]',

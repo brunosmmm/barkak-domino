@@ -223,8 +223,12 @@ export function useWebSocket() {
 
       case 'reaction':
         console.log('Reaction from', message.player_name, ':', message.emoji);
-        // Add reaction to display - it will auto-remove via the component
-        addReaction(message.player_id, message.player_name, message.emoji);
+        // Add reaction to display - use getState() to avoid stale closure
+        // Skip if this is our own reaction (already shown via optimistic update)
+        const currentPlayerId = useGameStore.getState().playerId;
+        if (message.player_id !== currentPlayerId) {
+          useGameStore.getState().addReaction(message.player_id, message.player_name, message.emoji);
+        }
         break;
 
       default:
