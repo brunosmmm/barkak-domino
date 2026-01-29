@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "low",
+    "tags": [
+      "audio",
+      "taunts",
+      "sound-effects",
+      "ux",
+      "fun"
+    ],
+    "text": "## Sound Taunts from Static Sound Bank\n\nAdd audio taunts that play during gameplay events for a more immersive and fun experience.\n\n### Sound Categories:\n\n1. **Pass Taunts** (when someone passes)\n   - Laugh sounds\n   - \"Aw man!\" / disappointed sounds\n   - Buzzer sounds\n   - Comedy fail sounds\n\n2. **Domino Taunts** (when someone dominoes/wins round)\n   - Victory fanfare\n   - Air horn\n   - Crowd cheering\n   - \"Let's go!\" type sounds\n\n3. **Big Play Taunts** (high-value tiles, strategic moves)\n   - Slam sounds\n   - \"Ohhh!\" reaction sounds\n   - Impact sounds\n\n4. **Blocked Game**\n   - Tense music sting\n   - Record scratch\n\n### Implementation:\n- Store static audio files in `/public/sounds/`\n- Preload sounds on game start\n- Play via Web Audio API or simple `<audio>` elements\n- Add volume control in settings\n- Option to mute (respect user preference)\n- Random selection from category when event occurs\n\n### Sound Sources:\n- Use royalty-free sounds\n- Sites: freesound.org, mixkit.co, pixabay.com/sound-effects\n- Keep files small (MP3/OGG, <100KB each)\n\n### UI:\n- Sound toggle button in game UI\n- Maybe volume slider in settings\n- Visual indicator when sound plays (for accessibility)",
+    "type": "idea"
+  },
+  "entity_id": "ann_013542_2f3fa8",
+  "operation_id": "op_20260129_134640_ae2d4d07",
+  "operation_type": "annotation_create",
+  "parent_operation": "f0313aa7060d74bc063bfcc7c37f062155bf0035",
+  "timestamp": "2026-01-29T13:46:40.796946+00:00"
+}

@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "branch": "main",
+    "content": "## Summary\n\nFixed the domino chain layout system. Tiles now connect properly without overlapping, and the chain can grow from both ends independently.\n\n## Root Causes Found (via 5 parallel agents)\n\n### Critical Bug 1: Responsive Size Mismatch\n- Layout calculated with `sm` tile dimensions (64\u00d732px)\n- Desktop rendered `md` size (96\u00d748px) - **50% larger!**\n- Fix: Always use sm size for both layout AND rendering\n\n### Critical Bug 2: Single-End Tracking\n- Original code only tracked one growth direction\n- Both ends of a domino chain grow independently\n- Left end can be going North while right end goes South\n- Fix: Build from center pivot outward, track each end separately\n\n### Critical Bug 3: Position Field Misuse\n- Backend sets `position=0` for left plays, `position=N` for right plays\n- Frontend checked `position < 0` which is **never true**\n- The board array IS in physical left-to-right order, so iteration order is correct\n\n## New Algorithm\n\n```typescript\n// Find pivot (roughly middle of chain)\nconst pivotIndex = Math.floor(board.length / 2);\n\n// Place pivot at center\nplacements[pivotIndex] = { ... };\n\n// Build RIGHTWARD from pivot to board[N-1]\nfor (let i = pivotIndex + 1; i < board.length; i++) {\n  // Track rightEnd direction, can turn independently\n}\n\n// Build LEFTWARD from pivot to board[0]  \nfor (let i = pivotIndex - 1; i >= 0; i--) {\n  // Track leftEnd direction, can turn independently\n}\n```\n\n## Files Changed\n\n- `frontend/src/hooks/useChainLayout.ts` - Complete rewrite with dual-end tracking\n- `frontend/src/components/GameBoard.tsx` - Removed responsive tile sizing\n\n## Key Learnings\n\n1. Domino chains have TWO ends that grow independently\n2. Always match layout calculation dimensions with render dimensions\n3. Parallel agent investigation is effective for finding architectural issues\n4. The board array order represents physical chain order (left-to-right)\n\n## Test Results\n\nScreenshots show tiles properly connected:\n- 5 tiles: J-shape (horizontal \u2192 turn down)\n- 10 tiles: Snake pattern (right \u2192 down \u2192 left)\n- 12 tiles: Extended snake, no overlaps",
+    "context": "Fixed domino chain layout after extensive debugging with parallel agent investigation",
+    "repository_id": "github.com/brunosmmm/barkak-domino",
+    "session_id": null,
+    "session_type": "Software Development",
+    "title": "20260128_2055_chain-layout-fixed-dual-end-tracking"
+  },
+  "entity_id": "20260128_2055_chain-layout-fixed-dual-end-tracking",
+  "operation_id": "op_20260129_134641_3b623185",
+  "operation_type": "checkpoint_save",
+  "parent_operation": "ffd62fabe6c4d00c687f6d5be330bde45ab31019",
+  "timestamp": "2026-01-28T20:55:45.118440+00:00"
+}

@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.35,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Auto-start game when created with enough CPUs to fill all slots",
+    "retrospective_complexity": 0.1,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_181430_daedbb",
+  "operation_id": "op_20260129_134641_3bce01d0",
+  "operation_type": "task_complete",
+  "parent_operation": "8b56e40160fa540909b1ea8d931085167adfa0a7",
+  "timestamp": "2026-01-27T18:16:48.746929+00:00"
+}

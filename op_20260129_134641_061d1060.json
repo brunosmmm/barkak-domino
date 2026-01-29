@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Designed comprehensive E2E tests for reaction system: UI tests (popup, buttons, cooldown), display tests (reaction appears, auto-dismiss), and multiplayer tests (broadcast to other players). Added data-testid attributes to ReactionDisplay.",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_012548_3e7ckyd1c701",
+  "operation_id": "op_20260129_134641_061d1060",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "ac32ae87a10ba6955c17fc7f0d329a4e9a63a9d7",
+  "timestamp": "2026-01-29T13:46:41.196347+00:00"
+}

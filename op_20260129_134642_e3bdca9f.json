@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": "ann_011103_3e7ckyad6c57",
+    "confidence": 0.7,
+    "description": "Investigate game stuck state after timer expiration - check TurnTimer auto-pass mechanism",
+    "git_branch": "main",
+    "perceived_complexity": 0.5,
+    "session_id": "20260127_225555_88ac"
+  },
+  "entity_id": "task_011109_e6f46a",
+  "operation_id": "op_20260129_134642_e3bdca9f",
+  "operation_type": "task_start",
+  "parent_operation": "fefdd145ece58943f42e3310589cc4a6c6a6d685",
+  "timestamp": "2026-01-28T01:11:09.971098+00:00"
+}

@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "critical",
+    "tags": [
+      "ui",
+      "game-board",
+      "layout",
+      "mobile"
+    ],
+    "text": "The horizontal scrolling board layout is not functional for longer games. Need to implement an automatic meandering/snaking path system where dominoes arrange themselves in a path that stays visible within the table bounds, turning/wrapping as needed.\n\nCurrent approach: Single horizontal scrollable row that extends infinitely right.\nProblem: Poor UX on mobile, requires manual scrolling, tiles go off-screen.\nSolution: Dynamic path that snakes/meanders within visible table area.",
+    "type": "bug"
+  },
+  "entity_id": "ann_213736_3e7cky63f932",
+  "operation_id": "op_20260129_134640_5d5c13cc",
+  "operation_type": "annotation_create",
+  "parent_operation": "71ee8064469871f58fcdd5d74fb9b86f0c7fc633",
+  "timestamp": "2026-01-29T13:46:40.803772+00:00"
+}

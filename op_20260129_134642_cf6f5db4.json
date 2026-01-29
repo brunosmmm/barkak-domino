@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": "ann_213922_3e7ckyac0c09",
+    "confidence": 0.8,
+    "description": "Fix 2 failing E2E tests: picking state extractor and reaction popup timing",
+    "git_branch": "main",
+    "perceived_complexity": 0.4,
+    "session_id": "20260127_225555_88ac"
+  },
+  "entity_id": "task_010127_893c75",
+  "operation_id": "op_20260129_134642_cf6f5db4",
+  "operation_type": "task_start",
+  "parent_operation": "636f4e233225b5ef557d8116718e368fb87c4ed6",
+  "timestamp": "2026-01-28T01:01:27.772233+00:00"
+}

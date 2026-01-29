@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "implementation",
+    "annotation_id": "ann_134610_3e7ckya19bdf",
+    "confidence": 0.9,
+    "description": "Migrate project data to git-native storage backend",
+    "git_branch": "main",
+    "perceived_complexity": 0.4,
+    "session_id": "20260129_134619_33a4"
+  },
+  "entity_id": "task_134619_b82069",
+  "operation_id": "op_20260129_134644_c211c574",
+  "operation_type": "task_start",
+  "parent_operation": "b3e0e2ddae316c58e2281ddfc7ff067ee119b04c",
+  "timestamp": "2026-01-29T13:46:19.582377+00:00"
+}

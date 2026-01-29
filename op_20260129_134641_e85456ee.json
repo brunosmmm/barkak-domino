@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "high",
+    "tags": [
+      "timer",
+      "auto-pass",
+      "state"
+    ],
+    "text": "Debug: Game stuck in bad state - player cannot play after timer expired. Investigate turn timer auto-pass mechanism.",
+    "type": "bug"
+  },
+  "entity_id": "ann_011103_3e7ckyad6c57",
+  "operation_id": "op_20260129_134641_e85456ee",
+  "operation_type": "annotation_create",
+  "parent_operation": "9dc8af3c50945958e7eadb3ed663d429a93411f7",
+  "timestamp": "2026-01-29T13:46:41.131512+00:00"
+}

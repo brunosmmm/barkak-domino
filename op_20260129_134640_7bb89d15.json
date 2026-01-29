@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "frontend",
+      "backend",
+      "websocket",
+      "ux",
+      "social"
+    ],
+    "text": "Add reaction/taunt system for player interaction during games. Include emoji/icon picker accessible during gameplay. When a player sends a reaction, broadcast to all players with sender identification. Show reactions briefly on screen (toast/popup). Consider: thumbs up, clapping, laughing, crying, thinking, fire, etc.",
+    "type": "todo"
+  },
+  "entity_id": "ann_005957_472124",
+  "operation_id": "op_20260129_134640_7bb89d15",
+  "operation_type": "annotation_create",
+  "parent_operation": "98766dc0648d57752fa7bc0571691d26fb8903a3",
+  "timestamp": "2026-01-29T13:46:40.901857+00:00"
+}

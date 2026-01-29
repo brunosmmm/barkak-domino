@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Fixed green banner layout shift by always rendering with opacity toggle, fixed avatar backdrop by moving opacity to content only",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_011535_3e7cky84ecee",
+  "operation_id": "op_20260129_134641_669b9e44",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "6c97d786a8bc07be08b17c5a4db7b25e50577693",
+  "timestamp": "2026-01-29T13:46:41.176289+00:00"
+}

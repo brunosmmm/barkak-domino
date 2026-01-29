@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "branch": "main",
+    "content": "# E2E Testing System Migrated to Playwright\n\n## Summary\nMigrated the E2E testing infrastructure from Puppeteer to Playwright per user request. Playwright provides better auto-waiting, trace viewer, cross-browser support, and parallel execution.\n\n## Changes Made\n\n### Dependencies (package.json)\n- Removed: `puppeteer`, `tsx`\n- Added: `@playwright/test`\n- Updated scripts to use `npx playwright test`\n\n### New Scripts\n- `test:e2e` - Run all tests\n- `test:e2e:headed` - Visible browser\n- `test:e2e:debug` - Playwright Inspector\n- `test:e2e:ui` - Interactive UI mode\n- `test:e2e:report` - View HTML report\n\n### Configuration (playwright.config.ts)\n- Base URL configuration\n- Trace capture on retry\n- Screenshot on failure\n- Video recording on retry\n- HTML reporter\n- Chromium project (Firefox/Safari ready to enable)\n\n### Test Fixtures (setup.ts)\n- Extended Playwright's `test` with `gamePage` and `playerName` fixtures\n- Clean fixture-based approach\n\n### Page Object Model (GamePage.ts)\n- Converted from Puppeteer's `Page` to Playwright's `Page`\n- Uses Playwright's `Locator` API\n- Uses `expect()` assertions for waiting\n\n### Test Specs\nAll tests converted to Playwright's `test.describe()` / `test()` syntax:\n- lobby.test.ts - 8 tests\n- picking.test.ts - 9 tests\n- playing.test.ts - 7 tests\n- reactions.test.ts - 6 tests\n- multiplayer/join.test.ts - 3 tests\n\n### Multi-Player Harness\n- Uses Playwright's `BrowserContext` for isolation\n- Single browser instance with multiple contexts\n\n### Removed Files\n- `cli.ts` - Playwright has its own runner\n- `reporters/ScreenshotReporter.ts` - Built into Playwright\n\n## Key Playwright Improvements\n\n1. **Auto-waiting**: No manual `waitForSelector()` needed in most cases\n2. **Trace viewer**: Time-travel debugging with `--trace on`\n3. **Locator API**: Stricter element selection\n4. **Fixtures**: Clean test setup/teardown\n5. **Parallel execution**: Tests run in parallel by default\n6. **Built-in reporters**: HTML, JSON, list reporters\n\n## Usage\n\n```bash\ncd frontend\nnpm install\nnpx playwright install chromium\n\n# Run tests\nnpm run test:e2e\n\n# Debug mode\nnpm run test:e2e:debug\n\n# View report\nnpm run test:e2e:report\n```\n\n## Related\n- Previous checkpoint: E2E Testing System Implemented (Puppeteer)\n- Annotation: #ann_213922",
+    "context": "User requested migration from Puppeteer to Playwright for better debugging and cross-browser support",
+    "repository_id": "github.com/brunosmmm/barkak-domino",
+    "session_id": "20260127_200419_4bb9",
+    "session_type": "Software Development",
+    "title": "E2E Testing System Migrated to Playwright"
+  },
+  "entity_id": "20260127_2220_e2e-testing-migrated-to-playwright",
+  "operation_id": "op_20260129_134641_b0c9b1f8",
+  "operation_type": "checkpoint_save",
+  "parent_operation": "42490fdee2cbc3f022f4d635d3d0fbc44d2bb808",
+  "timestamp": "2026-01-27T22:20:33.998705+00:00"
+}

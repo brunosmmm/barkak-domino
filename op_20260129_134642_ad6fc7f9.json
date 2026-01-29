@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "implementation",
+    "annotation_id": "ann_010358_9e1779",
+    "confidence": 0.75,
+    "description": "Add visual distinction for play options - clear feedback on valid moves",
+    "git_branch": "main",
+    "perceived_complexity": 0.5,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_191355_e8a245",
+  "operation_id": "op_20260129_134642_ad6fc7f9",
+  "operation_type": "task_start",
+  "parent_operation": "1605e93eec4fb0aa143654631b9d579713014c23",
+  "timestamp": "2026-01-27T19:13:55.283166+00:00"
+}

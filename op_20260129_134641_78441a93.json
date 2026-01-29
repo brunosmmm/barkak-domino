@@ -1,0 +1,15 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "git_branch": "main",
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "commit_event_27",
+  "operation_id": "op_20260129_134641_78441a93",
+  "operation_type": "commit_linked",
+  "parent_operation": "3f58f7b2f710ab88a25d70fa1d02ec5e849962b5",
+  "timestamp": "2026-01-27T18:37:55.937996+00:00"
+}

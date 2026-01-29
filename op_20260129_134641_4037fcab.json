@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Replaced custom DominoPips with DominoTile component in picking phase - tiles now have consistent ivory/bone styling with 3D dots",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_011434_3e7cky54bbea",
+  "operation_id": "op_20260129_134641_4037fcab",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "927c464bd7f02b9f8bf8395e9a834e545d2add72",
+  "timestamp": "2026-01-29T13:46:41.152613+00:00"
+}

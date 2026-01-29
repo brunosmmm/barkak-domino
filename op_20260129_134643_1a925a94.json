@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.2,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Added semi-opaque black backdrop (bg-black/60) with padding and rounded corners to player names in TableSurface avatars around the game board",
+    "retrospective_complexity": 0.0,
+    "session_id": "20260127_225555_88ac"
+  },
+  "entity_id": "task_012145_4f94a3",
+  "operation_id": "op_20260129_134643_1a925a94",
+  "operation_type": "task_complete",
+  "parent_operation": "4f1623900dfc1b9a37abc99c964ecaff7d182221",
+  "timestamp": "2026-01-28T01:22:03.398293+00:00"
+}

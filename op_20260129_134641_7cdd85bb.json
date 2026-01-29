@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Added visual feedback for dual-option plays: green pulsing play zones with 'Choose a side!' banner, and green ring + badge on tiles that can play both sides",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_010908_8a4951",
+  "operation_id": "op_20260129_134641_7cdd85bb",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "0aad28f3e35614202b9b5f74c3bcab33dae2713d",
+  "timestamp": "2026-01-29T13:46:41.033076+00:00"
+}

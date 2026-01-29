@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": null,
+    "complexity_factors": [
+      "debugging",
+      "test_creation",
+      "investigation"
+    ],
+    "confidence": 0.7,
+    "description": "Debug snaking layout not working and add tests to identify the issue",
+    "git_branch": "main",
+    "perceived_complexity": 0.5,
+    "session_id": "20260127_225555_88ac"
+  },
+  "entity_id": "task_030642_c4cf31",
+  "operation_id": "op_20260129_134643_0c5ce37d",
+  "operation_type": "task_start",
+  "parent_operation": "d3ded183f0243e1b34e98080524bdb9265c037f1",
+  "timestamp": "2026-01-28T03:06:42.734266+00:00"
+}

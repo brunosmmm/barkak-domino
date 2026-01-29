@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "testing",
+      "e2e",
+      "reactions"
+    ],
+    "text": "Design E2E tests for the taunt/reaction system to verify it works correctly",
+    "type": "work"
+  },
+  "entity_id": "ann_012548_3e7ckyd1c701",
+  "operation_id": "op_20260129_134641_a91e36db",
+  "operation_type": "annotation_create",
+  "parent_operation": "7bd7ffb4741f1695b479cf5f4ccee9e05dbbbecb",
+  "timestamp": "2026-01-29T13:46:41.193464+00:00"
+}

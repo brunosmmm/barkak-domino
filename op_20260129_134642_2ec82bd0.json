@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "planning",
+    "annotation_id": "ann_023656_baa5a9",
+    "complexity_factors": [
+      "frontend_backend",
+      "game_mechanic",
+      "multi_file"
+    ],
+    "confidence": 0.7,
+    "description": "Interactive tile picking phase - core game mechanic change",
+    "git_branch": "main",
+    "perceived_complexity": 0.7,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_194531_a7c551",
+  "operation_id": "op_20260129_134642_2ec82bd0",
+  "operation_type": "task_start",
+  "parent_operation": "3043f00c527fad466095d70bd14c3d04813a5bd2",
+  "timestamp": "2026-01-27T19:45:31.862706+00:00"
+}

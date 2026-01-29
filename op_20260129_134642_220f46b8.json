@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "implementation",
+    "annotation_id": "ann_030448_f007ab",
+    "complexity_factors": [
+      "new_component",
+      "css_styling",
+      "responsive"
+    ],
+    "confidence": 0.85,
+    "description": "Implement TableSurface component with felt + wood rim for game board",
+    "git_branch": "main",
+    "perceived_complexity": 0.45,
+    "session_id": "20260127_200419_4bb9"
+  },
+  "entity_id": "task_210915_8628a1",
+  "operation_id": "op_20260129_134642_220f46b8",
+  "operation_type": "task_start",
+  "parent_operation": "73ccb0ace903d8a1d1d4bcc728a32fd0a1f73403",
+  "timestamp": "2026-01-27T21:09:15.247469+00:00"
+}

@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": "ann_015622_3e7cky9fd4f4",
+    "confidence": 0.75,
+    "description": "Fix next round button not working",
+    "git_branch": "main",
+    "perceived_complexity": 0.4,
+    "session_id": "20260129_013146_a414"
+  },
+  "entity_id": "task_020047_1b9373",
+  "operation_id": "op_20260129_134644_b8bf73e4",
+  "operation_type": "task_start",
+  "parent_operation": "4e49ba27803eee9be16466d231384670b4c7f600",
+  "timestamp": "2026-01-29T02:00:47.165278+00:00"
+}

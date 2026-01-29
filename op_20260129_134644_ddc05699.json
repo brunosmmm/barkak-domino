@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": "ann_215159_3e7cky8dc9b5",
+    "complexity_factors": [
+      "chain_layout",
+      "geometric_calculation",
+      "multi_arm_coordination"
+    ],
+    "confidence": 0.75,
+    "description": "Fix snake layout direction bug - arms should expand outward without colliding",
+    "git_branch": "main",
+    "perceived_complexity": 0.55,
+    "session_id": "20260129_013146_a414"
+  },
+  "entity_id": "task_013146_a58dfc",
+  "operation_id": "op_20260129_134644_ddc05699",
+  "operation_type": "task_start",
+  "parent_operation": "1ae70f8dbfe657eaae2c11326b1e01b6319b75d1",
+  "timestamp": "2026-01-29T01:31:46.652320+00:00"
+}

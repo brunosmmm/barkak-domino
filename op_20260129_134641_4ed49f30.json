@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Added 30-second turn timer: backend tracks turn_started_at, background task checks timeouts and auto-plays random valid move or passes. Frontend shows circular timer in mobile header and progress bar in desktop sidebar.",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_030332_fc7bec",
+  "operation_id": "op_20260129_134641_4ed49f30",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "4c180c3a344326489466ad6661d69d19ae40ab62",
+  "timestamp": "2026-01-29T13:46:41.022083+00:00"
+}

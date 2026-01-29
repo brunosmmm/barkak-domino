@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "high",
+    "tags": [
+      "feature",
+      "persistence",
+      "ux",
+      "mobile"
+    ],
+    "text": "Session persistence - save gameId/playerId to localStorage and auto-reconnect on page load. Allows players to refresh, close tab, or recover from accidental navigation without losing their game.",
+    "type": "idea"
+  },
+  "entity_id": "ann_031155_337516",
+  "operation_id": "op_20260129_134640_999236d2",
+  "operation_type": "annotation_create",
+  "parent_operation": "caeb20f7f36fd7b026f1e9e1da9f1b8586a107ab",
+  "timestamp": "2026-01-29T13:46:40.973552+00:00"
+}

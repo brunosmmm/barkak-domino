@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "implementation",
+    "annotation_id": "ann_010908_8a4951",
+    "confidence": 0.8,
+    "description": "Visual distinction for multiple play options - highlight valid board ends when tile can play on both sides",
+    "git_branch": "main",
+    "perceived_complexity": 0.45,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_191422_e4a77f",
+  "operation_id": "op_20260129_134642_acfc1cca",
+  "operation_type": "task_start",
+  "parent_operation": "d3852ea1ba6d63ceebd663af496d4cbcb26b3188",
+  "timestamp": "2026-01-27T19:14:22.866629+00:00"
+}

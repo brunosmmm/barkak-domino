@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "high",
+    "tags": [
+      "mobile",
+      "responsive",
+      "ux"
+    ],
+    "text": "Game is unplayable on phone in portrait mode - needs responsive layout fixes for mobile portrait orientation",
+    "type": "bug"
+  },
+  "entity_id": "ann_191031_5a7586",
+  "operation_id": "op_20260129_134640_84c5d1d8",
+  "operation_type": "annotation_create",
+  "parent_operation": "cdd318a562538c5964588c73b3c6925a4e096674",
+  "timestamp": "2026-01-29T13:46:40.951131+00:00"
+}

@@ -1,0 +1,24 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "implementation",
+    "annotation_id": "ann_213922",
+    "complexity_factors": [
+      "refactoring",
+      "api_migration"
+    ],
+    "confidence": 0.9,
+    "description": "Migrate E2E testing system from Puppeteer to Playwright",
+    "git_branch": "main",
+    "perceived_complexity": 0.45,
+    "session_id": "20260127_200419_4bb9"
+  },
+  "entity_id": "task_221041_b06255",
+  "operation_id": "op_20260129_134642_bb797bff",
+  "operation_type": "task_start",
+  "parent_operation": "00bc0a3ea155568154a0e3adcc211b19c910415e",
+  "timestamp": "2026-01-27T22:10:41.548544+00:00"
+}

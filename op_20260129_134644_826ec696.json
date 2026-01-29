@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.4,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "partial",
+    "resolution_summary": "Added logging and fixed silent send failure - send() now logs and attempts reconnect if WebSocket not connected. Added console logs to trace button click flow.",
+    "retrospective_complexity": 0.0,
+    "session_id": "20260129_013146_a414"
+  },
+  "entity_id": "task_020047_1b9373",
+  "operation_id": "op_20260129_134644_826ec696",
+  "operation_type": "task_complete",
+  "parent_operation": "5b9717190c7248be5c75d36cabff962c0a1448a4",
+  "timestamp": "2026-01-29T02:02:19.362287+00:00"
+}

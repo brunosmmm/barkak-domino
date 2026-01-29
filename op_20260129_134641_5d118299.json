@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "frontend",
+      "backend",
+      "game-logic",
+      "ux",
+      "multiplayer"
+    ],
+    "text": "Interactive tile picking phase before game starts.\n\n**Feature:** Instead of automatically dealing tiles, show a grid of face-down tiles. Players asynchronously click to claim tiles (no turn order needed during picking).\n\n**Flow:**\n1. Game created \u2192 Show 28 face-down tiles in a grid\n2. All players can click tiles simultaneously to claim them\n3. Each player claims 6 tiles (their limit)\n4. Once all players have 6 tiles, game begins with normal turn order\n5. Remaining tiles become the boneyard (shown but inaccessible)\n\n**Implementation:**\n- Backend: Track which tiles are claimed by whom during picking phase\n- Frontend: Grid of clickable face-down tiles, show claimed count per player\n- WebSocket: Broadcast tile claims in real-time",
+    "type": "idea"
+  },
+  "entity_id": "ann_023656_baa5a9",
+  "operation_id": "op_20260129_134641_5d118299",
+  "operation_type": "annotation_create",
+  "parent_operation": "2b0e61c345951fb6dc6a39eed377ee0bb2c7fbde",
+  "timestamp": "2026-01-29T13:46:41.042715+00:00"
+}

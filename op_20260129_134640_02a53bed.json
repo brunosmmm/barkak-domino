@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Session persistence via localStorage - auto-reconnect on page refresh/reload",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_031155_337516",
+  "operation_id": "op_20260129_134640_02a53bed",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "6ca440175d43129bff0defc93e5785136daba091",
+  "timestamp": "2026-01-29T13:46:40.975692+00:00"
+}

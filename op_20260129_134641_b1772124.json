@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": "ann_030602_b03768",
+    "confidence": 0.8,
+    "description": "Fix CPU auto-start lobby bug - game auto-starts when 3 CPU players added instead of waiting for Start button",
+    "git_branch": "main",
+    "perceived_complexity": 0.45,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_181430_daedbb",
+  "operation_id": "op_20260129_134641_b1772124",
+  "operation_type": "task_start",
+  "parent_operation": "c5b0b6814aaa908b031a272f16167adf18bccf91",
+  "timestamp": "2026-01-27T18:14:30.228990+00:00"
+}

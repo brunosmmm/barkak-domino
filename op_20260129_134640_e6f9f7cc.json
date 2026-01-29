@@ -1,0 +1,24 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "testing",
+      "puppeteer",
+      "automation",
+      "e2e",
+      "debugging",
+      "umbrella"
+    ],
+    "text": "Create a Puppeteer-based automated testing system for end-to-end gameplay testing that Claude can use autonomously to debug features.\n\n## Goals\n- Fully autonomous game testing without human intervention\n- Visual verification of game states (tiles, board, players)\n- Simulate multi-player games (multiple browser instances)\n- Integration with Claude Code for automatic debugging workflows\n\n## Components Needed\n1. **Puppeteer test harness** - Launch game, control multiple players\n2. **Game state extraction** - Read DOM to understand current game state\n3. **Action API** - Click tiles, pass turns, send reactions, etc.\n4. **Assertion helpers** - Verify expected game states\n5. **Screenshot/recording** - Capture failures for debugging\n6. **Claude integration** - Hooks/skills for Claude to run tests and interpret results\n\n## Use Cases\n- Regression testing after changes\n- Reproduce reported bugs automatically\n- Stress testing (rapid moves, disconnects)\n- Visual testing (UI renders correctly)\n- Claude-driven debugging: \"test the tile picking phase\" \u2192 runs tests \u2192 reports issues",
+    "type": "idea"
+  },
+  "entity_id": "ann_213922_3e7ckyac0c09",
+  "operation_id": "op_20260129_134640_e6f9f7cc",
+  "operation_type": "annotation_create",
+  "parent_operation": "d71dc8668abd189bc7d3b41991d5337f6428078e",
+  "timestamp": "2026-01-29T13:46:40.807673+00:00"
+}

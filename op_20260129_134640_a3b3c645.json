@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Auto-start game when created with enough CPUs to fill all slots",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_030602_b03768",
+  "operation_id": "op_20260129_134640_a3b3c645",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "e54e9e82dacf6732ba63da881f2a1fd8f99b09f0",
+  "timestamp": "2026-01-29T13:46:40.985307+00:00"
+}

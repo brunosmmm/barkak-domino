@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "gameplay",
+      "lobby",
+      "cpu"
+    ],
+    "text": "When game is created with 3 CPU players, it auto-starts immediately (should wait for user to click Start?)",
+    "type": "bug"
+  },
+  "entity_id": "ann_030602_b03768",
+  "operation_id": "op_20260129_134640_69a87b53",
+  "operation_type": "annotation_create",
+  "parent_operation": "f4b46c05719c221ef9e992c5658e4e78869ec946",
+  "timestamp": "2026-01-29T13:46:40.983304+00:00"
+}

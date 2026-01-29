@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "debugging",
+    "annotation_id": "ann_031155_337516",
+    "confidence": 0.85,
+    "description": "Fix session persistence - clear session when game no longer exists on server",
+    "git_branch": "main",
+    "perceived_complexity": 0.4,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_182255_4180ef",
+  "operation_id": "op_20260129_134641_c0b916da",
+  "operation_type": "task_start",
+  "parent_operation": "0c394446922bf55e5351a98316803506773fb979",
+  "timestamp": "2026-01-27T18:22:55.487736+00:00"
+}

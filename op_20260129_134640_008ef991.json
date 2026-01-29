@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Auto-play clicked domino when user starts first - removed redundant Play First Tile button",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_175519_3e7cky253d43",
+  "operation_id": "op_20260129_134640_008ef991",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "84653335fb54d1207274fa12f9a8b233529c7df0",
+  "timestamp": "2026-01-29T13:46:40.965228+00:00"
+}

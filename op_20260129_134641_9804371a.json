@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [],
+    "text": "Fix layout shift in mobile header when turn indicator appears. The conditional border class causes 1px shift.",
+    "type": "bug"
+  },
+  "entity_id": "ann_010919_3e7ckyeca421",
+  "operation_id": "op_20260129_134641_9804371a",
+  "operation_type": "annotation_create",
+  "parent_operation": "a87d963eedf01080d543ef76a3cf01158a43099d",
+  "timestamp": "2026-01-29T13:46:41.118190+00:00"
+}

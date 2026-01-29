@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "critical",
+    "tags": [
+      "frontend",
+      "ui",
+      "game-board",
+      "layout"
+    ],
+    "text": "Board meandering/snake pattern bug: domino tiles not visually touching.\n\n**CRITICAL:** UI allows impossible plays because tiles aren't properly connected, making it unclear which ends are playable.\n\nThe board layout system displays tiles with gaps between them. Pieces should be visually connected/touching as they would be in a real game.\n\n**Affected:** GameBoard.tsx snake layout logic\n**Expected:** Tiles connect seamlessly, matching ends touch visually\n**Actual:** Tiles displayed with gaps - causes confusion about valid play positions",
+    "type": "bug"
+  },
+  "entity_id": "ann_022230_b33745",
+  "operation_id": "op_20260129_134640_c2b3d85d",
+  "operation_type": "annotation_create",
+  "parent_operation": "a4cf85b92c418d1c89295c9f5c3684b5760bc566",
+  "timestamp": "2026-01-29T13:46:40.911852+00:00"
+}

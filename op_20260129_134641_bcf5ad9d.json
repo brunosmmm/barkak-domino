@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "gameplay",
+      "feature",
+      "timer"
+    ],
+    "text": "Player should have maximum time to play turn, otherwise random piece gets auto-played (turn timer feature)",
+    "type": "idea"
+  },
+  "entity_id": "ann_030332_fc7bec",
+  "operation_id": "op_20260129_134641_bcf5ad9d",
+  "operation_type": "annotation_create",
+  "parent_operation": "dcea2e05b67f7b92f24a6f01d9de088037ab6fa8",
+  "timestamp": "2026-01-29T13:46:41.019717+00:00"
+}

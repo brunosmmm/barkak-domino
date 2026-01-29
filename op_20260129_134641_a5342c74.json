@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Added TableSurface component with wood rim and green felt layers. GameBoard now renders tiles on a realistic table surface with shadows. Responsive sizing included.",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_030448_f007ab",
+  "operation_id": "op_20260129_134641_a5342c74",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "7b76741c11dadaad389f3f3a139d81a8897e23dd",
+  "timestamp": "2026-01-29T13:46:41.058345+00:00"
+}

@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "low",
+    "tags": [
+      "frontend",
+      "backend",
+      "animation",
+      "ux",
+      "engagement"
+    ],
+    "text": "Add \"epic moment\" detection and visual effects for statistically unlikely plays.\n\n**Triggers to detect:**\n- Playing last tile to win (domino!)\n- Playing a double-6 as first move\n- Winning with 0 passes made\n- Clearing multiple tiles in quick succession\n- Comeback win when opponent had 1-2 tiles left\n- Perfect game (win without ever being blocked)\n- Blocking all opponents simultaneously\n\n**Visual Effects (broadcast to all players):**\n- Screen shake\n- Particle explosions / confetti\n- Dramatic slow-mo animation of the tile being played\n- Sound effects (glass clink, crowd gasp, airhorn)\n- Special message overlay: \"DOMINO!\", \"CLUTCH!\", \"LEGENDARY PLAY\"\n- Glow/highlight on the player who made the play\n\n**Implementation:**\n- Backend: Calculate odds/detect special conditions after each move\n- WebSocket: Broadcast \"epic_moment\" event with type and player\n- Frontend: Trigger appropriate animation/sound based on type",
+    "type": "todo"
+  },
+  "entity_id": "ann_010358_9e1779",
+  "operation_id": "op_20260129_134640_92f0eac9",
+  "operation_type": "annotation_create",
+  "parent_operation": "560b754b969bbb90453bcf36ac0cd5f4bb7d9a9d",
+  "timestamp": "2026-01-29T13:46:40.791094+00:00"
+}

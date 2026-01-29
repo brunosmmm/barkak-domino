@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.14,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Fixed tile picking UI: grid positions now static, tiles disappear where clicked, added 60s picking timeout with auto-assign",
+    "retrospective_complexity": 0.41,
+    "session_id": "20260127_200419_4bb9"
+  },
+  "entity_id": "task_200419_3bbc70",
+  "operation_id": "op_20260129_134642_1b4f1ec7",
+  "operation_type": "task_complete",
+  "parent_operation": "13523ef775db61629e1f55317d10f6613627cc8f",
+  "timestamp": "2026-01-27T20:11:03.272955+00:00"
+}

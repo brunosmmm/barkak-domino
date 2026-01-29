@@ -1,0 +1,24 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "medium",
+    "tags": [
+      "scoring",
+      "multi-round",
+      "teams",
+      "ui",
+      "table-visualization",
+      "match-system"
+    ],
+    "text": "## Multi-Round Team Scoring System\n\n### Core Concept\nTransform single-game play into multi-round sessions with persistent scoring.\n\n### Team Play (4 players)\n- Opposite players are teammates (like sitting at a round table)\n- Player 0 + Player 2 vs Player 1 + Player 3\n- Team score accumulates across rounds\n- First team to reach target score wins (e.g., 100 points)\n\n### Individual Scoring Fallback (2-3 players)\n- When fewer than 4 players, use individual scoring\n- Each player accumulates points independently\n- First to target score wins\n\n### Scoring Rules\n- Winner scores the total pip count of all opponents' remaining tiles\n- On blocked game: lowest remaining pip count wins, scores difference\n- Teams: combine teammate tiles for team pip count\n\n### UI Changes Required\n\n1. **Table Visualization (small corner indicator)**\n   - Show 4 seats around a small table graphic\n   - Highlight occupied seats with player avatars/names\n   - Color-code teams (e.g., red team vs blue team)\n   - Position: lower-left or lower-right corner\n   - Subtle but informative\n\n2. **Score Display**\n   - Persistent team/player scores across rounds\n   - Round counter (Round 3 of ?)\n   - Target score progress bar\n   - \"Match point\" indicator when near winning\n\n3. **Round Transition**\n   - \"Round Over\" overlay with scoring breakdown\n   - Show tiles remaining in each hand\n   - Points awarded animation\n   - \"Next Round\" button (or auto-start timer)\n   - Running team/player scores update\n\n4. **Match End**\n   - \"Match Winner\" celebration screen\n   - Full score history/breakdown\n   - Option to rematch or return to lobby\n\n### Backend Changes\n- Add `Match` model wrapping multiple `Game` rounds\n- Track cumulative scores per player/team\n- Add `match_score`, `round_number`, `target_score` fields\n- Preserve team assignments across rounds\n- Handle player disconnection mid-match\n\n### State Model Addition\n```\nMatch {\n  id: string\n  games: Game[]  // completed rounds\n  current_game: Game\n  team_a: [player_id, player_id]  // for 4p\n  team_b: [player_id, player_id]\n  scores: { team_a: number, team_b: number } | { player_id: number }\n  target_score: number\n  is_team_game: boolean\n}\n```",
+    "type": "idea"
+  },
+  "entity_id": "ann_010733_d52ff2",
+  "operation_id": "op_20260129_134640_733c3665",
+  "operation_type": "annotation_create",
+  "parent_operation": "e7426b0d5e4e3d9f71f94a110a93535de1654652",
+  "timestamp": "2026-01-29T13:46:40.889790+00:00"
+}

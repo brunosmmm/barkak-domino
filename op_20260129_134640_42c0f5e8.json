@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Fixed play zone logic: added isYourTurn check, removed tiles gap, simplified zone conditions, made zones match tile orientation",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_022230_b33745",
+  "operation_id": "op_20260129_134640_42c0f5e8",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "69f7fd7761c6eec1dbb7ff0423b571ac38e60193",
+  "timestamp": "2026-01-29T13:46:40.914314+00:00"
+}

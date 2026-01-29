@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.4,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Fixed green banner layout shift by always rendering with opacity toggle, fixed avatar backdrop by moving opacity to content only",
+    "retrospective_complexity": 0.0,
+    "session_id": "20260127_225555_88ac"
+  },
+  "entity_id": "task_011919_e8455d",
+  "operation_id": "op_20260129_134643_b96b422a",
+  "operation_type": "task_complete",
+  "parent_operation": "10e07029dc1681a25bb943031b0fe050291a50c5",
+  "timestamp": "2026-01-28T01:20:22.586225+00:00"
+}

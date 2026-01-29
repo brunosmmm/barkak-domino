@@ -1,0 +1,27 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "assessment_id": "assess_180433_e10141",
+    "git_branch": "main",
+    "phases": [
+      "debugging"
+    ],
+    "rationale": "Reliance level 3: some corrections needed",
+    "reliance_level": 3,
+    "session_id": "20260127_175528_81e5",
+    "supporting_metrics": {
+      "files_changed": 1,
+      "lines_modified": 1,
+      "user_corrections": 1
+    },
+    "task_id": "task_180355_efdf37"
+  },
+  "entity_id": "assess_180433_e10141",
+  "operation_id": "op_20260129_134641_47de270e",
+  "operation_type": "ai_self_assessment",
+  "parent_operation": "deb89959196593d821dd59552613d3e9e91aa384",
+  "timestamp": "2026-01-27T18:04:33.124116+00:00"
+}

@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Increased mobile top bar: larger avatars (32px\u219240px), show all player names with truncation, increased padding and spacing",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_030312_2dc982",
+  "operation_id": "op_20260129_134641_2856dc2a",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "311496a223e5be29b4ddd993df71f169485a749d",
+  "timestamp": "2026-01-29T13:46:41.010118+00:00"
+}

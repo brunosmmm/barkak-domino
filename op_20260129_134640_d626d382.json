@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "high",
+    "tags": [
+      "web-app",
+      "game",
+      "multiplayer",
+      "dominoes"
+    ],
+    "text": "Build multiplayer dominoes web app - game UI/UX focused with access control",
+    "type": "work"
+  },
+  "entity_id": "ann_002954_fac278",
+  "operation_id": "op_20260129_134640_d626d382",
+  "operation_type": "annotation_create",
+  "parent_operation": "bc4fd120aa1a82d0403b637865406ea301f783b2",
+  "timestamp": "2026-01-29T13:46:40.878294+00:00"
+}

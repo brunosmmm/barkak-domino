@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "high",
+    "tags": [
+      "e2e",
+      "testing",
+      "multiplayer"
+    ],
+    "text": "E2E test: Multiplayer join tests expect wrong game status\n\nTests expect status=\"waiting\" but game now auto-transitions to \"picking\" phase.\nAffected tests:\n- \"two players can see each other\" \n- \"four players can join the same game\"\n\nSuspects: tests/e2e/specs/multiplayer/join.test.ts\nPath to trace: Update assertions to expect \"picking\" or add wait logic for the correct phase",
+    "type": "bug"
+  },
+  "entity_id": "ann_225544_3e7cky3bdefb",
+  "operation_id": "op_20260129_134641_bc4ae50e",
+  "operation_type": "annotation_create",
+  "parent_operation": "07ed29d56133b6c87d8d2bb434743a1b50444387",
+  "timestamp": "2026-01-29T13:46:41.085835+00:00"
+}

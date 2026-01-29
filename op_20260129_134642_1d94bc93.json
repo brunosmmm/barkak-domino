@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.5,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Moved player avatars from mini TableVisualization widget to positions around the main game table. Removed redundant TableVisualization component. Avatars now show around the felt table with turn indicator, tile count badges, and connection status.",
+    "retrospective_complexity": 0.0,
+    "session_id": "20260127_200419_4bb9"
+  },
+  "entity_id": "task_211729_b6d339",
+  "operation_id": "op_20260129_134642_1d94bc93",
+  "operation_type": "task_complete",
+  "parent_operation": "65b97f44bb46dadfb67c98358f2e5ca60e95e47d",
+  "timestamp": "2026-01-27T21:19:49.904484+00:00"
+}

@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Generated 20 monkey avatars and implemented random selection. Backend now assigns 4 random avatars per match, frontend displays them. Also fixed table visualization spacing and increased size.",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_031835_aee3a7",
+  "operation_id": "op_20260129_134640_6abb9ae9",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "6e3d4e21fe0ffbc58ebc3cc9bf9a71149aafdcec",
+  "timestamp": "2026-01-29T13:46:40.942984+00:00"
+}

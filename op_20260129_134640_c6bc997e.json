@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Implemented Match model with team scoring (4 players: opposite seats teammates), individual scoring fallback (2-3 players), table visualization, round-over overlay with scoring breakdown and next round button",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_010733_d52ff2",
+  "operation_id": "op_20260129_134640_c6bc997e",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "7d8b484a5a23caf1413f033a0a27335bd4159245",
+  "timestamp": "2026-01-29T13:46:40.892773+00:00"
+}

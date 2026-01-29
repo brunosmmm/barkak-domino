@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "branch": "main",
+    "content": "## Turn Timer Feature\n\nImplemented a 30-second turn timer that auto-plays or auto-passes when time expires.\n\n### Backend Changes\n\n**game/models.py:**\n- Added `turn_started_at: Optional[datetime]` to track when turn started\n- Added `turn_timeout: int = 30` for configurable timeout (0 = disabled)\n\n**game/logic.py:**\n- Added datetime import\n- `start_game()` now sets `turn_started_at = datetime.utcnow()`\n- `advance_turn()` now resets `turn_started_at`\n\n**game/rooms.py:**\n- Added `list_active_games()` method for timer task to iterate\n\n**main.py:**\n- Added `turn_timer_task()` background task - checks every second for timeouts\n- Added `handle_turn_timeout()` - auto-plays random valid move or auto-passes\n- Updated `create_player_game_view()` to include `turn_timer` info with remaining time\n- Both tasks started in lifespan handler\n\n### Frontend Changes\n\n**types.ts:**\n- Added `TurnTimer` interface with `timeout`, `remaining`, `started_at`\n- Added `turn_timer: TurnTimer | null` to `GameState`\n\n**components/TurnTimer.tsx:** (new file)\n- Circular compact timer for mobile header\n- Full progress bar timer for desktop sidebar\n- Color changes: green \u2192 amber (\u226410s) \u2192 red (\u22645s)\n- Pulses when critical and it's your turn\n- Syncs with server timestamp for accuracy\n\n**components/Game.tsx:**\n- Added TurnTimer import\n- Added compact TurnTimer to mobile header bar\n\n**components/GameStatus.tsx:**\n- Added TurnTimer import\n- Added full TurnTimer to playing status section\n\n### Key Design Decisions\n\n1. **Server-authoritative timer**: Server tracks `turn_started_at` and enforces timeout. Frontend calculates remaining from server timestamp for clock sync.\n\n2. **Auto-play behavior**: When timeout, picks random valid move. If no valid moves, auto-passes. Broadcasts with `auto_played: true` flag.\n\n3. **CPU exemption**: Timer task skips CPU turns - they have their own delay logic (5-20s random).\n\n4. **Visual feedback**: Timer changes color and pulses at critical moments to alert player.",
+    "context": "Implemented turn timer with auto-play feature",
+    "repository_id": "github.com/brunosmmm/barkak-domino",
+    "session_id": "20260127_175528_81e5",
+    "session_type": "Software Development",
+    "title": "20260127_1858_turn-timer-feature-implementation"
+  },
+  "entity_id": "20260127_1858_turn-timer-feature-implementation",
+  "operation_id": "op_20260129_134641_42e090f8",
+  "operation_type": "checkpoint_save",
+  "parent_operation": "07c2ec5c2e531527529ab8ed150b815212938fd1",
+  "timestamp": "2026-01-27T18:58:49.300867+00:00"
+}

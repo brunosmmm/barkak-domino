@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "priority": "high",
+    "tags": [
+      "fullstack",
+      "websocket",
+      "game",
+      "react",
+      "fastapi"
+    ],
+    "text": "Implement multiplayer dominoes web app with FastAPI backend, React frontend, and WebSocket real-time communication. Starting with Block Game variant, extensible architecture for Draw Game and All Fives later.",
+    "type": "work"
+  },
+  "entity_id": "ann_003409_2f7434",
+  "operation_id": "op_20260129_134640_ef3135f5",
+  "operation_type": "annotation_create",
+  "parent_operation": "70fa7fa566aa3d30a9dcba477054bc851d28b30e",
+  "timestamp": "2026-01-29T13:46:40.870897+00:00"
+}

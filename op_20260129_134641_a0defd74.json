@@ -1,0 +1,20 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "branch": "main",
+    "content": "# Chain Layout Implementation\n\n## Summary\nReplaced the incorrect row-wrapping \"snake\" layout with a proper 2D domino chain positioning system. Tiles are now positioned based on actual chain growth direction, with turns occurring when container boundaries are reached.\n\n## Changes Made\n\n### 1. Extended Container Size Hook (`useContainerWidth.ts`)\n- Added `ContainerSize` interface with `width` and `height`\n- Renamed/created `useContainerSize()` hook that returns both dimensions\n- Kept `useContainerWidth()` as deprecated wrapper for backwards compatibility\n\n### 2. Added Chain Layout Types (`types.ts`)\nNew types for the 2D positioning system:\n- `GrowthDirection`: 'N' | 'S' | 'E' | 'W'\n- `TilePosition`: { x, y } in tile units\n- `ChainTilePlacement`: placement info for each tile\n- `ChainEnd`: state of each chain end (position, direction, pipValue)\n- `ChainLayoutResult`: complete layout with offsets for centering\n\n### 3. Created Chain Layout Hook (`useChainLayout.ts`)\nCore algorithm:\n- First tile placed at origin, initializes both ends\n- Tiles with position < 0 extend left end, position > 0 extend right end\n- Each end tracks its own growth direction independently\n- When boundary hit, chain turns (prefers S from horizontal, E/W from vertical)\n- Returns placements array with positions in tile units + centering offsets\n\nKey functions:\n- `extendChain()`: Extends from an end, handles boundary turns\n- `canGrowInDirection()`: Checks if space exists in direction\n- `getNextDirection()`: Determines turn direction\n- `getRotationForDirection()`: Calculates tile rotation (0\u00b0 or 90\u00b0)\n\n### 4. Refactored GameBoard Component\n- Uses `useContainerSize` instead of `useContainerWidth`\n- Uses `useChainLayout` for tile positions\n- Two rendering modes:\n  - **Flex layout**: For simple horizontal chains (no turns)\n  - **Absolute positioning**: For chains with turns or non-horizontal growth\n- Play buttons now show direction arrows (\u2191 \u2193 \u2192 \u2190) based on growth direction\n- Buttons positioned at actual chain ends in absolute mode\n\n## Architecture Decisions\n\n### Client-Side Layout Calculation\nThe layout is calculated client-side based on each player's viewport. This means players on different devices may see different visual arrangements, but the game logic (which tile connects where) is server-authoritative.\n\nFuture options discussed:\n1. Accept visual differences (current approach)\n2. Server-computed canonical layout\n3. Hybrid: normalize at breakpoints\n\n### Fallback to Flex Layout\nSimple horizontal chains still use flex layout for simplicity. Absolute positioning only activates when:\n- Growth direction is not horizontal (W/E)\n- Chain has multiple y-levels (minY != maxY)\n\n## Testing\n- Added `useChainLayout.test.ts` with 11 tests covering:\n  - Empty/zero-size cases\n  - Single tile placement\n  - Multi-tile horizontal layout\n  - Bounds calculation\n  - Direction tracking\n- All existing `useSnakeLayout.test.ts` tests still pass (13 tests)\n\n## Files Changed\n- `frontend/src/hooks/useContainerWidth.ts` - Extended for height\n- `frontend/src/types.ts` - Added chain layout types\n- `frontend/src/hooks/useChainLayout.ts` - NEW: 2D chain positioning\n- `frontend/src/hooks/useChainLayout.test.ts` - NEW: Tests\n- `frontend/src/components/GameBoard.tsx` - Refactored for absolute positioning",
+    "context": "Implemented 2D domino chain layout system to replace row-wrapping snake layout",
+    "repository_id": "github.com/brunosmmm/barkak-domino",
+    "session_id": null,
+    "session_type": "Software Development",
+    "title": "Chain Layout Implementation"
+  },
+  "entity_id": "20260128_1529_chain-layout-implementation",
+  "operation_id": "op_20260129_134641_a0defd74",
+  "operation_type": "checkpoint_save",
+  "parent_operation": "5bfbb3ae3e9865b32bf21fa0b0e1638a1112ff38",
+  "timestamp": "2026-01-28T15:29:20.433773+00:00"
+}

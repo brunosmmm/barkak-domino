@@ -1,0 +1,17 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Fixed game stuck state after timer expiration - selectedDomino now cleared when turn changes or tile auto-played, errors cleared on state update",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_011103_3e7ckyad6c57",
+  "operation_id": "op_20260129_134641_e1f613a6",
+  "operation_type": "annotation_resolve",
+  "parent_operation": "5a6617c8d177351955baa6f2265d42f21b1ba996",
+  "timestamp": "2026-01-29T13:46:41.133645+00:00"
+}

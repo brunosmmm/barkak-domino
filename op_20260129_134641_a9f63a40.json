@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": "ann_030917_80da33",
+    "complexity_delta": -0.36,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Fixed perceived latency in reaction display: reduced animation duration from 300ms to 150ms, removed stagger delay, and fixed timer memory leak",
+    "retrospective_complexity": 0.09,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_184416_df8966",
+  "operation_id": "op_20260129_134641_a9f63a40",
+  "operation_type": "task_complete",
+  "parent_operation": "b75fe0146811a948587ee4af5ae857a6b9148325",
+  "timestamp": "2026-01-27T18:47:08.067118+00:00"
+}
