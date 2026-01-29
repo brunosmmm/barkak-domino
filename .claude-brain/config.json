@@ -4,5 +4,6 @@
     "annotations": ".claude-brain/annotations.yaml",
     "archive": ".claude-brain/annotations-archive.yaml",
     "knowledge": ".claude-brain/knowledge.yaml"
-  }
+  },
+  "storage_backend": "git-native"
 }
