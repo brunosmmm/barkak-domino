@@ -20,3 +20,12 @@ dist/
 frontend/playwright-report/
 frontend/tests/e2e/test-results
 
+# Test output
+test-results/
+frontend/test-results/
+
+# Claude Code
+.claude/
+.claude-brain/
+.mcp.json
+CLAUDE.md
