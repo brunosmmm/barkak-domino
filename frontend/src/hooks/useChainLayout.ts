@@ -40,6 +40,7 @@ interface ArmState {
   goingRight: boolean; // Track horizontal direction for snake pattern
   lastTileWidth: number;  // Width of the tile that created this arm state
   lastTileHeight: number; // Height of the tile that created this arm state
+  lastTileWasDouble: boolean; // Whether last tile was a double (affects turn positioning)
 }
 
 // Stable key for caching tile positions
@@ -144,6 +145,7 @@ export function useChainLayout({
           goingRight: false,  // Left arm starts going left
           lastTileWidth: width,
           lastTileHeight: height,
+          lastTileWasDouble: isDouble,
         },
         rightArm: {
           x: centerX + width,
@@ -153,6 +155,7 @@ export function useChainLayout({
           goingRight: true,   // Right arm starts going right
           lastTileWidth: width,
           lastTileHeight: height,
+          lastTileWasDouble: isDouble,
         },
         containerWidth,
         containerHeight,
@@ -288,7 +291,7 @@ function placeNextTile(
   tilesPerRow: number,
   tilesPerColumn: number
 ): PlaceResult {
-  let { x, y, direction, tileCount, goingRight, lastTileWidth, lastTileHeight } = arm;
+  let { x, y, direction, tileCount, goingRight, lastTileWidth, lastTileHeight, lastTileWasDouble } = arm;
   let isCorner = false;
 
   // Determine max tiles for current direction
@@ -305,31 +308,37 @@ function placeNextTile(
     // For W direction: left half is outgoing → connection at 1/4 of tile width from left
     // For S direction: bottom half is outgoing → connection at 3/4 of tile height from top
     // For N direction: top half is outgoing → connection at 1/4 of tile height from top
+    // EXCEPTION: Doubles are symmetric, so we move to tile center (1/2) instead
+    const xFraction = lastTileWasDouble ? 1/2 : 1/4;
+    const yFraction = lastTileWasDouble ? 1/2 : 1/4;
+
     if (isHorizontal(direction)) {
       // Turning from E/W to S (going down)
       // Move to bottom edge, but at the CENTER OF THE OUTGOING HALF (not tile center)
+      // For doubles: move to tile center (they're symmetric)
       if (direction === 'E') {
         // Arm is at right edge center. Outgoing half is the right half.
         // Move to: center of right half's bottom edge = 3/4 width from tile left
-        // From right edge: move left by 1/4 width (not 1/2)
-        x = x - lastTileWidth / 4;
+        // From right edge: move left by 1/4 width (or 1/2 for doubles)
+        x = x - lastTileWidth * xFraction;
         y = y + lastTileHeight / 2;
       } else {
         // Arm is at left edge center. Outgoing half is the left half.
         // Move to: center of left half's bottom edge = 1/4 width from tile left
-        // From left edge: move right by 1/4 width
-        x = x + lastTileWidth / 4;
+        // From left edge: move right by 1/4 width (or 1/2 for doubles)
+        x = x + lastTileWidth * xFraction;
         y = y + lastTileHeight / 2;
       }
       direction = 'S';
     } else {
       // Turning from S/N to E or W (going horizontal)
       // Move to horizontal edge, but at the CENTER OF THE OUTGOING HALF
+      // For doubles: move to tile center (they're symmetric)
       if (direction === 'S') {
         // Arm is at bottom edge center. Outgoing half is the bottom half.
         // Move to: center of bottom half's side edge = 3/4 height from tile top
-        // From bottom edge: move up by 1/4 height (not 1/2)
-        y = y - lastTileHeight / 4;
+        // From bottom edge: move up by 1/4 height (or 1/2 for doubles)
+        y = y - lastTileHeight * yFraction;
         if (goingRight) {
           x = x + lastTileWidth / 2;
         } else {
@@ -338,8 +347,8 @@ function placeNextTile(
       } else {
         // Arm is at top edge center. Outgoing half is the top half.
         // Move to: center of top half's side edge = 1/4 height from tile top
-        // From top edge: move down by 1/4 height
-        y = y + lastTileHeight / 4;
+        // From top edge: move down by 1/4 height (or 1/2 for doubles)
+        y = y + lastTileHeight * yFraction;
         if (goingRight) {
           x = x + lastTileWidth / 2;
         } else {
@@ -353,8 +362,16 @@ function placeNextTile(
   // Calculate tile dimensions based on direction
   // Regular tiles align with growth direction (long side parallel to direction)
   // Doubles are perpendicular (short side parallel to direction)
-  // Note: We DON'T apply double rotation at corners - the turn already changed orientation
-  const horizontal = isHorizontal(direction) ? !isDouble : isDouble;
+  // EXCEPTION: At corners, doubles align WITH the new direction (not perpendicular)
+  // This allows the double to bridge the turn - connecting incoming and outgoing directions
+  let horizontal: boolean;
+  if (isCorner && isDouble) {
+    // Corner double: align with the new direction
+    horizontal = isHorizontal(direction);
+  } else {
+    // Normal behavior: regular tiles align, doubles are perpendicular
+    horizontal = isHorizontal(direction) ? !isDouble : isDouble;
+  }
   const width = horizontal ? tileWidth : tileHeight;
   const height = horizontal ? tileHeight : tileWidth;
 
@@ -421,6 +438,7 @@ function placeNextTile(
       goingRight,
       lastTileWidth: width,
       lastTileHeight: height,
+      lastTileWasDouble: isDouble,
     },
   };
 }
