@@ -1,0 +1,29 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotations_linked": [
+      "ann_012523_3e7ckye8cb2b"
+    ],
+    "code_commit": "2eaf427f505cf48a2d4f961c4ee7e3f11e16daf7",
+    "code_commit_message": "feat(backend): avatar selection in lobby for human players",
+    "files": [
+      "backend/game/models.py",
+      "backend/game/rooms.py",
+      "backend/main.py",
+      "frontend/src/App.tsx",
+      "frontend/src/components/Lobby.tsx"
+    ],
+    "tasks_linked": [
+      "task_214539_dd204b"
+    ]
+  },
+  "entity_id": null,
+  "lamport_clock": 7,
+  "operation_id": "op_20260129_220451_ced3bfe4",
+  "operation_type": "commit_linked",
+  "parent_operation": null,
+  "timestamp": "2026-01-29T22:04:51.946224+00:00"
+}
