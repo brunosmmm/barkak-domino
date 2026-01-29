@@ -98,6 +98,7 @@ export function Game() {
   };
 
   const handleNextRound = () => {
+    console.log('handleNextRound called');
     nextRound();
   };
 

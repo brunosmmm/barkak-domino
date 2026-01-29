@@ -243,16 +243,21 @@ export class GamePage {
 
   /**
    * Claim a tile at the given grid position during picking phase
+   * Returns true if claimed successfully, false if tile was taken
    */
-  async claimTile(gridPosition: number): Promise<void> {
+  async claimTile(gridPosition: number): Promise<boolean> {
     const tile = this.locator(selectors.tilePosition(gridPosition));
 
-    // Check if available
-    await expect(tile).toHaveAttribute('data-available', 'true');
+    // Check if still available (might have been taken by CPU)
+    const isAvailable = await tile.getAttribute('data-available');
+    if (isAvailable !== 'true') {
+      return false; // Tile was taken, caller should retry with another
+    }
 
     await tile.click();
     // Wait for tile to be claimed (animation)
     await this.page.waitForTimeout(100);
+    return true;
   }
 
   /**
@@ -276,12 +281,25 @@ export class GamePage {
    * Claim all remaining tiles (up to 6)
    */
   async claimAllTiles(): Promise<void> {
-    for (let picked = 0; picked < 6; picked++) {
-      const available = await this.getAvailableTilePositions();
-      if (available.length === 0) break;
+    let picked = 0;
+    let attempts = 0;
+    const maxAttempts = 30; // Prevent infinite loop
 
-      await this.claimTile(available[0]);
-      await this.page.waitForTimeout(200); // Wait between picks
+    while (picked < 6 && attempts < maxAttempts) {
+      attempts++;
+      const available = await this.getAvailableTilePositions();
+      if (available.length === 0) {
+        // No tiles available, wait and retry
+        await this.page.waitForTimeout(200);
+        continue;
+      }
+
+      // Try to claim the first available tile
+      const claimed = await this.claimTile(available[0]);
+      if (claimed) {
+        picked++;
+      }
+      await this.page.waitForTimeout(150); // Wait between picks
     }
   }
 

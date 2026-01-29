@@ -1,5 +1,54 @@
 // Game types matching backend models
 
+// ============================================
+// Chain Layout Types (2D positioning system)
+// ============================================
+
+/** Cardinal direction for chain growth */
+export type GrowthDirection = 'N' | 'S' | 'E' | 'W';
+
+/** Position in tile units (not pixels) */
+export interface TilePosition {
+  x: number;
+  y: number;
+}
+
+/** Placement info for a single tile in the chain */
+export interface ChainTilePlacement {
+  tileIndex: number;
+  position: TilePosition;
+  rotation: number;       // 0, 90, 180, 270 degrees
+  isCorner: boolean;      // Tile where chain turned direction
+  isDouble: boolean;      // Whether tile is a double (affects rendering)
+}
+
+/** State of a chain end (left or right) */
+export interface ChainEnd {
+  position: TilePosition;
+  growthDirection: GrowthDirection;
+  pipValue: number | null;
+}
+
+/** Complete layout result for rendering */
+export interface ChainLayoutResult {
+  placements: ChainTilePlacement[];
+  leftEnd: ChainEnd;
+  rightEnd: ChainEnd;
+  bounds: {
+    minX: number;
+    maxX: number;
+    minY: number;
+    maxY: number;
+  };
+  // Offset to center the chain in the container
+  offsetX: number;
+  offsetY: number;
+}
+
+// ============================================
+// Domino Game Types
+// ============================================
+
 export interface Domino {
   left: number;
   right: number;

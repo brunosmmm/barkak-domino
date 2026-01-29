@@ -268,6 +268,18 @@ async def get_stats():
     return room_manager.get_stats()
 
 
+async def delayed_game_termination(game_id: str, grace_period: int = 10):
+    """
+    Wait for grace period, then terminate game if still no humans connected.
+    This allows players to reconnect after page refresh.
+    """
+    await asyncio.sleep(grace_period)
+    game = room_manager.get_game(game_id)
+    if game and not game.has_connected_humans():
+        print(f"Grace period expired, no humans reconnected to game {game_id}, terminating")
+        room_manager.delete_game(game_id)
+
+
 # WebSocket endpoint
 
 @app.websocket("/ws/{game_id}/{player_id}")
@@ -320,6 +332,18 @@ async def websocket_endpoint(websocket: WebSocket, game_id: str, player_id: str)
         manager.disconnect(game_id, player_id)
         if player:
             player.connected = False
+
+        # Check if game should be terminated (no human players left)
+        game = room_manager.get_game(game_id)
+        if game and not game.has_connected_humans():
+            # For waiting games, terminate immediately
+            if game.status == GameStatus.WAITING:
+                print(f"No human players remaining in waiting game {game_id}, terminating")
+                room_manager.delete_game(game_id)
+                return
+            # For active games, schedule delayed termination to allow reconnection
+            asyncio.create_task(delayed_game_termination(game_id, grace_period=10))
+
         await manager.broadcast_to_game(
             game_id,
             {"type": "player_disconnected", "player_id": player_id}

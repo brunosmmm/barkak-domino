@@ -22,6 +22,7 @@ function resetReconnectAttempts(): void {
 export function useWebSocket() {
   const wsRef = useRef<WebSocket | null>(null);
   const reconnectTimeoutRef = useRef<number | null>(null);
+  const intentionalDisconnectRef = useRef<boolean>(false);
 
   const {
     gameId,
@@ -42,6 +43,9 @@ export function useWebSocket() {
   const connect = useCallback(() => {
     if (!gameId || !playerId) return;
 
+    // Reset intentional disconnect flag when starting a new connection
+    intentionalDisconnectRef.current = false;
+
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${protocol}//${window.location.host}/ws/${gameId}/${playerId}`;
 
@@ -58,6 +62,13 @@ export function useWebSocket() {
     ws.onclose = (event) => {
       console.log('WebSocket disconnected, code:', event.code);
       setConnected(false);
+
+      // If intentionally disconnected, don't attempt reconnection
+      if (intentionalDisconnectRef.current) {
+        console.log('Intentional disconnect, not reconnecting');
+        resetReconnectAttempts();
+        return;
+      }
 
       // If game/player not found (4004), clear session and go back to lobby
       if (event.code === 4004) {
@@ -237,8 +248,11 @@ export function useWebSocket() {
   }, [setGameState, setValidMoves, setError, setRoundOverInfo, setMatchOverInfo, setLastPlayedTile, setPassNotification, addReaction, gameState]);
 
   const disconnect = useCallback(() => {
+    // Mark as intentional disconnect to prevent auto-reconnect
+    intentionalDisconnectRef.current = true;
     if (reconnectTimeoutRef.current) {
       clearTimeout(reconnectTimeoutRef.current);
+      reconnectTimeoutRef.current = null;
     }
     if (wsRef.current) {
       wsRef.current.close();
@@ -249,8 +263,15 @@ export function useWebSocket() {
   const send = useCallback((data: object) => {
     if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
       wsRef.current.send(JSON.stringify(data));
+    } else {
+      console.warn('WebSocket not connected, cannot send:', data);
+      // Attempt to reconnect if not intentionally disconnected
+      if (!intentionalDisconnectRef.current && gameId && playerId) {
+        console.log('Attempting to reconnect before sending...');
+        connect();
+      }
     }
-  }, []);
+  }, [gameId, playerId, connect]);
 
   const playTile = useCallback((domino: Domino, side: 'left' | 'right') => {
     send({ type: 'play_tile', domino, side });
@@ -269,6 +290,7 @@ export function useWebSocket() {
   }, [send]);
 
   const nextRound = useCallback(() => {
+    console.log('nextRound called, sending next_round message');
     send({ type: 'next_round' });
   }, [send]);
 

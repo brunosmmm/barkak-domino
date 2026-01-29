@@ -41,9 +41,10 @@ export function ReactionDisplay() {
           data-emoji={reaction.emoji}
           className="absolute animate-bounce"
           style={{
-            // Stagger positions based on index (no animation delay)
-            top: `${20 + (index % 3) * 15}%`,
-            left: `${10 + ((index * 20) % 80)}%`,
+            // Position in center of screen, stagger vertically
+            top: `${30 + (index % 3) * 12}%`,
+            left: '50%',
+            transform: 'translateX(-50%)',
           }}
         >
           <div className="bg-black/70 backdrop-blur rounded-xl px-4 py-2 shadow-2xl border border-white/20 animate-in fade-in zoom-in slide-in-from-bottom-4 duration-150">

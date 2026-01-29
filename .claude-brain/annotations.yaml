@@ -376,3 +376,213 @@ annotations:
   - ui
   - multiplayer
   - avatar
+- id: ann_024447_3e7ckyd6d41f
+  type: work
+  status: INPROGRESS
+  created: '2026-01-28T02:44:47.578990+00:00'
+  last_activity: '2026-01-28T02:44:58.089427+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T02:44:58.089427+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_024457_38932e
+    source: auto
+  text: Implement board snaking mechanism - tiles should wrap/turn when approaching
+    screen edges to keep the board playable and visible
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_012556_ddab7c
+  perceived_complexity: 0.65
+  complexity_factors:
+  - multi_file
+  - visual_layout
+  - game_logic
+  priority: high
+  updated: '2026-01-28T02:44:58.089427+00:00'
+- id: ann_144329_3e7ckyf57302
+  type: idea
+  status: TODO
+  created: '2026-01-28T14:43:29.591152+00:00'
+  last_activity: '2026-01-28T14:43:29.591152+00:00'
+  activity_log: []
+  text: 'Mobile UI: Avatars redundancy after layout changes. Due to layout changes,
+    avatars on the top bar in mobile may no longer be needed. Options to explore:
+
+    1. Show something more informative in the top bar instead of avatars
+
+    2. Remove avatars around the table to increase table/board size (if needed for
+    snake layout)
+
+
+    Need to experiment with both approaches to see what works best.'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.4
+  priority: low
+  tags:
+  - frontend
+  - mobile
+  - ui
+  - layout
+- id: ann_144447_3e7cky40549f
+  type: bug
+  status: TODO
+  created: '2026-01-28T14:44:47.242415+00:00'
+  last_activity: '2026-01-28T14:44:47.242415+00:00'
+  activity_log: []
+  text: Game unplayable on mobile devices with small screens in landscape mode. Need
+    to investigate and fix layout/responsiveness issues for this viewport configuration.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.5
+  priority: high
+  tags:
+  - frontend
+  - mobile
+  - responsive
+  - layout
+  - landscape
+- id: ann_214803_3e7ckyd2c5c9
+  type: bug
+  status: TODO
+  created: '2026-01-28T21:48:03.275566+00:00'
+  last_activity: '2026-01-28T21:48:03.275566+00:00'
+  activity_log: []
+  text: 'Boneyard obstructs other UI elements. Fix: If screen is big enough, display
+    boneyard on the table surface. If not enough space, hide the boneyard completely.'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    file: frontend/src/components/GameBoard.tsx
+  perceived_complexity: 0.4
+  priority: medium
+  tags:
+  - ui
+  - responsive
+  - boneyard
+- id: ann_214857_3e7ckyef6c16
+  type: bug
+  status: TODO
+  created: '2026-01-28T21:48:57.199653+00:00'
+  last_activity: '2026-01-28T21:48:57.199653+00:00'
+  activity_log: []
+  text: Tile placement confirmation popup is severely misaligned. When clicking on
+    a tile in hand, the popup that confirms where to place the tile on the table appears
+    in the wrong position.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    file: frontend/src/components/GameBoard.tsx
+  perceived_complexity: 0.45
+  priority: high
+  tags:
+  - ui
+  - alignment
+  - play-buttons
+- id: ann_215159_3e7cky8dc9b5
+  type: bug
+  status: INPROGRESS
+  created: '2026-01-28T21:51:59.482077+00:00'
+  last_activity: '2026-01-29T02:20:01.432578+00:00'
+  activity_log:
+  - timestamp: '2026-01-28T21:57:31.972391+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_215731_b95912
+    source: auto
+  - timestamp: '2026-01-28T22:36:31.696980+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_215731_b95912
+    source: auto
+  - timestamp: '2026-01-29T01:31:46.919780+00:00'
+    action: status_change
+    from: DONE
+    to: INPROGRESS
+    task_id: task_013146_a58dfc
+    source: auto
+  text: 'FUNDAMENTAL BUG: Chain layout recalculates and re-centers ALL tile positions
+    on every board update. This causes the entire game to shift/move as tiles are
+    added.
+
+
+    CORRECT BEHAVIOR:
+
+    - First tile placed at table center - position is FIXED
+
+    - Each new tile placed relative to chain end - then FIXED
+
+    - Once a tile is placed, it CANNOT move
+
+    - Only calculate position for newly added tile
+
+
+    Current algorithm rebuilds from pivot and applies centering offset - this is wrong.
+    Need to store positions incrementally and never recalculate existing tiles.'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    file: frontend/src/hooks/useChainLayout.ts
+  perceived_complexity: 0.7
+  priority: critical
+  tags:
+  - architecture
+  - layout
+  - chain-layout
+  - fundamental
+  updated: '2026-01-29T02:20:01.432578+00:00'
+  resolution:
+    type: fixed
+    summary: Fixed fundamental layout re-centering bug. Tiles now have stable positions
+      - first tile at center (fixed), subsequent tiles cached by domino key and never
+      recalculated. Removed centering offset.
+    approach: bugfix
+- id: ann_015622_3e7cky9fd4f4
+  type: bug
+  status: INPROGRESS
+  created: '2026-01-29T01:56:22.233700+00:00'
+  last_activity: '2026-01-29T02:00:47.428967+00:00'
+  activity_log:
+  - timestamp: '2026-01-29T02:00:47.428967+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_020047_1b9373
+    source: auto
+  text: Next round button does not work - clicking it has no effect after a round
+    ends
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_013146_a58dfc
+  perceived_complexity: 0.4
+  priority: critical
+  tags:
+  - gameplay
+  - round-transition
+  updated: '2026-01-29T02:00:47.428967+00:00'
+- id: ann_024848_3e7cky1743e0
+  type: idea
+  status: TODO
+  created: '2026-01-29T02:48:48.326124+00:00'
+  last_activity: '2026-01-29T02:48:48.326124+00:00'
+  activity_log: []
+  text: Add game speed control option - allow players to configure how fast CPUs play
+    (faster or slower). Could be a slider in game settings or lobby configuration.
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+    task_id: task_022001_463235
+  perceived_complexity: 0.45
+  priority: low
+  tags:
+  - feature
+  - ux
+  - cpu
+  - settings

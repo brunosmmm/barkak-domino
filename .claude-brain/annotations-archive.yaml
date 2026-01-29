@@ -1216,7 +1216,7 @@ archived:
   type: work
   status: DONE
   created: '2026-01-28T01:25:48.439181+00:00'
-  last_activity: '2026-01-28T01:28:01.705475+00:00'
+  last_activity: '2026-01-28T02:29:37.327184+00:00'
   activity_log:
   - timestamp: '2026-01-28T01:25:56.870452+00:00'
     action: status_change
@@ -1248,3 +1248,48 @@ archived:
       tests (broadcast to other players). Added data-testid attributes to ReactionDisplay.'
     approach: bugfix
   completed: '2026-01-28T01:28:01.705475+00:00'
+  commit_refs:
+  - hash: 0d8f960af8d761ed54833833d6d7c72af3a63339
+    hash_short: 0d8f960
+    linked_at: '2026-01-28T02:29:37.327184+00:00'
+    message: 'fix(reactions): add optimistic rendering and fix stale closure issue
+
+
+      - Show reactions immediately w'
+- id: ann_144201_3e7cky894a99
+  type: todo
+  status: DONE
+  created: '2026-01-28T14:42:01.656226+00:00'
+  last_activity: '2026-01-29T01:59:49.671694+00:00'
+  activity_log:
+  - timestamp: '2026-01-29T01:58:59.034749+00:00'
+    action: status_change
+    from: TODO
+    to: INPROGRESS
+    task_id: task_015858_a752bd
+    source: auto
+  - timestamp: '2026-01-29T01:59:49.671694+00:00'
+    action: status_change
+    from: INPROGRESS
+    to: DONE
+    task_id: task_015858_a752bd
+    source: auto
+  text: 'Auto-terminate single-human games on exit: When a game consists of 1 human
+    player + CPU players only, and the human exits via the menu, the game should be
+    fully terminated in the backend and purged (not left in suspended state).'
+  context:
+    repository_id: github.com/brunosmmm/barkak-domino
+    git_branch: main
+  perceived_complexity: 0.45
+  priority: medium
+  tags:
+  - backend
+  - game-lifecycle
+  - cleanup
+  updated: '2026-01-29T01:59:49.671694+00:00'
+  resolution:
+    type: fixed
+    summary: Added game termination when last human player disconnects - checks has_connected_humans()
+      after disconnect and deletes game if no humans remain
+    approach: bugfix
+  completed: '2026-01-29T01:59:49.671694+00:00'
