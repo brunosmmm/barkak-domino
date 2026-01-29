@@ -2,10 +2,13 @@ import { useState, useEffect } from 'react';
 import { useGameStore } from '../store/gameStore';
 
 interface LobbyProps {
-  onJoinGame: (gameId: string, playerName: string) => void;
-  onCreateGame: (playerName: string, maxPlayers: number, addCpu: number) => void;
+  onJoinGame: (gameId: string, playerName: string, avatarId: number | null) => void;
+  onCreateGame: (playerName: string, maxPlayers: number, addCpu: number, avatarId: number | null) => void;
   initialJoinGameId?: string | null;
 }
+
+// Available avatar IDs (matches backend)
+const AVAILABLE_AVATARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 20];
 
 interface OpenGame {
   id: string;
@@ -23,6 +26,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
   const [openGames, setOpenGames] = useState<OpenGame[]>([]);
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<'menu' | 'create' | 'join'>(initialJoinGameId ? 'join' : 'menu');
+  const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
   const { error, setError } = useGameStore();
 
   // Fetch open games
@@ -42,7 +46,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
     }
     setLoading(true);
     try {
-      onCreateGame(playerName.trim(), maxPlayers, cpuPlayers);
+      onCreateGame(playerName.trim(), maxPlayers, cpuPlayers, selectedAvatar);
     } finally {
       setLoading(false);
     }
@@ -55,7 +59,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
     }
     setLoading(true);
     try {
-      onJoinGame(gameId, playerName.trim());
+      onJoinGame(gameId, playerName.trim(), selectedAvatar);
     } finally {
       setLoading(false);
     }
@@ -86,6 +90,34 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
               className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white placeholder-gray-400
                          border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
             />
+
+            {/* Avatar Selection */}
+            <div>
+              <label className="block text-gray-300 text-sm mb-2">Choose Your Avatar</label>
+              <div className="grid grid-cols-6 gap-2" data-testid="avatar-picker">
+                {AVAILABLE_AVATARS.map((avatarId) => (
+                  <button
+                    key={avatarId}
+                    onClick={() => setSelectedAvatar(selectedAvatar === avatarId ? null : avatarId)}
+                    data-testid={`avatar-${avatarId}`}
+                    className={`relative w-12 h-12 rounded-full overflow-hidden border-2 transition-all
+                      ${selectedAvatar === avatarId
+                        ? 'border-neon-amber shadow-neon-amber scale-110'
+                        : 'border-bar-wood-light hover:border-neon-amber/50'}`}
+                  >
+                    <img
+                      src={`/images/avatar-${avatarId}.png`}
+                      alt={`Avatar ${avatarId}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+              {!selectedAvatar && (
+                <p className="text-gray-500 text-xs mt-1">Random avatar if not selected</p>
+              )}
+            </div>
+
             <button
               onClick={() => setMode('create')}
               disabled={!playerName.trim()}

@@ -57,6 +57,7 @@ class Player(BaseModel):
     score: int = 0
     connected: bool = True
     is_cpu: bool = False
+    preferred_avatar: Optional[int] = None  # Player's chosen avatar ID
 
     def hand_total(self) -> int:
         return sum(d.total() for d in self.hand)
@@ -116,6 +117,7 @@ class Game(BaseModel):
 class JoinGameRequest(BaseModel):
     game_id: str
     player_name: str
+    avatar_id: Optional[int] = None  # Player's preferred avatar
 
 
 class CreateGameRequest(BaseModel):
@@ -124,6 +126,7 @@ class CreateGameRequest(BaseModel):
     max_players: int = Field(default=4, ge=2, le=4)
     cpu_players: int = Field(default=0, ge=0, le=3)
     target_score: int = Field(default=100, ge=50, le=500)  # For multi-round matches
+    avatar_id: Optional[int] = None  # Creator's preferred avatar
 
 
 class PlayTileRequest(BaseModel):

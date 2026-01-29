@@ -29,7 +29,7 @@ class GameRoomManager:
             max_players=request.max_players
         )
 
-        player = Player(name=request.player_name)
+        player = Player(name=request.player_name, preferred_avatar=request.avatar_id)
         game.players.append(player)
 
         # Add CPU players
@@ -46,7 +46,7 @@ class GameRoomManager:
         """Get a game by ID."""
         return self.games.get(game_id)
 
-    def join_game(self, game_id: str, player_name: str) -> tuple[Optional[Game], Optional[Player], str]:
+    def join_game(self, game_id: str, player_name: str, avatar_id: int | None = None) -> tuple[Optional[Game], Optional[Player], str]:
         """
         Join an existing game.
         Returns (game, player, error_message).
@@ -65,7 +65,7 @@ class GameRoomManager:
         if any(p.name == player_name for p in game.players):
             return None, None, "Name already taken in this game"
 
-        player = Player(name=player_name)
+        player = Player(name=player_name, preferred_avatar=avatar_id)
         game.players.append(player)
 
         # Auto-start when enough players (minimum 2)
@@ -258,10 +258,25 @@ class GameRoomManager:
                 match.player_positions.append(player.id)
                 match.individual_scores.scores[player.id] = 0
 
-        # Randomly select 4 unique avatars from available pool (excluding removed avatars)
+        # Assign avatars: respect player preferences, randomly fill the rest
         if not match.avatar_ids:
             available_avatars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 20]
-            match.avatar_ids = random.sample(available_avatars, min(4, len(game.players)))
+            match.avatar_ids = [None] * len(game.players)
+            used_avatars = set()
+
+            # First pass: assign preferred avatars
+            for i, player in enumerate(game.players):
+                if player.preferred_avatar and player.preferred_avatar in available_avatars:
+                    if player.preferred_avatar not in used_avatars:
+                        match.avatar_ids[i] = player.preferred_avatar
+                        used_avatars.add(player.preferred_avatar)
+
+            # Second pass: randomly assign remaining
+            remaining = [a for a in available_avatars if a not in used_avatars]
+            random.shuffle(remaining)
+            for i in range(len(match.avatar_ids)):
+                if match.avatar_ids[i] is None:
+                    match.avatar_ids[i] = remaining.pop()
 
         # Set up teams for 4 players
         if len(game.players) == 4:

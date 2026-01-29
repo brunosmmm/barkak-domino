@@ -12,7 +12,7 @@ function App() {
     return params.get('join');
   }, []);
 
-  const handleCreateGame = async (playerName: string, maxPlayers: number, cpuPlayers: number) => {
+  const handleCreateGame = async (playerName: string, maxPlayers: number, cpuPlayers: number, avatarId: number | null) => {
     try {
       const response = await fetch('/api/games', {
         method: 'POST',
@@ -21,6 +21,7 @@ function App() {
           player_name: playerName,
           max_players: maxPlayers,
           cpu_players: cpuPlayers,
+          avatar_id: avatarId,
         }),
       });
 
@@ -37,7 +38,7 @@ function App() {
     }
   };
 
-  const handleJoinGame = async (gameId: string, playerName: string) => {
+  const handleJoinGame = async (gameId: string, playerName: string, avatarId: number | null) => {
     try {
       const response = await fetch(`/api/games/${gameId}/join`, {
         method: 'POST',
@@ -45,6 +46,7 @@ function App() {
         body: JSON.stringify({
           game_id: gameId,
           player_name: playerName,
+          avatar_id: avatarId,
         }),
       });
 

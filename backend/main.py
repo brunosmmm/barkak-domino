@@ -805,7 +805,7 @@ def create_player_game_view(game: Game, player_id: str) -> dict:
 @app.post("/api/games/{game_id}/join")
 async def join_game(game_id: str, request: JoinGameRequest):
     """Join an existing game."""
-    game, player, error = room_manager.join_game(game_id, request.player_name)
+    game, player, error = room_manager.join_game(game_id, request.player_name, request.avatar_id)
 
     if error:
         raise HTTPException(status_code=400, detail=error)
