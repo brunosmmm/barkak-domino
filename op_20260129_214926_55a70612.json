@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Added avatar selection UI in lobby - players can choose from 17 avatars before creating/joining a game. Backend respects preferences when assigning avatars at match start.",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_012523_3e7ckye8cb2b",
+  "lamport_clock": 6,
+  "operation_id": "op_20260129_214926_55a70612",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-29T21:49:26.486830+00:00"
+}
