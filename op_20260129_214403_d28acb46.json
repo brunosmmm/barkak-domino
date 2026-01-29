@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Fixed in UI polish and state bugs update",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_015622_3e7cky9fd4f4",
+  "lamport_clock": 2,
+  "operation_id": "op_20260129_214403_d28acb46",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-29T21:44:03.500629+00:00"
+}
