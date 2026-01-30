@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "commit_refs": [
+      {
+        "hash": "9b7cef0af1acaf9f5518ffcaedbfca1f21ed7b96",
+        "hash_short": "9b7cef0",
+        "linked_at": "2026-01-30T03:33:48.583822+00:00",
+        "message": "feat(audio-gen,frontend): Grouped by time proximity (407s) (+5 more)"
+      }
+    ],
+    "last_activity": "2026-01-30T03:33:48.583822+00:00"
+  },
+  "entity_id": "ann_031225_3e7ckye3e9fb",
+  "lamport_clock": 45,
+  "operation_id": "op_20260130_033348_81a6bf2f",
+  "operation_type": "annotation_update",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:33:48.594679+00:00"
+}
