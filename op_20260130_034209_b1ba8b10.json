@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Abandoned - AI-generated prop images had persistent transparency issues that couldn't be resolved satisfactorily",
+      "type": "wontfix"
+    }
+  },
+  "entity_id": "ann_031225_3e7ckye3e9fb",
+  "lamport_clock": 56,
+  "operation_id": "op_20260130_034209_b1ba8b10",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:42:09.225807+00:00"
+}
