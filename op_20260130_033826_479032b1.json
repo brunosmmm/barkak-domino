@@ -9,10 +9,10 @@
       "type": "canceled"
     }
   },
-  "entity_id": "ann_213922_3e7ckyac0c09",
-  "lamport_clock": 52,
-  "operation_id": "op_20260130_033553_5df96934",
+  "entity_id": "ann_022717_94aeb3",
+  "lamport_clock": 53,
+  "operation_id": "op_20260130_033826_479032b1",
   "operation_type": "annotation_resolve",
   "parent_operation": null,
-  "timestamp": "2026-01-30T03:35:53.393149+00:00"
+  "timestamp": "2026-01-30T03:38:26.107667+00:00"
 }
