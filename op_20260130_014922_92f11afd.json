@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotations_linked": [
+      "ann_024848_3e7cky1743e0"
+    ],
+    "code_commit": "1145c0e9007fccf0f951ef1e8ca099decbce4e97",
+    "code_commit_message": "feat(dev): add --network option to bind servers to 0.0.0.0",
+    "files": [
+      "dev.sh"
+    ],
+    "tasks_linked": [
+      "task_013107_ad960e"
+    ]
+  },
+  "entity_id": null,
+  "lamport_clock": 22,
+  "operation_id": "op_20260130_014922_92f11afd",
+  "operation_type": "commit_linked",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:49:22.803670+00:00"
+}
