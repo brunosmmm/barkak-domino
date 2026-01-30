@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "complexity_factors": null,
+    "perceived_complexity": 0.35,
+    "priority": "high",
+    "tags": [
+      "layout",
+      "ui",
+      "pass-button",
+      "chain-layout"
+    ],
+    "text": "Fix tile layout garbling when pass button appears - reserve space for pass button to prevent container resize cascade",
+    "type": "bug"
+  },
+  "entity_id": "ann_014529_3e7ckydd5421",
+  "lamport_clock": 16,
+  "operation_id": "op_20260130_014529_da63f74c",
+  "operation_type": "annotation_create",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:45:29.720382+00:00"
+}
