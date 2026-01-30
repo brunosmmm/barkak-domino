@@ -12,10 +12,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Parse arguments
 KILL_EXISTING=false
+BIND_HOST="127.0.0.1"
 for arg in "$@"; do
     case $arg in
         -k|--kill)
             KILL_EXISTING=true
+            shift
+            ;;
+        -n|--network)
+            BIND_HOST="0.0.0.0"
             shift
             ;;
         -h|--help)
@@ -23,6 +28,7 @@ for arg in "$@"; do
             echo ""
             echo "Options:"
             echo "  -k, --kill    Kill existing instances before starting"
+            echo "  -n, --network Bind to 0.0.0.0 (accessible from network)"
             echo "  -h, --help    Show this help message"
             exit 0
             ;;
@@ -64,18 +70,23 @@ source venv/bin/activate 2>/dev/null || {
     source venv/bin/activate
     pip install -r requirements.txt
 }
-uvicorn main:app --reload --port 8000 &
+uvicorn main:app --reload --host "$BIND_HOST" --port 8000 &
 BACKEND_PID=$!
 
 # Start frontend
 echo -e "${GREEN}Starting frontend (Vite)...${NC}"
 cd "$SCRIPT_DIR/frontend"
-npm run dev &
+npm run dev -- --host "$BIND_HOST" &
 FRONTEND_PID=$!
 
 echo -e "\n${GREEN}Both servers running:${NC}"
-echo -e "  Backend:  ${YELLOW}http://localhost:8000${NC}"
-echo -e "  Frontend: ${YELLOW}http://localhost:5173${NC}"
+if [ "$BIND_HOST" = "0.0.0.0" ]; then
+    echo -e "  Backend:  ${YELLOW}http://0.0.0.0:8000${NC} (network accessible)"
+    echo -e "  Frontend: ${YELLOW}http://0.0.0.0:5173${NC} (network accessible)"
+else
+    echo -e "  Backend:  ${YELLOW}http://localhost:8000${NC}"
+    echo -e "  Frontend: ${YELLOW}http://localhost:5173${NC}"
+fi
 echo -e "\nPress Ctrl+C to stop both servers\n"
 
 # Wait for both processes
