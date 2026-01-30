@@ -103,17 +103,17 @@ export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: Player
         <p className="text-gray-400 text-center py-2">No tiles remaining</p>
       )}
 
-      {/* Pass button - appears when player must pass */}
-      {isYourTurn && canPass && onPass && (
-        <button
-          onClick={onPass}
-          data-testid="pass-btn"
-          className="mt-2 w-full bg-orange-600 active:bg-orange-500 text-white py-3 rounded-lg font-bold
-                     shadow-lg shadow-orange-500/30 border-2 border-orange-400"
-        >
-          ⏭️ PASS TURN
-        </button>
-      )}
+      {/* Pass button - always rendered to reserve space, invisible when not needed */}
+      <button
+        onClick={onPass}
+        data-testid="pass-btn"
+        disabled={!(isYourTurn && canPass && onPass)}
+        className={`mt-2 w-full bg-orange-600 active:bg-orange-500 text-white py-3 rounded-lg font-bold
+                   shadow-lg shadow-orange-500/30 border-2 border-orange-400
+                   ${isYourTurn && canPass && onPass ? 'visible' : 'invisible'}`}
+      >
+        ⏭️ PASS TURN
+      </button>
     </div>
   );
 }
