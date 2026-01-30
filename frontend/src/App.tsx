@@ -12,7 +12,7 @@ function App() {
     return params.get('join');
   }, []);
 
-  const handleCreateGame = async (playerName: string, maxPlayers: number, cpuPlayers: number, avatarId: number | null) => {
+  const handleCreateGame = async (playerName: string, maxPlayers: number, cpuPlayers: number, avatarId: number | null, cpuSpeed: string) => {
     try {
       const response = await fetch('/api/games', {
         method: 'POST',
@@ -22,6 +22,7 @@ function App() {
           max_players: maxPlayers,
           cpu_players: cpuPlayers,
           avatar_id: avatarId,
+          cpu_speed: cpuSpeed,
         }),
       });
 

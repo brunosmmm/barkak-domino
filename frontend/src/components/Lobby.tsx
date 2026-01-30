@@ -3,12 +3,20 @@ import { useGameStore } from '../store/gameStore';
 
 interface LobbyProps {
   onJoinGame: (gameId: string, playerName: string, avatarId: number | null) => void;
-  onCreateGame: (playerName: string, maxPlayers: number, addCpu: number, avatarId: number | null) => void;
+  onCreateGame: (playerName: string, maxPlayers: number, addCpu: number, avatarId: number | null, cpuSpeed: string) => void;
   initialJoinGameId?: string | null;
 }
 
 // Available avatar IDs (matches backend)
 const AVAILABLE_AVATARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 16, 17, 18, 20];
+
+// CPU speed options (matches backend CpuSpeed enum)
+const CPU_SPEEDS = [
+  { value: 'slow', label: 'Slow', description: '10-20s per move' },
+  { value: 'normal', label: 'Normal', description: '5-15s per move' },
+  { value: 'fast', label: 'Fast', description: '2-5s per move' },
+  { value: 'instant', label: 'Instant', description: '<1s per move' },
+];
 
 interface OpenGame {
   id: string;
@@ -27,6 +35,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<'menu' | 'create' | 'join'>(initialJoinGameId ? 'join' : 'menu');
   const [selectedAvatar, setSelectedAvatar] = useState<number | null>(null);
+  const [cpuSpeed, setCpuSpeed] = useState('normal');
   const { error, setError } = useGameStore();
 
   // Fetch open games
@@ -46,7 +55,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
     }
     setLoading(true);
     try {
-      onCreateGame(playerName.trim(), maxPlayers, cpuPlayers, selectedAvatar);
+      onCreateGame(playerName.trim(), maxPlayers, cpuPlayers, selectedAvatar, cpuSpeed);
     } finally {
       setLoading(false);
     }
@@ -182,6 +191,25 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                 ))}
               </select>
             </div>
+
+            {cpuPlayers > 0 && (
+              <div>
+                <label className="block text-gray-300 text-sm mb-2">CPU Speed</label>
+                <select
+                  value={cpuSpeed}
+                  onChange={(e) => setCpuSpeed(e.target.value)}
+                  data-testid="cpu-speed-select"
+                  className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
+                             border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
+                >
+                  {CPU_SPEEDS.map((speed) => (
+                    <option key={speed.value} value={speed.value}>
+                      {speed.label} ({speed.description})
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <button
               onClick={handleCreate}

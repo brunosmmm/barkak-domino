@@ -10,7 +10,7 @@ import os
 
 from game.models import (
     Game, CreateGameRequest, JoinGameRequest, PlayTileRequest,
-    Domino, GameStatus, Match
+    Domino, GameStatus, Match, CpuSpeed
 )
 from game.logic import play_tile, pass_turn, start_game, get_valid_moves, has_valid_move, claim_tile, cpu_claim_tile, check_picking_complete, auto_assign_remaining_tiles
 from game.manager import manager
@@ -24,6 +24,26 @@ _cpu_picking_active: set[str] = set()
 
 # Test mode - set TEST_MODE=1 to make CPUs pick instantly
 TEST_MODE = os.environ.get("TEST_MODE", "0") == "1"
+
+
+def get_cpu_delay_range(cpu_speed: CpuSpeed) -> tuple[float, float]:
+    """Get min/max delay in seconds based on CPU speed setting."""
+    return {
+        CpuSpeed.SLOW: (10.0, 20.0),
+        CpuSpeed.NORMAL: (5.0, 15.0),
+        CpuSpeed.FAST: (2.0, 5.0),
+        CpuSpeed.INSTANT: (0.5, 1.0),
+    }.get(cpu_speed, (5.0, 15.0))
+
+
+def get_cpu_pick_delay_range(cpu_speed: CpuSpeed) -> tuple[float, float]:
+    """Get min/max delay for tile picking based on CPU speed setting."""
+    return {
+        CpuSpeed.SLOW: (3.0, 5.0),
+        CpuSpeed.NORMAL: (1.5, 3.0),
+        CpuSpeed.FAST: (0.5, 1.5),
+        CpuSpeed.INSTANT: (0.2, 0.5),
+    }.get(cpu_speed, (1.5, 3.0))
 
 
 async def cleanup_task():
@@ -617,7 +637,8 @@ async def process_cpu_turns(game_id: str):
         # Add a random delay for UX (feels more human-like)
         # In TEST_MODE, play instantly
         if not TEST_MODE:
-            delay = random.uniform(5.0, 20.0)
+            min_delay, max_delay = get_cpu_delay_range(game.cpu_speed)
+            delay = random.uniform(min_delay, max_delay)
             await asyncio.sleep(delay)
 
         cpu_player_id = game.current_turn
@@ -675,10 +696,11 @@ async def process_cpu_tile_claims(game_id: str):
             # Pick one tile for ONE random CPU (round-robin would be predictable)
             cpu = random.choice(cpus_needing_tiles)
 
-            # Delay before picking (1.5-3 seconds) - gives humans time to pick
+            # Delay before picking - gives humans time to pick
             # In TEST_MODE, pick instantly
             if not TEST_MODE:
-                delay = random.uniform(1.5, 3.0)
+                min_delay, max_delay = get_cpu_pick_delay_range(game.cpu_speed)
+                delay = random.uniform(min_delay, max_delay)
                 await asyncio.sleep(delay)
 
             # Re-check game status after delay

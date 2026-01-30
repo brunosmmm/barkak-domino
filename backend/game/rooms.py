@@ -3,7 +3,7 @@ import random
 from typing import Optional
 from datetime import datetime, timedelta
 from .models import (
-    Game, Player, GameStatus, GameVariant, CreateGameRequest,
+    Game, Player, GameStatus, GameVariant, CreateGameRequest, CpuSpeed,
     Match, RoundResult, TeamScores, IndividualScores
 )
 from .logic import start_game, calculate_round_points, calculate_team_round_points, start_new_round
@@ -26,7 +26,8 @@ class GameRoomManager:
         """Create a new game and add the creator as first player."""
         game = Game(
             variant=request.variant,
-            max_players=request.max_players
+            max_players=request.max_players,
+            cpu_speed=request.cpu_speed
         )
 
         player = Player(name=request.player_name, preferred_avatar=request.avatar_id)

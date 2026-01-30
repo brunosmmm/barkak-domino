@@ -12,6 +12,13 @@ class GameVariant(str, Enum):
     ALL_FIVES = "all_fives"
 
 
+class CpuSpeed(str, Enum):
+    SLOW = "slow"      # 10-20 seconds
+    NORMAL = "normal"  # 5-15 seconds
+    FAST = "fast"      # 2-5 seconds
+    INSTANT = "instant"  # 0.5-1 second
+
+
 class GameStatus(str, Enum):
     WAITING = "waiting"
     PICKING = "picking"  # Players are picking tiles from face-down pool
@@ -91,6 +98,7 @@ class Game(BaseModel):
     picking_tiles: dict[int, Domino] = Field(default_factory=dict)  # Grid position (0-27) -> tile
     picking_started_at: datetime | None = None  # For picking timeout
     picking_timeout: int = 60  # Seconds before auto-assign remaining tiles
+    cpu_speed: CpuSpeed = CpuSpeed.NORMAL  # How fast CPU players play
 
     def touch(self):
         """Update last activity timestamp."""
@@ -127,6 +135,7 @@ class CreateGameRequest(BaseModel):
     cpu_players: int = Field(default=0, ge=0, le=3)
     target_score: int = Field(default=100, ge=50, le=500)  # For multi-round matches
     avatar_id: Optional[int] = None  # Creator's preferred avatar
+    cpu_speed: CpuSpeed = CpuSpeed.NORMAL  # How fast CPUs play
 
 
 class PlayTileRequest(BaseModel):
