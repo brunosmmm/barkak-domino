@@ -18,6 +18,7 @@ from game.rooms import room_manager
 from game.cpu import is_cpu_turn, execute_cpu_turn
 import asyncio
 import random
+import time
 
 # Track games with active CPU picking tasks to prevent concurrent task spawning
 _cpu_picking_active: set[str] = set()
@@ -527,6 +528,27 @@ async def handle_message(game_id: str, player_id: str, data: dict):
             "player_id": player_id,
             "player_name": player_name,
             "emoji": emoji
+        })
+
+    elif msg_type == "chat_message":
+        # Broadcast chat message to all players
+        text = data.get("text", "").strip()
+        if not text:
+            return
+        # Truncate long messages
+        text = text[:200]
+        player = game.get_player(player_id)
+        if not player:
+            return
+        player_position = game.players.index(player)
+
+        await manager.broadcast_to_game(game_id, {
+            "type": "chat_message",
+            "player_id": player_id,
+            "player_name": player.name,
+            "player_position": player_position,
+            "text": text,
+            "timestamp": int(time.time() * 1000)
         })
 
     elif msg_type == "next_round":

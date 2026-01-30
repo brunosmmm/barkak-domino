@@ -11,6 +11,9 @@ import { Boneyard } from './Boneyard';
 import { TurnTimer } from './TurnTimer';
 import { TilePicking } from './TilePicking';
 import { SoundToggle } from './SoundToggle';
+import { ChatBox } from './ChatBox';
+import { ChatBubble } from './ChatBubble';
+import { ChatPopup } from './ChatPopup';
 import { useGameStore } from '../store/gameStore';
 import { useWebSocket } from '../hooks/useWebSocket';
 import { useSound } from '../hooks/useSound';
@@ -25,8 +28,8 @@ const PLAYER_COLORS: Record<number, { border: string; text: string }> = {
 };
 
 export function Game() {
-  const { gameState, selectedDomino, setSelectedDomino, reset, addReaction, passNotification, roundOverInfo } = useGameStore();
-  const { playTile, passTurn, startGame, addCpu, nextRound, claimTile, sendReaction, disconnect } = useWebSocket();
+  const { gameState, selectedDomino, setSelectedDomino, reset, addReaction, passNotification, roundOverInfo, isChatOpen, setChatOpen, unreadChatCount } = useGameStore();
+  const { playTile, passTurn, startGame, addCpu, nextRound, claimTile, sendReaction, sendChatMessage, disconnect } = useWebSocket();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const { playTilePlace, playTileSelect, playTurnNotify, playVictory, playDefeat, playPass, playGameStart, playReaction } = useSound();
 
@@ -321,6 +324,45 @@ export function Game() {
         <div className="fixed bottom-24 lg:bottom-4 right-4 z-40">
           <ReactionPicker onReaction={handleSendReaction} />
         </div>
+      )}
+
+      {/* Mobile Chat button (bottom left, aligned with reaction picker) */}
+      {gameState.status === 'playing' && (
+        <div className="lg:hidden fixed bottom-24 left-4 z-40">
+          <button
+            onClick={() => setChatOpen(true)}
+            className="relative w-12 h-12 flex items-center justify-center bg-neon-amber hover:bg-neon-amber-glow hover:scale-110 rounded-full shadow-lg shadow-neon-amber transition-all"
+            aria-label="Open chat"
+            data-testid="mobile-chat-button"
+          >
+            <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            {unreadChatCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full text-[10px] text-white font-bold flex items-center justify-center" data-testid="chat-unread-badge">
+                {unreadChatCount > 9 ? '9+' : unreadChatCount}
+              </span>
+            )}
+          </button>
+        </div>
+      )}
+
+      {/* Desktop Chat - bottom-left corner, always visible during game */}
+      {gameState.status === 'playing' && (
+        <div className="hidden lg:block fixed bottom-4 left-4 z-30">
+          <ChatBox onSendMessage={sendChatMessage} />
+        </div>
+      )}
+
+      {/* Mobile Chat Bubbles - incoming from others */}
+      <ChatBubble />
+
+      {/* Mobile Chat Popup */}
+      {isChatOpen && (
+        <ChatPopup
+          onClose={() => setChatOpen(false)}
+          onSendMessage={sendChatMessage}
+        />
       )}
     </div>
   );

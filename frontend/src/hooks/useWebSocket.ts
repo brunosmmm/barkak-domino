@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { useGameStore } from '../store/gameStore';
-import type { WSMessage, Domino } from '../types';
+import type { WSMessage, Domino, ChatMessage } from '../types';
 
 const RECONNECT_KEY = 'barkak-reconnect-attempts';
 const MAX_RECONNECT_ATTEMPTS = 3;
@@ -36,6 +36,9 @@ export function useWebSocket() {
     setLastPlayedTile,
     setPassNotification,
     addReaction,
+    addChatMessage,
+    addChatBubble,
+    isChatOpen,
     gameState,
     reset,
   } = useGameStore();
@@ -242,10 +245,29 @@ export function useWebSocket() {
         }
         break;
 
+      case 'chat_message':
+        console.log('Chat from', message.player_name, ':', message.text);
+        const isOwnMessage = message.player_id === useGameStore.getState().playerId;
+        const chatMsg: ChatMessage = {
+          id: `${message.timestamp}-${message.player_id}`,
+          playerId: message.player_id,
+          playerName: message.player_name,
+          playerPosition: message.player_position,
+          text: message.text,
+          timestamp: message.timestamp,
+          isOwn: isOwnMessage,
+        };
+        useGameStore.getState().addChatMessage(chatMsg);
+        // On mobile, show popup bubble for other players' messages
+        if (!isOwnMessage) {
+          useGameStore.getState().addChatBubble(chatMsg);
+        }
+        break;
+
       default:
         console.log('Received message:', message);
     }
-  }, [setGameState, setValidMoves, setError, setRoundOverInfo, setMatchOverInfo, setLastPlayedTile, setPassNotification, addReaction, gameState]);
+  }, [setGameState, setValidMoves, setError, setRoundOverInfo, setMatchOverInfo, setLastPlayedTile, setPassNotification, addReaction, addChatMessage, addChatBubble, isChatOpen, gameState]);
 
   const disconnect = useCallback(() => {
     // Mark as intentional disconnect to prevent auto-reconnect
@@ -302,6 +324,10 @@ export function useWebSocket() {
     send({ type: 'reaction', emoji });
   }, [send]);
 
+  const sendChatMessage = useCallback((text: string) => {
+    send({ type: 'chat_message', text });
+  }, [send]);
+
   const requestValidMoves = useCallback(() => {
     send({ type: 'get_valid_moves' });
   }, [send]);
@@ -326,6 +352,7 @@ export function useWebSocket() {
     nextRound,
     claimTile,
     sendReaction,
+    sendChatMessage,
     requestValidMoves,
     disconnect,
   };

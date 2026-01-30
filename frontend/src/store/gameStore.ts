@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { GameState, Domino, ValidMove } from '../types';
+import type { GameState, Domino, ValidMove, ChatMessage } from '../types';
 
 // Session persistence helpers
 const SESSION_KEY = 'barkak-domino-session';
@@ -82,6 +82,12 @@ interface GameStore {
   passNotification: { playerName: string; message: string } | null;
   activeReactions: { playerId: string; playerName: string; emoji: string; id: number }[];
 
+  // Chat state
+  chatMessages: ChatMessage[];
+  activeChatBubbles: ChatMessage[];  // Mobile popup bubbles
+  unreadChatCount: number;
+  isChatOpen: boolean;
+
   // Actions
   setCredentials: (gameId: string, playerId: string, playerName: string) => void;
   setConnected: (connected: boolean) => void;
@@ -96,6 +102,14 @@ interface GameStore {
   setPassNotification: (notification: { playerName: string; message: string } | null) => void;
   addReaction: (playerId: string, playerName: string, emoji: string) => void;
   removeReaction: (id: number) => void;
+
+  // Chat actions
+  addChatMessage: (msg: ChatMessage) => void;
+  addChatBubble: (msg: ChatMessage) => void;
+  removeChatBubble: (id: string) => void;
+  clearUnreadChat: () => void;
+  setChatOpen: (open: boolean) => void;
+
   reset: () => void;
 }
 
@@ -115,6 +129,12 @@ export const useGameStore = create<GameStore>((set) => ({
   lastPlayedTile: null,
   passNotification: null,
   activeReactions: [],
+
+  // Chat initial state
+  chatMessages: [],
+  activeChatBubbles: [],
+  unreadChatCount: 0,
+  isChatOpen: false,
 
   // Actions
   setCredentials: (gameId, playerId, playerName) => {
@@ -175,6 +195,27 @@ export const useGameStore = create<GameStore>((set) => ({
     activeReactions: state.activeReactions.filter(r => r.id !== id)
   })),
 
+  // Chat actions
+  addChatMessage: (msg) => set((state) => ({
+    chatMessages: [...state.chatMessages.slice(-99), msg], // Keep last 100 messages
+    unreadChatCount: state.isChatOpen ? state.unreadChatCount : state.unreadChatCount + (msg.isOwn ? 0 : 1),
+  })),
+
+  addChatBubble: (msg) => set((state) => ({
+    activeChatBubbles: [...state.activeChatBubbles, msg],
+  })),
+
+  removeChatBubble: (id) => set((state) => ({
+    activeChatBubbles: state.activeChatBubbles.filter(b => b.id !== id),
+  })),
+
+  clearUnreadChat: () => set({ unreadChatCount: 0 }),
+
+  setChatOpen: (isChatOpen) => set((state) => ({
+    isChatOpen,
+    unreadChatCount: isChatOpen ? 0 : state.unreadChatCount,
+  })),
+
   reset: () => {
     clearSession();
     set({
@@ -192,6 +233,10 @@ export const useGameStore = create<GameStore>((set) => ({
       lastPlayedTile: null,
       passNotification: null,
       activeReactions: [],
+      chatMessages: [],
+      activeChatBubbles: [],
+      unreadChatCount: 0,
+      isChatOpen: false,
     });
   },
 }));

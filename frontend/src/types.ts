@@ -152,4 +152,16 @@ export type WSMessage =
   | { type: 'cpu_added'; player_count: number }
   | { type: 'valid_moves'; moves: ValidMove[] }
   | { type: 'reaction'; player_id: string; player_name: string; emoji: string }
+  | { type: 'chat_message'; player_id: string; player_name: string; player_position: number; text: string; timestamp: number }
   | { type: 'error'; message: string };
+
+// Chat message type
+export interface ChatMessage {
+  id: string;
+  playerId: string;
+  playerName: string;
+  playerPosition: number;
+  text: string;
+  timestamp: number;
+  isOwn: boolean;
+}
