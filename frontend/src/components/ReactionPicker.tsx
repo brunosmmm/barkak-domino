@@ -4,18 +4,19 @@ interface ReactionPickerProps {
   onReaction: (emoji: string) => void;
 }
 
+// Bar-themed reactions for the "drinking, smoking, based" aesthetic
 const REACTIONS = [
-  { emoji: '😂', label: 'Laughing' },
-  { emoji: '😤', label: 'Angry' },
-  { emoji: '🔥', label: 'Fire' },
+  { emoji: '🥃', label: 'Cheers' },
+  { emoji: '🚬', label: 'Smoke' },
+  { emoji: '🎰', label: 'Jackpot' },
+  { emoji: '🃏', label: 'Wild card' },
+  { emoji: '💰', label: 'Money' },
+  { emoji: '🎲', label: 'Dice' },
+  { emoji: '👑', label: 'King' },
   { emoji: '💀', label: 'Dead' },
-  { emoji: '🤡', label: 'Clown' },
-  { emoji: '👑', label: 'Crown' },
-  { emoji: '🎯', label: 'Bullseye' },
-  { emoji: '💪', label: 'Strong' },
+  { emoji: '🔥', label: 'Fire' },
   { emoji: '😈', label: 'Devil' },
-  { emoji: '🙏', label: 'Pray' },
-  { emoji: '👎', label: 'Thumbs down' },
+  { emoji: '🖕', label: 'Middle finger' },
   { emoji: '🍀', label: 'Lucky' },
 ];
 

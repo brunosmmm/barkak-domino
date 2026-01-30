@@ -62,41 +62,218 @@ body {
   animation: fade-in 0.3s ease-out;
 }
 
-/* Table surface - wood rim */
+/* Table surface - dark wood rim with neon underglow */
 .table-rim {
-  background: linear-gradient(145deg, #4a3528 0%, #2d1f14 50%, #1a0f08 100%);
+  background: linear-gradient(145deg, #3a2a1e 0%, #251a10 50%, #140d08 100%);
   border: 3px solid #0a0a0a;
   border-radius: 16px;
   box-shadow:
-    inset 0 2px 4px rgba(255,255,255,0.1),
-    inset 0 -2px 4px rgba(0,0,0,0.4),
+    inset 0 2px 4px rgba(255,255,255,0.08),
+    inset 0 -2px 4px rgba(0,0,0,0.5),
     0 4px 12px rgba(0,0,0,0.5),
-    0 8px 24px rgba(0,0,0,0.3);
+    0 8px 24px rgba(0,0,0,0.3),
+    0 0 25px rgba(255, 170, 0, 0.15),
+    0 0 50px rgba(255, 140, 0, 0.08);
 }
 
-/* Table surface - green felt */
+/* Table surface - darker green felt */
 .table-felt {
-  background: linear-gradient(180deg, #1a3d2e 0%, #143326 50%, #0f2a1f 100%);
-  border-radius: 12px;
+  background: linear-gradient(180deg, #122e24 0%, #0e2519 40%, #0a1c14 70%, #06140e 100%);
+  border-radius: 10px;
   box-shadow:
-    inset 0 2px 8px rgba(0,0,0,0.5),
-    inset 0 0 20px rgba(0,0,0,0.3);
+    inset 0 3px 10px rgba(0,0,0,0.6),
+    inset 0 -3px 8px rgba(0,0,0,0.4),
+    inset 0 0 30px rgba(0,0,0,0.5);
   position: relative;
 }
 
-/* Subtle felt texture overlay */
+/* Neon amber glow bleeding onto felt edges */
 .table-felt::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 12px;
-  background-image:
-    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.02) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.02) 0%, transparent 50%);
+  border-radius: 10px;
+  background:
+    radial-gradient(ellipse 30% 50% at 0% 50%, rgba(255, 170, 0, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 50% at 100% 50%, rgba(255, 170, 0, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 30% at 50% 0%, rgba(255, 170, 0, 0.08) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 30% at 50% 100%, rgba(255, 170, 0, 0.08) 0%, transparent 70%);
   pointer-events: none;
 }
 
 /* Tile shadow on table */
 .tile-on-table {
   filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+}
+
+/* Player color shimmer effect for last played tiles */
+@keyframes player-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.player-glow-effect {
+  position: relative;
+  overflow: visible;
+  /* Default to amber, overridden by inline style */
+  --player-color: 255, 170, 0;
+}
+
+.player-glow-effect::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 12px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--player-color), 0) 20%,
+    rgba(var(--player-color), 0.5) 40%,
+    rgba(var(--player-color), 0.9) 50%,
+    rgba(var(--player-color), 0.5) 60%,
+    rgba(var(--player-color), 0) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: player-shimmer 1.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.player-glow-effect::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 10px;
+  border: 2px solid rgba(var(--player-color), 0.7);
+  box-shadow:
+    0 0 12px rgba(var(--player-color), 0.6),
+    0 0 24px rgba(var(--player-color), 0.4),
+    inset 0 0 8px rgba(var(--player-color), 0.15);
+  pointer-events: none;
+}
+
+/* Victory glow burst effect */
+@keyframes victory-burst {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.victory-tile {
+  animation: victory-burst 0.5s ease-out;
+}
+
+/* Neon flicker effect for bar signs aesthetic */
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 4px currentColor,
+      0 0 11px currentColor,
+      0 0 19px currentColor,
+      0 0 40px currentColor;
+  }
+  20%, 24%, 55% {
+    opacity: 0.8;
+    text-shadow: none;
+  }
+}
+
+.neon-flicker {
+  animation: neon-flicker 1.5s infinite alternate;
+}
+
+/* Subtle neon pulse for UI elements */
+@keyframes neon-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+  }
+  50% {
+    box-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 30px currentColor;
+  }
+}
+
+.neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+/* Floating smoke wisps */
+@keyframes smoke-wisp {
+  0% {
+    opacity: 0;
+    transform: translateY(0) translateX(0) scale(0.5);
+  }
+  20% {
+    opacity: 0.15;
+  }
+  80% {
+    opacity: 0.08;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px) translateX(20px) scale(1.5);
+  }
+}
+
+.smoke-wisp {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.smoke-wisp-1 {
+  bottom: 10%;
+  left: 15%;
+  animation: smoke-wisp 8s ease-out infinite;
+}
+
+.smoke-wisp-2 {
+  bottom: 5%;
+  right: 20%;
+  animation: smoke-wisp 10s ease-out 2s infinite;
+}
+
+.smoke-wisp-3 {
+  bottom: 15%;
+  left: 40%;
+  animation: smoke-wisp 12s ease-out 4s infinite;
+}
+
+/* Ambient bar glow on edges */
+@keyframes ambient-glow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.ambient-bar-glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse at 10% 90%, rgba(255, 170, 0, 0.1) 0%, transparent 40%),
+    radial-gradient(ellipse at 90% 80%, rgba(255, 100, 50, 0.08) 0%, transparent 35%);
+  animation: ambient-glow 6s ease-in-out infinite;
 }

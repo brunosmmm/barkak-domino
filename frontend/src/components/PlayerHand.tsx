@@ -53,8 +53,8 @@ export function PlayerHand({ onTileSelect, isYourTurn, canPass, onPass }: Player
   return (
     <div className="glass-panel p-2 lg:p-3 mx-auto flex-shrink-0 relative z-20" data-testid="player-hand">
       <div className="flex flex-col lg:flex-row items-center justify-center gap-2 lg:gap-4">
-        <span className="text-neon-amber-glow text-xs lg:text-sm font-medium neon-text whitespace-nowrap" data-testid="hand-count">
-          Your Hand ({hand.length})
+        <span className={`text-neon-amber-glow text-xs lg:text-sm font-medium whitespace-nowrap ${isYourTurn ? 'neon-flicker' : 'neon-text'}`} data-testid="hand-count">
+          {isYourTurn ? '🎯 YOUR TURN' : `Your Hand (${hand.length})`}
         </span>
         <div className="flex flex-wrap gap-1 lg:gap-2 justify-center" data-testid="hand-tiles">
           {hand.map((domino, index) => {

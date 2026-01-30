@@ -5,12 +5,12 @@ import { useContainerSize } from '../hooks/useContainerWidth';
 import { useChainLayout, type ChainTilePlacementExt } from '../hooks/useChainLayout';
 import type { GrowthDirection } from '../types';
 
-// Player colors based on position (0-3)
-const PLAYER_COLORS: Record<number, { ring: string; shadow: string; bg: string }> = {
-  0: { ring: 'ring-orange-400', shadow: 'shadow-orange-400/60', bg: 'bg-orange-400' },
-  1: { ring: 'ring-purple-400', shadow: 'shadow-purple-400/60', bg: 'bg-purple-400' },
-  2: { ring: 'ring-cyan-400', shadow: 'shadow-cyan-400/60', bg: 'bg-cyan-400' },
-  3: { ring: 'ring-lime-400', shadow: 'shadow-lime-400/60', bg: 'bg-lime-400' },
+// Player colors based on position (0-3) - includes RGB for CSS variable
+const PLAYER_COLORS: Record<number, { ring: string; shadow: string; bg: string; rgb: string }> = {
+  0: { ring: 'ring-orange-400', shadow: 'shadow-orange-400/60', bg: 'bg-orange-400', rgb: '251, 146, 60' },
+  1: { ring: 'ring-purple-400', shadow: 'shadow-purple-400/60', bg: 'bg-purple-400', rgb: '192, 132, 252' },
+  2: { ring: 'ring-cyan-400', shadow: 'shadow-cyan-400/60', bg: 'bg-cyan-400', rgb: '34, 211, 238' },
+  3: { ring: 'ring-lime-400', shadow: 'shadow-lime-400/60', bg: 'bg-lime-400', rgb: '163, 230, 53' },
 };
 
 // Base tile dimensions - will be scaled dynamically
@@ -57,8 +57,8 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
     return player?.position ?? 0;
   };
 
-  const getPlayerColorClasses = (): { ring: string; shadow: string } => {
-    if (!lastPlayedTile) return { ring: 'ring-neon-amber', shadow: 'shadow-neon-amber/50' };
+  const getPlayerColorClasses = (): { ring: string; shadow: string; rgb: string } => {
+    if (!lastPlayedTile) return { ring: 'ring-neon-amber', shadow: 'shadow-neon-amber/50', rgb: '255, 170, 0' };
     const position = getPlayerPosition(lastPlayedTile.playerId);
     return PLAYER_COLORS[position] || PLAYER_COLORS[0];
   };
@@ -118,7 +118,7 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
         key={stableKey}
         className={`absolute ${
           justPlayed
-            ? `animate-pulse ring-2 ${playerColors.ring} ring-opacity-90 rounded shadow-lg ${playerColors.shadow}`
+            ? `player-glow-effect victory-tile rounded`
             : ''
         }`}
         style={{
@@ -127,7 +127,8 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
           width: placement.renderWidth,
           height: placement.renderHeight,
           zIndex: justPlayed ? 10 : baseZIndex,
-        }}
+          '--player-color': justPlayed ? playerColors.rgb : undefined,
+        } as React.CSSProperties}
       >
         {/* Scale transform applied only to the tile, not the container (to keep ring effect at correct size) */}
         <div style={{ transform, transformOrigin }}>

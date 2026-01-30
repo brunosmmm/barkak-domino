@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GameBoard } from './GameBoard';
 import { PlayerHand } from './PlayerHand';
 import { PlayerList } from './PlayerList';
@@ -10,8 +10,10 @@ import { ReactionDisplay } from './ReactionDisplay';
 import { Boneyard } from './Boneyard';
 import { TurnTimer } from './TurnTimer';
 import { TilePicking } from './TilePicking';
+import { SoundToggle } from './SoundToggle';
 import { useGameStore } from '../store/gameStore';
 import { useWebSocket } from '../hooks/useWebSocket';
+import { useSound } from '../hooks/useSound';
 import type { Domino } from '../types';
 
 // Player colors by position - matches TableVisualization
@@ -23,12 +25,65 @@ const PLAYER_COLORS: Record<number, { border: string; text: string }> = {
 };
 
 export function Game() {
-  const { gameState, selectedDomino, setSelectedDomino, reset, addReaction } = useGameStore();
+  const { gameState, selectedDomino, setSelectedDomino, reset, addReaction, passNotification, roundOverInfo } = useGameStore();
   const { playTile, passTurn, startGame, addCpu, nextRound, claimTile, sendReaction, disconnect } = useWebSocket();
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const { playTilePlace, playTileSelect, playTurnNotify, playVictory, playDefeat, playPass, playGameStart, playReaction } = useSound();
+
+  // Track previous state for sound triggers
+  const prevBoardLength = useRef(gameState?.board?.length ?? 0);
+  const prevTurn = useRef(gameState?.current_turn);
+  const prevStatus = useRef(gameState?.status);
+
+  // Sound effects based on game state changes
+  useEffect(() => {
+    if (!gameState) return;
+
+    const currentBoardLength = gameState.board?.length ?? 0;
+    const isYourTurn = gameState.current_turn === gameState.your_player_id;
+
+    // Tile placed sound
+    if (currentBoardLength > prevBoardLength.current && prevBoardLength.current > 0) {
+      playTilePlace();
+    }
+
+    // Turn notification (when it becomes your turn)
+    if (isYourTurn && prevTurn.current !== gameState.current_turn && prevTurn.current !== undefined) {
+      playTurnNotify();
+    }
+
+    // Game start sound
+    if (gameState.status === 'playing' && prevStatus.current === 'waiting') {
+      playGameStart();
+    }
+
+    prevBoardLength.current = currentBoardLength;
+    prevTurn.current = gameState.current_turn;
+    prevStatus.current = gameState.status;
+  }, [gameState, playTilePlace, playTurnNotify, playGameStart]);
+
+  // Pass notification sound
+  useEffect(() => {
+    if (passNotification) {
+      playPass();
+    }
+  }, [passNotification, playPass]);
+
+  // Round over sounds
+  useEffect(() => {
+    if (roundOverInfo) {
+      const isYou = roundOverInfo.winnerId === gameState?.your_player_id;
+      if (isYou) {
+        playVictory();
+      } else {
+        playDefeat();
+      }
+    }
+  }, [roundOverInfo, gameState?.your_player_id, playVictory, playDefeat]);
 
   // Send reaction with optimistic update (show immediately, don't wait for server roundtrip)
   const handleSendReaction = (emoji: string) => {
+    playReaction();
     // Optimistically add reaction locally for immediate feedback
     if (gameState) {
       const you = gameState.players.find(p => p.is_you);
@@ -70,6 +125,7 @@ export function Game() {
     if (selectedDomino?.left === domino.left && selectedDomino?.right === domino.right) {
       setSelectedDomino(null);
     } else {
+      playTileSelect();
       setSelectedDomino(domino);
     }
   };
@@ -165,6 +221,7 @@ export function Game() {
            isYourTurn ? 'GO!' : ''}
         </span>
 
+        <SoundToggle compact />
         <button
           onClick={() => setShowMobileMenu(!showMobileMenu)}
           className="p-1.5 text-neon-amber hover:bg-neon-amber/20 rounded-lg transition-colors"
@@ -214,6 +271,7 @@ export function Game() {
           isYourTurn={isYourTurn}
           canPass={canPass()}
         />
+        <SoundToggle />
       </div>
 
       {/* Main game area - takes full height on mobile */}

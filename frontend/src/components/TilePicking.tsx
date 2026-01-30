@@ -146,27 +146,21 @@ export function TilePicking({ onClaimTile }: TilePickingProps) {
               data-testid={`tile-position-${position}`}
               data-available={isAvailable}
               className={`
-                w-10 h-16 sm:w-12 sm:h-20 rounded-lg transition-all duration-200
+                w-8 h-16 sm:w-12 sm:h-24 rounded-lg transition-all duration-200
                 ${isAvailable
                   ? canPick
-                    ? `bg-gradient-to-br from-slate-700 to-slate-800 border-2 border-slate-500
-                       hover:border-neon-amber hover:scale-105 hover:shadow-lg hover:shadow-neon-amber/30
-                       cursor-pointer active:scale-95`
-                    : 'bg-gradient-to-br from-slate-700 to-slate-800 border-2 border-slate-600 opacity-60 cursor-not-allowed'
-                  : 'bg-transparent border-2 border-dashed border-slate-700/50 opacity-30'
+                    ? `cursor-pointer active:scale-95 hover:scale-105 hover:ring-2 hover:ring-neon-amber/50 hover:shadow-lg hover:shadow-neon-amber/30`
+                    : 'opacity-60 cursor-not-allowed'
+                  : 'opacity-0 pointer-events-none'
                 }
-                ${isClaiming ? 'animate-pulse scale-110 border-neon-amber' : ''}
+                ${isClaiming ? 'animate-pulse scale-110 ring-2 ring-neon-amber' : ''}
               `}
-            >
-              {isAvailable && (
-                <div className="w-full h-full flex items-center justify-center">
-                  {/* Face-down pattern */}
-                  <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-slate-600/50 flex items-center justify-center">
-                    <span className="text-slate-400 text-lg">?</span>
-                  </div>
-                </div>
-              )}
-            </button>
+              style={isAvailable ? {
+                background: 'linear-gradient(145deg, #ede5d8 0%, #ddd5c5 50%, #c9bfad 100%)',
+                boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.6), inset 0 -1px 2px rgba(0,0,0,0.15), 0 3px 6px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.25)',
+                border: '1px solid #9a8a78',
+              } : undefined}
+            />
           );
         })}
       </div>

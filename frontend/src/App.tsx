@@ -65,11 +65,20 @@ function App() {
   };
 
   // Show lobby if not in a game, otherwise show game
-  if (!gameId || !playerId) {
-    return <Lobby onJoinGame={handleJoinGame} onCreateGame={handleCreateGame} initialJoinGameId={joinGameId} />;
-  }
+  const content = (!gameId || !playerId)
+    ? <Lobby onJoinGame={handleJoinGame} onCreateGame={handleCreateGame} initialJoinGameId={joinGameId} />
+    : <Game />;
 
-  return <Game />;
+  return (
+    <>
+      {/* Ambient bar atmosphere effects */}
+      <div className="ambient-bar-glow" />
+      <div className="smoke-wisp smoke-wisp-1" />
+      <div className="smoke-wisp smoke-wisp-2" />
+      <div className="smoke-wisp smoke-wisp-3" />
+      {content}
+    </>
+  );
 }
 
 export default App;

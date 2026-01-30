@@ -111,7 +111,7 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
                     data-testid={`avatar-${avatarId}`}
                     className={`relative w-12 h-12 rounded-full overflow-hidden border-2 transition-all
                       ${selectedAvatar === avatarId
-                        ? 'border-neon-amber shadow-neon-amber scale-110'
+                        ? 'border-neon-amber shadow-neon-amber scale-110 neon-pulse'
                         : 'border-bar-wood-light hover:border-neon-amber/50'}`}
                   >
                     <img

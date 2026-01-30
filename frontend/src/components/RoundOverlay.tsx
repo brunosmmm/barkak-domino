@@ -106,7 +106,12 @@ export function RoundOverlay({ onNextRound, onNewGame }: RoundOverlayProps) {
 
         {/* Winner announcement */}
         <div className="text-center mb-6">
-          <p className="text-6xl mb-2">{didYouWin ? '🎉' : '😤'}</p>
+          <img
+            src={didYouWin ? '/images/victory.png' : '/images/defeat.png'}
+            alt={didYouWin ? 'Victory!' : 'Defeat'}
+            className="w-32 h-32 mx-auto mb-2 drop-shadow-lg"
+            data-testid="result-image"
+          />
           <p className="text-xl text-white">
             {isTeamGame ? (
               <>
