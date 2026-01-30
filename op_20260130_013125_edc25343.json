@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Identified root cause of tile garbling: pass button appearance triggers PlayerHand height change, which shrinks GameBoard flex container, causing absolute-positioned tiles to shift within their relative-positioned container. Found 3 key files with layout issues.",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_024848_3e7cky1743e0",
+  "lamport_clock": 15,
+  "operation_id": "op_20260130_013125_edc25343",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:31:25.816259+00:00"
+}
