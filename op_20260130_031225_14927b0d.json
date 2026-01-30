@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "complexity_factors": null,
+    "perceived_complexity": 0.55,
+    "priority": "medium",
+    "tags": [
+      "theme",
+      "props",
+      "table",
+      "images"
+    ],
+    "text": "Add decorative bar props to table corners (ashtray with cigar, whiskey glass, beer bottle) with random placement at game start, desktop only",
+    "type": "work"
+  },
+  "entity_id": "ann_031225_3e7ckye3e9fb",
+  "lamport_clock": 37,
+  "operation_id": "op_20260130_031225_14927b0d",
+  "operation_type": "annotation_create",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:12:25.729061+00:00"
+}
