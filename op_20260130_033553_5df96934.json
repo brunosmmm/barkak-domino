@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Closed by user request",
+      "type": "canceled"
+    }
+  },
+  "entity_id": "ann_213922_3e7ckyac0c09",
+  "lamport_clock": 52,
+  "operation_id": "op_20260130_033553_5df96934",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:35:53.393149+00:00"
+}
