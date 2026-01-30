@@ -1,0 +1,31 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotations_linked": [
+      "ann_024848_3e7cky1743e0",
+      "ann_012523_3e7ckye8cb2b"
+    ],
+    "code_commit": "cc2b3889cf974d0851b46e027418e37dc6434c45",
+    "code_commit_message": "feat(backend): game speed control option for CPU players",
+    "files": [
+      "backend/game/models.py",
+      "backend/game/rooms.py",
+      "backend/main.py",
+      "frontend/src/App.tsx",
+      "frontend/src/components/Lobby.tsx"
+    ],
+    "tasks_linked": [
+      "task_214539_dd204b",
+      "task_004304_16178a"
+    ]
+  },
+  "entity_id": null,
+  "lamport_clock": 11,
+  "operation_id": "op_20260130_012635_194745b7",
+  "operation_type": "commit_linked",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:26:35.761387+00:00"
+}
