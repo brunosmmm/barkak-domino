@@ -8,16 +8,16 @@
       {
         "hash": "9b7cef0af1acaf9f5518ffcaedbfca1f21ed7b96",
         "hash_short": "9b7cef0",
-        "linked_at": "2026-01-30T03:33:48.757295+00:00",
+        "linked_at": "2026-01-30T03:33:48.804074+00:00",
         "message": "feat(audio-gen,frontend): Grouped by time proximity (407s) (+5 more)"
       }
     ],
-    "last_activity": "2026-01-30T03:33:48.757295+00:00"
+    "last_activity": "2026-01-30T03:33:48.804074+00:00"
   },
-  "entity_id": "ann_014529_3e7ckydd5421",
-  "lamport_clock": 49,
-  "operation_id": "op_20260130_033348_771aaf16",
+  "entity_id": "ann_012523_3e7ckye8cb2b",
+  "lamport_clock": 50,
+  "operation_id": "op_20260130_033348_acdbf3c7",
   "operation_type": "annotation_update",
   "parent_operation": null,
-  "timestamp": "2026-01-30T03:33:48.768159+00:00"
+  "timestamp": "2026-01-30T03:33:48.815259+00:00"
 }
