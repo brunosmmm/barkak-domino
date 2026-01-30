@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Resolved differently - addressed through other UI changes",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_144329_3e7ckyf57302",
+  "lamport_clock": 54,
+  "operation_id": "op_20260130_033849_d77ec715",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:38:49.545894+00:00"
+}
