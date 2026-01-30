@@ -1,0 +1,27 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_log": [
+      {
+        "action": "status_change",
+        "from": "TODO",
+        "source": "auto",
+        "task_id": "task_031231_8d94bc",
+        "timestamp": "2026-01-30T03:12:31.912996+00:00",
+        "to": "INPROGRESS"
+      }
+    ],
+    "last_activity": "2026-01-30T03:12:31.912996+00:00",
+    "status": "INPROGRESS",
+    "updated": "2026-01-30T03:12:31.912996+00:00"
+  },
+  "entity_id": "ann_031225_3e7ckye3e9fb",
+  "lamport_clock": 38,
+  "operation_id": "op_20260130_031231_a33a4783",
+  "operation_type": "annotation_update",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:12:31.929450+00:00"
+}
