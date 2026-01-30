@@ -1,0 +1,27 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotations_linked": [
+      "ann_024848_3e7cky1743e0",
+      "ann_014529_3e7ckydd5421"
+    ],
+    "code_commit": "165c4f8c869d86e793dc134c3aa9b4dc5d7da8f5",
+    "code_commit_message": "fix(frontend): tile layout garbling by reserving space for pass button",
+    "files": [
+      "frontend/src/components/PlayerHand.tsx"
+    ],
+    "tasks_linked": [
+      "task_014536_4b3aaf",
+      "task_013107_ad960e"
+    ]
+  },
+  "entity_id": null,
+  "lamport_clock": 19,
+  "operation_id": "op_20260130_014731_6368f850",
+  "operation_type": "commit_linked",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:47:31.807167+00:00"
+}
