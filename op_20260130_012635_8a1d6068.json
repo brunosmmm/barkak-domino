@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "commit_refs": [
+      {
+        "hash": "cc2b3889cf974d0851b46e027418e37dc6434c45",
+        "hash_short": "cc2b388",
+        "linked_at": "2026-01-30T01:26:35.806637+00:00",
+        "message": "feat(backend): game speed control option for CPU players"
+      }
+    ],
+    "last_activity": "2026-01-30T01:26:35.806637+00:00"
+  },
+  "entity_id": "ann_024848_3e7cky1743e0",
+  "lamport_clock": 12,
+  "operation_id": "op_20260130_012635_8a1d6068",
+  "operation_type": "annotation_update",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:26:35.827409+00:00"
+}
