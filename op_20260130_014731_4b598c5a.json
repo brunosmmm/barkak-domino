@@ -1,0 +1,23 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "commit_refs": [
+      {
+        "hash": "165c4f8c869d86e793dc134c3aa9b4dc5d7da8f5",
+        "hash_short": "165c4f8",
+        "linked_at": "2026-01-30T01:47:31.831797+00:00",
+        "message": "fix(frontend): tile layout garbling by reserving space for pass button"
+      }
+    ],
+    "last_activity": "2026-01-30T01:47:31.831797+00:00"
+  },
+  "entity_id": "ann_024848_3e7cky1743e0",
+  "lamport_clock": 20,
+  "operation_id": "op_20260130_014731_4b598c5a",
+  "operation_type": "annotation_update",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:47:31.844232+00:00"
+}
