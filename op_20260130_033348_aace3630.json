@@ -1,0 +1,53 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotations_linked": [
+      "ann_031225_3e7ckye3e9fb",
+      "ann_030704_3e7ckyc816bc",
+      "ann_024848_3e7cky1743e0",
+      "ann_015812_3e7cky1a15b0",
+      "ann_014529_3e7ckydd5421",
+      "ann_012523_3e7ckye8cb2b",
+      "ann_010141_31ffb0"
+    ],
+    "code_commit": "9b7cef0af1acaf9f5518ffcaedbfca1f21ed7b96",
+    "code_commit_message": "feat(audio-gen,frontend): Grouped by time proximity (407s) (+5 more)",
+    "files": [
+      "frontend/src/App.tsx",
+      "frontend/src/components/Game.tsx",
+      "frontend/src/components/GameBoard.tsx",
+      "frontend/src/components/Lobby.tsx",
+      "frontend/src/components/PlayerHand.tsx",
+      "frontend/src/components/ReactionPicker.tsx",
+      "frontend/src/components/RoundOverlay.tsx",
+      "frontend/src/components/SoundToggle.tsx",
+      "frontend/src/components/TilePicking.tsx",
+      "frontend/src/hooks/useSound.ts",
+      "frontend/src/index.css"
+    ],
+    "tasks_linked": [
+      "task_214539_dd204b",
+      "task_032344_e314d1",
+      "task_032231_3824d4",
+      "task_031644_c97525",
+      "task_031231_8d94bc",
+      "task_030710_67a49e",
+      "task_025848_6350cf",
+      "task_025624_cce8c0",
+      "task_025407_e4eeee",
+      "task_022519_58f26b",
+      "task_015819_250be5",
+      "task_014536_4b3aaf",
+      "task_004304_16178a"
+    ]
+  },
+  "entity_id": null,
+  "lamport_clock": 44,
+  "operation_id": "op_20260130_033348_aace3630",
+  "operation_type": "commit_linked",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:33:48.561562+00:00"
+}
