@@ -90,9 +90,9 @@ export function TableSurface({ children, players, currentTurn, avatarIds }: Tabl
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
-      {/* Top player (P2) */}
+      {/* Top player (P2) - hidden on mobile portrait (uses top bar instead) */}
       {hasPlayers && p2 && (
-        <div className="mb-2 flex-shrink-0">
+        <div className="mb-2 flex-shrink-0 hidden landscape:block lg:block">
           <PlayerAvatar
             player={p2}
             isCurrent={p2.id === currentTurn}
@@ -104,9 +104,9 @@ export function TableSurface({ children, players, currentTurn, avatarIds }: Tabl
 
       {/* Middle row: Left player + Table + Right player */}
       <div className="flex items-center justify-center flex-1 min-h-0 w-full gap-2">
-        {/* Left player (P3) */}
+        {/* Left player (P3) - hidden on mobile portrait */}
         {hasPlayers && p3 && (
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 hidden landscape:block lg:block">
             <PlayerAvatar
               player={p3}
               isCurrent={p3.id === currentTurn}
@@ -116,16 +116,16 @@ export function TableSurface({ children, players, currentTurn, avatarIds }: Tabl
           </div>
         )}
 
-        {/* Table */}
-        <div className="table-rim flex-1 min-w-0 h-full max-h-[60vh] flex items-center justify-center p-2 lg:p-3">
+        {/* Table - full width on mobile portrait */}
+        <div className="table-rim flex-1 min-w-0 h-full max-h-[70vh] portrait:max-h-[60vh] lg:max-h-[60vh] flex items-center justify-center p-2 lg:p-3">
           <div className="table-felt w-full h-full flex items-center justify-center overflow-hidden rounded-lg">
             {children}
           </div>
         </div>
 
-        {/* Right player (P1) */}
+        {/* Right player (P1) - hidden on mobile portrait */}
         {hasPlayers && p1 && (
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 hidden landscape:block lg:block">
             <PlayerAvatar
               player={p1}
               isCurrent={p1.id === currentTurn}
@@ -136,9 +136,9 @@ export function TableSurface({ children, players, currentTurn, avatarIds }: Tabl
         )}
       </div>
 
-      {/* Bottom player (P0 - you) */}
+      {/* Bottom player (P0 - you) - hidden on mobile portrait */}
       {hasPlayers && p0 && (
-        <div className="mt-2 flex-shrink-0">
+        <div className="mt-2 flex-shrink-0 hidden landscape:block lg:block">
           <PlayerAvatar
             player={p0}
             isCurrent={p0.id === currentTurn}

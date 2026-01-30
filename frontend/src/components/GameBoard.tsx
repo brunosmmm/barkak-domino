@@ -15,8 +15,6 @@ const PLAYER_COLORS: Record<number, { ring: string; shadow: string; bg: string }
 
 // Base tile dimensions - will be scaled dynamically
 const BASE_TILE = { width: 64, height: 32 };
-const TILES_PER_ROW = 5;     // Tiles in horizontal arm before turning
-const TILES_PER_COLUMN = 2;  // Tiles in vertical arm before turning (fewer due to table being wider than tall)
 
 interface GameBoardProps {
   onPlayLeft: () => void;
@@ -28,6 +26,17 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
   const { gameState, selectedDomino, lastPlayedTile } = useGameStore();
   const [containerRef, containerSize] = useContainerSize();
 
+  // Compute adaptive tiles per row/column based on container dimensions
+  // Portrait mode: fewer tiles per row (narrower), more tiles per column (taller)
+  // Landscape mode: more tiles per row, fewer per column
+  const aspectRatio = containerSize.width > 0 && containerSize.height > 0
+    ? containerSize.width / containerSize.height
+    : 1;
+
+  // Adaptive snaking: adjust tile counts based on aspect ratio
+  const tilesPerRow = aspectRatio < 0.8 ? 3 : aspectRatio < 1.2 ? 4 : 5;
+  const tilesPerColumn = aspectRatio < 0.8 ? 3 : 2;
+
   const layout = useChainLayout({
     board: gameState?.board ?? [],
     containerWidth: containerSize.width,
@@ -35,8 +44,8 @@ export function GameBoard({ onPlayLeft, onPlayRight, isYourTurn }: GameBoardProp
     tileWidth: BASE_TILE.width,
     tileHeight: BASE_TILE.height,
     padding: 16,
-    tilesPerRow: TILES_PER_ROW,
-    tilesPerColumn: TILES_PER_COLUMN,
+    tilesPerRow,
+    tilesPerColumn,
   });
 
   if (!gameState) return null;

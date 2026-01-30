@@ -121,16 +121,24 @@ export function Game() {
                 key={player.id}
                 className={`relative flex flex-col items-center px-1.5 py-1 rounded-lg bg-black/50 ${isCurrent ? 'scale-110' : ''}`}
               >
-                <div
-                  className={`w-10 h-10 rounded-full overflow-hidden border-2 ${colors.border} ${
-                    isCurrent ? 'shadow-lg animate-pulse' : 'opacity-60'
-                  }`}
-                >
-                  <img
-                    src={`/images/avatar-${avatarId}.png`}
-                    alt={player.name}
-                    className="w-full h-full object-cover"
-                  />
+                {/* Avatar with tile count badge */}
+                <div className="relative">
+                  <div
+                    className={`w-10 h-10 rounded-full overflow-hidden border-2 ${colors.border} ${
+                      isCurrent ? 'shadow-lg animate-pulse' : 'opacity-60'
+                    }`}
+                  >
+                    <img
+                      src={`/images/avatar-${avatarId}.png`}
+                      alt={player.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Tile count badge */}
+                  <div className={`absolute -top-1 -right-1 w-4 h-4 rounded-full bg-bar-dark border ${colors.border}
+                    flex items-center justify-center text-[9px] ${colors.text} font-bold`}>
+                    {player.tile_count}
+                  </div>
                 </div>
                 <span className={`text-[10px] font-semibold mt-0.5 max-w-[48px] truncate ${
                   isCurrent ? `font-bold ${colors.text}` : 'text-gray-300 opacity-80'

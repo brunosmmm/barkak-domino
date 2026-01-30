@@ -94,11 +94,19 @@ export function useChainLayout({
       return createEmptyLayout();
     }
 
-    // Calculate dynamic tile size based on container width
+    // Calculate dynamic tile size based on container dimensions (auto-scale to fit)
     const availableWidth = containerWidth - padding * 2;
-    // Cap scale at 1.5 to allow reasonably larger tiles on wide screens
-    const rawScale = availableWidth / (tilesPerRow * baseTileWidth + baseTileWidth);
-    const scale = Math.min(rawScale, 1.5);
+    const availableHeight = containerHeight - padding * 2;
+
+    // Calculate scale for width (horizontal tiles per row + extra buffer)
+    const widthScale = availableWidth / (tilesPerRow * baseTileWidth + baseTileWidth);
+    // Calculate scale for height (vertical tiles per column + extra buffer)
+    // Note: vertical tiles use tileWidth as their height (doubles are rotated)
+    const heightScale = availableHeight / (tilesPerColumn * baseTileWidth + baseTileWidth);
+
+    // Use the minimum of both to ensure board fits in both dimensions
+    // Cap at 1.5 to avoid oversized tiles on large screens
+    const scale = Math.min(widthScale, heightScale, 1.5);
     const tileWidth = Math.floor(baseTileWidth * scale);
     const tileHeight = Math.floor(baseTileHeight * scale);
 
@@ -114,9 +122,12 @@ export function useChainLayout({
       (cache.positions.size > 0 && board.length === 1); // New game
 
     if (needsReset) {
-      // Initialize with first tile at center
-      const firstTile = board[0];
-      const isDouble = firstTile.domino.left === firstTile.domino.right;
+      // Find the center tile (first tile played is in the middle of the array)
+      // For a board of N tiles: left end is board[0], right end is board[N-1]
+      // The first tile played is approximately at the center index
+      const centerIndex = Math.floor((board.length - 1) / 2);
+      const centerTile = board[centerIndex];
+      const isDouble = centerTile.domino.left === centerTile.domino.right;
       const horizontal = !isDouble;
       const width = horizontal ? tileWidth : tileHeight;
       const height = horizontal ? tileHeight : tileWidth;
@@ -125,38 +136,63 @@ export function useChainLayout({
       const centerY = (containerHeight - height) / 2;
 
       const positions = new Map<string, CachedPosition>();
-      positions.set(dominoKey(firstTile.domino), {
+      positions.set(dominoKey(centerTile.domino), {
         x: centerX,
         y: centerY,
         horizontal,
         width,
         height,
         isCorner: false,
-        flipped: false,  // First tile is never flipped
+        flipped: false,
       });
+
+      // Initialize arms from center tile
+      let leftArm: ArmState = {
+        x: centerX,
+        y: centerY + height / 2,
+        direction: 'W',
+        tileCount: 0,
+        goingRight: false,
+        lastTileWidth: width,
+        lastTileHeight: height,
+        lastTileWasDouble: isDouble,
+      };
+
+      let rightArm: ArmState = {
+        x: centerX + width,
+        y: centerY + height / 2,
+        direction: 'E',
+        tileCount: 0,
+        goingRight: true,
+        lastTileWidth: width,
+        lastTileHeight: height,
+        lastTileWasDouble: isDouble,
+      };
+
+      // Rebuild all positions: walk left from center
+      for (let i = centerIndex - 1; i >= 0; i--) {
+        const tile = board[i];
+        const key = dominoKey(tile.domino);
+        const tileIsDouble = tile.domino.left === tile.domino.right;
+        const result = placeNextTile(leftArm, tileIsDouble, tileWidth, tileHeight, gap, tilesPerRow, tilesPerColumn);
+        positions.set(key, result.position);
+        leftArm = result.newArm;
+      }
+
+      // Rebuild all positions: walk right from center
+      for (let i = centerIndex + 1; i < board.length; i++) {
+        const tile = board[i];
+        const key = dominoKey(tile.domino);
+        const tileIsDouble = tile.domino.left === tile.domino.right;
+        const result = placeNextTile(rightArm, tileIsDouble, tileWidth, tileHeight, gap, tilesPerRow, tilesPerColumn);
+        positions.set(key, result.position);
+        rightArm = result.newArm;
+      }
 
       cache = {
         positions,
-        leftArm: {
-          x: centerX,
-          y: centerY + height / 2,
-          direction: 'W',
-          tileCount: 0,
-          goingRight: false,  // Left arm starts going left
-          lastTileWidth: width,
-          lastTileHeight: height,
-          lastTileWasDouble: isDouble,
-        },
-        rightArm: {
-          x: centerX + width,
-          y: centerY + height / 2,
-          direction: 'E',
-          tileCount: 0,
-          goingRight: true,   // Right arm starts going right
-          lastTileWidth: width,
-          lastTileHeight: height,
-          lastTileWasDouble: isDouble,
-        },
+        leftArm,
+        rightArm,
         containerWidth,
         containerHeight,
         scale,
@@ -168,7 +204,7 @@ export function useChainLayout({
     // (either we used existing cache or created a new one)
     const safeCache = cache!;
 
-    // Process new tiles at each end
+    // Process new tiles at each end (for incremental updates when cache wasn't reset)
     const leftTile = board[0];
     const rightTile = board[board.length - 1];
     const leftKey = dominoKey(leftTile.domino);
@@ -208,8 +244,8 @@ export function useChainLayout({
       safeCache.rightArm = result.newArm;
     }
 
-    // Build placements array
-    const placements: ChainTilePlacementExt[] = board.map((tile, index) => {
+    // Build raw placements array from cached positions
+    const rawPlacements: ChainTilePlacementExt[] = board.map((tile, index) => {
       const key = dominoKey(tile.domino);
       const cached = safeCache.positions.get(key);
 
@@ -242,15 +278,67 @@ export function useChainLayout({
       };
     });
 
-    // Chain ends for play buttons
+    // Calculate actual bounding box of all tiles
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const p of rawPlacements) {
+      minX = Math.min(minX, p.position.x);
+      minY = Math.min(minY, p.position.y);
+      maxX = Math.max(maxX, p.position.x + p.renderWidth);
+      maxY = Math.max(maxY, p.position.y + p.renderHeight);
+    }
+
+    // Also include chain ends (for play buttons)
+    minX = Math.min(minX, safeCache.leftArm.x - 40);  // Button can be to the left
+    maxX = Math.max(maxX, safeCache.rightArm.x + 40);  // Button can be to the right
+    minY = Math.min(minY, safeCache.leftArm.y - 40, safeCache.rightArm.y - 40);
+    maxY = Math.max(maxY, safeCache.leftArm.y + 40, safeCache.rightArm.y + 40);
+
+    const contentWidth = maxX - minX;
+    const contentHeight = maxY - minY;
+    const availableW = containerWidth - padding * 2;
+    const availableH = containerHeight - padding * 2;
+
+    // Calculate fit scale if content exceeds container
+    let fitScale = 1;
+    if (contentWidth > availableW || contentHeight > availableH) {
+      const widthRatio = availableW / contentWidth;
+      const heightRatio = availableH / contentHeight;
+      fitScale = Math.min(widthRatio, heightRatio, 1);
+    }
+
+    // Calculate offset to center the content after scaling
+    const scaledWidth = contentWidth * fitScale;
+    const scaledHeight = contentHeight * fitScale;
+    const offsetX = (containerWidth - scaledWidth) / 2 - minX * fitScale;
+    const offsetY = (containerHeight - scaledHeight) / 2 - minY * fitScale;
+
+    // Apply fit transformation to all placements
+    const finalScale = scale * fitScale;
+    const placements: ChainTilePlacementExt[] = rawPlacements.map(p => ({
+      ...p,
+      position: {
+        x: p.position.x * fitScale + offsetX,
+        y: p.position.y * fitScale + offsetY,
+      },
+      renderWidth: p.renderWidth * fitScale,
+      renderHeight: p.renderHeight * fitScale,
+    }));
+
+    // Chain ends for play buttons (also transformed)
     const leftEnd: ChainEnd = {
-      position: { x: safeCache.leftArm.x, y: safeCache.leftArm.y },
+      position: {
+        x: safeCache.leftArm.x * fitScale + offsetX,
+        y: safeCache.leftArm.y * fitScale + offsetY,
+      },
       growthDirection: safeCache.leftArm.direction,
       pipValue: board[0]?.domino.left ?? null,
     };
 
     const rightEnd: ChainEnd = {
-      position: { x: safeCache.rightArm.x, y: safeCache.rightArm.y },
+      position: {
+        x: safeCache.rightArm.x * fitScale + offsetX,
+        y: safeCache.rightArm.y * fitScale + offsetY,
+      },
       growthDirection: safeCache.rightArm.direction,
       pipValue: board[board.length - 1]?.domino.right ?? null,
     };
@@ -260,9 +348,9 @@ export function useChainLayout({
       leftEnd,
       rightEnd,
       bounds: { minX: 0, maxX: containerWidth, minY: 0, maxY: containerHeight },
-      offsetX: 0,
-      offsetY: 0,
-      scale,
+      offsetX,
+      offsetY,
+      scale: finalScale,
     };
   }, [board, containerWidth, containerHeight, baseTileWidth, baseTileHeight, padding, tilesPerRow, tilesPerColumn]);
 }
