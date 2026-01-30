@@ -1,0 +1,18 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "resolution": {
+      "summary": "Play buttons now properly positioned using 2D chain layout system with dynamic positioning based on chain end positions and growth directions",
+      "type": "fixed"
+    }
+  },
+  "entity_id": "ann_214857_3e7ckyef6c16",
+  "lamport_clock": 55,
+  "operation_id": "op_20260130_034203_1aced152",
+  "operation_type": "annotation_resolve",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:42:03.360580+00:00"
+}
