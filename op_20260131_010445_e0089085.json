@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "branch": "main",
+    "content": "# Bar Theme CSS Animations\n\n## Summary\nAdded atmospheric CSS animations to enhance the bar/casino theme aesthetic.\n\n## Changes Made\n\n### CSS Animations (index.css)\n- **neon-flicker**: Classic bar sign flicker effect with intermittent dimming\n- **neon-pulse**: Subtle glow pulsing for UI elements  \n- **smoke-wisp**: Floating smoke particles rising from bottom\n- **ambient-bar-glow**: Warm amber/orange radial gradients on screen edges\n\n### App.tsx\n- Added smoke wisp elements (3 instances with staggered timing)\n- Added ambient bar glow overlay\n\n### PlayerHand.tsx\n- Turn indicator now shows \"\ud83c\udfaf YOUR TURN\" with neon-flicker when it's player's turn\n- Falls back to \"Your Hand (count)\" with regular neon-text when not\n\n### Lobby.tsx\n- Selected avatar now has neon-pulse effect\n\n## Technical Notes\n- All effects use CSS animations (performant, GPU-accelerated)\n- Smoke wisps are positioned fixed at bottom with different delays\n- Ambient glow is very subtle to not distract from gameplay\n- Neon flicker mimics real bar sign electrical issues\n\n## Files Changed\n- frontend/src/index.css\n- frontend/src/App.tsx\n- frontend/src/components/PlayerHand.tsx\n- frontend/src/components/Lobby.tsx\n\n## Related\n- Part of theme overhaul (ann_010141_31ffb0)\n- Previous work: gold leaf effect, bar-themed reactions\n- Remaining: victory/defeat images, sound assets",
+    "context": "Completed CSS animations for bar theme atmosphere",
+    "repository_id": "github.com/brunosmmm/barkak-domino",
+    "session_id": "20260129_214539_796f",
+    "session_type": "Software Development",
+    "title": "Bar Theme CSS Animations"
+  },
+  "entity_id": "20260130_0258_bar-theme-css-animations",
+  "lamport_clock": 75,
+  "operation_id": "op_20260131_010445_e0089085",
+  "operation_type": "checkpoint_save",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T02:58:39.896021+00:00"
+}
