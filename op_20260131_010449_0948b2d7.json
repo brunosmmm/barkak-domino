@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.4,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Fixed 2 failing E2E tests: state extractor now checks picked-tiles-container during picking phase, reactions test uses force:true to click disabled button",
+    "retrospective_complexity": 0.0,
+    "session_id": "20260127_225555_88ac"
+  },
+  "entity_id": "task_010127_893c75",
+  "lamport_clock": 106,
+  "operation_id": "op_20260131_010449_0948b2d7",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-28T01:04:04.338114+00:00"
+}
