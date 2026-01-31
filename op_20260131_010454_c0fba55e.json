@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": "ann_014529_3e7ckydd5421",
+    "complexity_delta": -0.305,
+    "git_branch": "main",
+    "resolution_approach": "bugfix",
+    "resolution_outcome": "success",
+    "resolution_summary": "Fixed tile layout garbling by always rendering pass button with 'invisible' class when not active. This reserves space and prevents container resize cascade.",
+    "retrospective_complexity": 0.045,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_014536_4b3aaf",
+  "lamport_clock": 144,
+  "operation_id": "op_20260131_010454_c0fba55e",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T01:46:26.317755+00:00"
+}
