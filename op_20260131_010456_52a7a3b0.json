@@ -1,0 +1,28 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "activity_phase": "planning",
+    "annotation_id": "ann_031225_3e7ckye3e9fb",
+    "complexity_factors": [
+      "multi_file",
+      "new_feature",
+      "websocket_integration",
+      "responsive_design",
+      "state_management"
+    ],
+    "confidence": 0.85,
+    "description": "Design chat system implementation for domino game - desktop always-visible, mobile with popup cards for incoming messages",
+    "git_branch": "main",
+    "perceived_complexity": 0.55,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_034848_93d65c",
+  "lamport_clock": 182,
+  "operation_id": "op_20260131_010456_52a7a3b0",
+  "operation_type": "task_start",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:48:48.414919+00:00"
+}
