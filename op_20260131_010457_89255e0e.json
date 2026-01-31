@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.36,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Replaced 3 dropdown menus with stylized radio button groups using bar theme (neon-amber selected, bar-wood unselected)",
+    "retrospective_complexity": 0.09,
+    "session_id": "20260131_004026_0d26"
+  },
+  "entity_id": "task_004026_fe38c7",
+  "lamport_clock": 192,
+  "operation_id": "op_20260131_010457_89255e0e",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-31T00:41:14.262230+00:00"
+}
