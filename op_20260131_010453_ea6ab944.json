@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": "ann_012523_3e7ckye8cb2b",
+    "complexity_delta": -0.04,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Added avatar selection UI in lobby - players can choose from 17 avatars before creating/joining a game. Backend respects preferences when assigning avatars at match start.",
+    "retrospective_complexity": 0.41,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_214539_dd204b",
+  "lamport_clock": 133,
+  "operation_id": "op_20260131_010453_ea6ab944",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-29T21:49:26.318963+00:00"
+}
