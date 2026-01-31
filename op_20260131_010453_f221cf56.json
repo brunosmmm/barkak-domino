@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.4,
+    "git_branch": "main",
+    "resolution_approach": "config",
+    "resolution_outcome": "success",
+    "resolution_summary": "Migrated all project data to git-native storage: 45 annotations, 1 knowledge entry, 8 checkpoints, 132 events (220 git operations created)",
+    "retrospective_complexity": 0.0,
+    "session_id": "20260129_134619_33a4"
+  },
+  "entity_id": "task_134619_b82069",
+  "lamport_clock": 130,
+  "operation_id": "op_20260131_010453_f221cf56",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-29T13:47:06.842675+00:00"
+}
