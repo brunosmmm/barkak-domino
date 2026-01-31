@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.36,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Enhanced table CSS with: darker moody green felt, neon amber glow bleeding onto edges from all sides, animated smoke haze overlay, brass trim border effect on wood rim, deeper shadows for atmosphere",
+    "retrospective_complexity": 0.09,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_030710_67a49e",
+  "lamport_clock": 167,
+  "operation_id": "op_20260131_010455_76e0451b",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:07:57.422140+00:00"
+}
