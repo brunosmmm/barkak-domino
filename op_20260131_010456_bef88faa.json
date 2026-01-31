@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.4,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Generated 3 bar prop images (ashtray with cigar, whiskey glass, beer bottle) with transparent backgrounds. Added random placement logic that picks 2 props and assigns to random corners at game start. Props only visible on desktop/landscape. Also refined table CSS with subtle amber glow.",
+    "retrospective_complexity": 0.15,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_031231_8d94bc",
+  "lamport_clock": 170,
+  "operation_id": "op_20260131_010456_bef88faa",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T03:14:49.632686+00:00"
+}
