@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.2,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Created useSound hook with preloading, volume control, mute toggle. Added SoundToggle component for UI. Integrated sounds for tile place/select, turn notify, victory/defeat, pass, reactions. Added gold leaf shimmer CSS effect for last played tiles.",
+    "retrospective_complexity": 0.35,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_022519_58f26b",
+  "lamport_clock": 155,
+  "operation_id": "op_20260131_010455_48b80e6b",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T02:28:10.749794+00:00"
+}
