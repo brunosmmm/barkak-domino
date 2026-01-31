@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "scope": "convention",
+    "tags": [
+      "deployment",
+      "fly.io",
+      "docker",
+      "production"
+    ],
+    "text": "## Deploying to Fly.io\n\n**Command:** \n```bash\n~/.fly/bin/flyctl deploy\n```\n\n**Note:** The `fly` command is installed at `~/.fly/bin/flyctl` and may not be in PATH. Use the full path if `fly deploy` gives \"command not found\".\n\n**What happens:**\n1. Builds Docker image using multi-stage Dockerfile\n2. Frontend built with `npm run build` (Vite)\n3. Backend served with uvicorn on port 8000\n4. Static frontend files copied to `backend/frontend/dist`\n5. Pushes to Fly.io registry and deploys\n\n**Live URL:** https://barkak-domino.fly.dev/\n\n**Files involved:**\n- `fly.toml` - Fly.io app configuration\n- `Dockerfile` - Multi-stage build (node for frontend, python for backend)"
+  },
+  "entity_id": "know_010634_3e7ckyc96384",
+  "lamport_clock": 195,
+  "operation_id": "op_20260131_010634_7f37deda",
+  "operation_type": "knowledge_add",
+  "parent_operation": null,
+  "timestamp": "2026-01-31T01:06:34.681173+00:00"
+}
