@@ -1,0 +1,21 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "branch": "main",
+    "content": "# Mobile Portrait Layout Improvements\n\n## Summary\nImplemented 4 improvements for better mobile portrait experience:\n\n1. **Tile count badges on top bar avatars** (Game.tsx:119-145)\n   - Added badge showing each player's remaining tile count\n   - Styled to match TableSurface avatar badges\n\n2. **Hidden table avatars on portrait** (TableSurface.tsx)\n   - Used `hidden landscape:block lg:block` to hide avatars on mobile portrait\n   - Frees up more space for the game board\n   - Players are still visible in the top bar\n\n3. **Adaptive snaking** (GameBoard.tsx:30-37)\n   - Computed `tilesPerRow` and `tilesPerColumn` dynamically based on aspect ratio\n   - Portrait mode (ratio < 0.8): 3 tiles per row, 3 per column\n   - Transitional (0.8-1.2): 4 tiles per row\n   - Landscape (> 1.2): 5 tiles per row, 2 per column\n\n4. **Auto-scale for both dimensions** (useChainLayout.ts:97-107)\n   - Previously only scaled based on width\n   - Now calculates scale for both width and height\n   - Uses minimum of both to ensure board always fits\n   - Capped at 1.5 to avoid oversized tiles\n\n## Files Changed\n- `frontend/src/components/Game.tsx` - Added tile count badge\n- `frontend/src/components/TableSurface.tsx` - Hidden avatars on portrait\n- `frontend/src/components/GameBoard.tsx` - Dynamic tiles per row/column\n- `frontend/src/hooks/useChainLayout.ts` - Auto-scale for both dimensions\n\n## Technical Notes\n- Each client calculates its own layout independently (frontend-only)\n- Cache invalidation happens automatically when scale changes\n- No backend changes required",
+    "context": "Completed mobile portrait layout improvements for better small screen experience",
+    "repository_id": "github.com/brunosmmm/barkak-domino",
+    "session_id": "20260129_214539_796f",
+    "session_type": "Software Development",
+    "title": "Mobile Portrait Layout Improvements"
+  },
+  "entity_id": "20260130_0202_mobile-portrait-layout-improvements",
+  "lamport_clock": 73,
+  "operation_id": "op_20260131_010445_8dc84e61",
+  "operation_type": "checkpoint_save",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T02:02:39.224421+00:00"
+}
