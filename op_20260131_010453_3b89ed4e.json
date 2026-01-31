@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": "ann_024848_3e7cky1743e0",
+    "complexity_delta": 0.0,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Added CPU speed control with 4 options: slow (10-20s), normal (5-15s), fast (2-5s), instant (<1s). Speed selector appears in lobby when CPU players are selected.",
+    "retrospective_complexity": 0.35,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_004304_16178a",
+  "lamport_clock": 137,
+  "operation_id": "op_20260131_010453_3b89ed4e",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T00:46:58.284423+00:00"
+}
