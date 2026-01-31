@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.355,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Fixed by resetting turn timer when human connects to their turn, and only enforcing timeouts for connected players",
+    "retrospective_complexity": 0.045,
+    "session_id": "20260127_175528_81e5"
+  },
+  "entity_id": "task_190001_99748f",
+  "lamport_clock": 93,
+  "operation_id": "op_20260131_010447_b0c494f7",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-27T19:01:04.372944+00:00"
+}
