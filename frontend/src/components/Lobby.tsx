@@ -160,54 +160,69 @@ export function Lobby({ onJoinGame, onCreateGame, initialJoinGameId }: LobbyProp
 
             <div>
               <label className="block text-gray-300 text-sm mb-2">Max Players</label>
-              <select
-                value={maxPlayers}
-                onChange={(e) => {
-                  const max = Number(e.target.value);
-                  setMaxPlayers(max);
-                  if (cpuPlayers >= max) setCpuPlayers(max - 1);
-                }}
-                data-testid="max-players-select"
-                className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
-                           border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
-              >
-                <option value={2}>2 Players</option>
-                <option value={3}>3 Players</option>
-                <option value={4}>4 Players</option>
-              </select>
+              <div className="flex gap-2" data-testid="max-players-select">
+                {[2, 3, 4].map((num) => (
+                  <button
+                    key={num}
+                    onClick={() => {
+                      setMaxPlayers(num);
+                      if (cpuPlayers >= num) setCpuPlayers(num - 1);
+                    }}
+                    data-testid={`max-players-${num}`}
+                    className={`flex-1 py-3 rounded-lg font-medium transition-all
+                      ${maxPlayers === num
+                        ? 'bg-neon-amber text-bar-dark shadow-neon-amber'
+                        : 'bg-bar-wood text-gray-300 border border-bar-wood-light hover:border-neon-amber/50 hover:text-white'
+                      }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
             </div>
 
             <div>
               <label className="block text-gray-300 text-sm mb-2">CPU Players</label>
-              <select
-                value={cpuPlayers}
-                onChange={(e) => setCpuPlayers(Number(e.target.value))}
-                data-testid="cpu-players-select"
-                className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
-                           border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
-              >
+              <div className="flex gap-2" data-testid="cpu-players-select">
                 {[...Array(maxPlayers)].map((_, i) => (
-                  <option key={i} value={i}>{i} CPU{i !== 1 ? 's' : ''}</option>
+                  <button
+                    key={i}
+                    onClick={() => setCpuPlayers(i)}
+                    data-testid={`cpu-players-${i}`}
+                    className={`flex-1 py-3 rounded-lg font-medium transition-all
+                      ${cpuPlayers === i
+                        ? 'bg-neon-amber text-bar-dark shadow-neon-amber'
+                        : 'bg-bar-wood text-gray-300 border border-bar-wood-light hover:border-neon-amber/50 hover:text-white'
+                      }`}
+                  >
+                    {i}
+                  </button>
                 ))}
-              </select>
+              </div>
             </div>
 
             {cpuPlayers > 0 && (
               <div>
                 <label className="block text-gray-300 text-sm mb-2">CPU Speed</label>
-                <select
-                  value={cpuSpeed}
-                  onChange={(e) => setCpuSpeed(e.target.value)}
-                  data-testid="cpu-speed-select"
-                  className="w-full px-4 py-3 rounded-lg bg-bar-wood text-white
-                             border border-bar-wood-light focus:border-neon-amber focus:shadow-neon-amber focus:outline-none"
-                >
+                <div className="grid grid-cols-2 gap-2" data-testid="cpu-speed-select">
                   {CPU_SPEEDS.map((speed) => (
-                    <option key={speed.value} value={speed.value}>
-                      {speed.label} ({speed.description})
-                    </option>
+                    <button
+                      key={speed.value}
+                      onClick={() => setCpuSpeed(speed.value)}
+                      data-testid={`cpu-speed-${speed.value}`}
+                      className={`py-3 px-2 rounded-lg font-medium transition-all text-center
+                        ${cpuSpeed === speed.value
+                          ? 'bg-neon-amber text-bar-dark shadow-neon-amber'
+                          : 'bg-bar-wood text-gray-300 border border-bar-wood-light hover:border-neon-amber/50 hover:text-white'
+                        }`}
+                    >
+                      <span className="block text-sm">{speed.label}</span>
+                      <span className={`block text-xs ${cpuSpeed === speed.value ? 'text-bar-dark/70' : 'text-gray-500'}`}>
+                        {speed.description}
+                      </span>
+                    </button>
                   ))}
-                </select>
+                </div>
               </div>
             )}
 
