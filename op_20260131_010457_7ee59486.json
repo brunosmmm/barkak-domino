@@ -1,0 +1,22 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotation_id": null,
+    "complexity_delta": -0.155,
+    "git_branch": "main",
+    "resolution_approach": "code",
+    "resolution_outcome": "success",
+    "resolution_summary": "Moved mobile chat button from header to bottom-left corner (bottom-24 left-4), mirroring reaction picker position",
+    "retrospective_complexity": 0.045,
+    "session_id": "20260129_214539_796f"
+  },
+  "entity_id": "task_040322_e95263",
+  "lamport_clock": 189,
+  "operation_id": "op_20260131_010457_7ee59486",
+  "operation_type": "task_complete",
+  "parent_operation": null,
+  "timestamp": "2026-01-30T04:04:02.100218+00:00"
+}
