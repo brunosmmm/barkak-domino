@@ -1,0 +1,25 @@
+{
+  "author": {
+    "email": "brunosmmm@gmail.com",
+    "name": "Bruno Morais"
+  },
+  "data": {
+    "annotations_linked": [
+      "ann_004012_3e7cky959f6f"
+    ],
+    "code_commit": "1ef22bd10e1aea5927e4ec37db2b535c368f67b8",
+    "code_commit_message": "feat(frontend): Replace lobby dropdowns with stylized radio buttons",
+    "files": [
+      "frontend/src/components/Lobby.tsx"
+    ],
+    "tasks_linked": [
+      "task_004026_fe38c7"
+    ]
+  },
+  "entity_id": null,
+  "lamport_clock": 71,
+  "operation_id": "op_20260131_004438_06d5f753",
+  "operation_type": "commit_linked",
+  "parent_operation": null,
+  "timestamp": "2026-01-31T00:44:38.917703+00:00"
+}
